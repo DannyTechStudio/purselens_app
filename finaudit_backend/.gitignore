@@ -1,0 +1,19 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Databases
+*.sqlite3
+
+# Editor config
+.vscode/
+
+# Virtual environments
+finaudit_env/
+venv/
+env/
