@@ -85,6 +85,9 @@ FinAudit_App/
 - Frontend: GitHub Pages
 - Backend: Render / Railway / VPS
 
+## Entity Relationship Diagram
+<img width="781" height="1159" alt="finaudit_ERD drawio" src="https://github.com/user-attachments/assets/738baefe-9b7a-446c-a8ad-04c0dd0907dd" />
+
 
 # Backend Setup
 
