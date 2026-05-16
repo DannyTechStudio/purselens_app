@@ -73,7 +73,7 @@ FinAudit_App/
 - Python
 - Django
 - Django REST Framework
-- PostgreSQL
+- MySQL
 - JWT Authentication
 
 ## Frontend
@@ -195,9 +195,33 @@ fetch("https://your-api-url.com/api/expenses/")
 ```http
 POST /api/auth/register/
 POST /api/auth/login/
-POST /api/auth/password-reset/
+POST /api/auth/change-password/
+POST /api/auth/forgot-password/
+POST /api/auth/reset-password/
 POST /api/auth/logout/
 POST /api/auth/refresh/
+
+
+## User Details Management
+
+```http
+GET /api/users/me/
+PATCH /api/users/me/
+DELETE /api/users/me/
+
+
+## Profile
+
+```http
+GET /api/profile/
+PATCH /api/profile/
+
+
+## User Settings
+
+```http
+GET /api/user/settings/
+PATCH /api/user/settings/
 
 
 ## Categories
@@ -206,41 +230,69 @@ POST /api/auth/refresh/
 GET /api/categories/
 POST /api/categories/
 GET /api/categories/{id}/
-PUT /api/catgeories/{id}/
+PATCH /api/catgeories/{id}/
 DELETE /api/categories/{id}/
 
 
-## Incomes
+## Transaction
 
 ```http
-GET /api/incomes/
-POST /api/incomes/
-GET /api/incomes/{id}/
-PUT /api/incomes/{id}/
-DELETE /api/incomes/{id}/
-
-
-## Expenses
-
-```http
-GET /api/expenses/
-POST /api/expenses/
-GET /api/expenses/{id}/
-PUT /api/expenses/{id}/
-DELETE /api/expenses/{id}/
+GET /api/transactions/
+POST /api/transactions/
+GET /api/transactions/{id}/
+PATCH /api/transactions/{id}/
+DELETE /api/transactions/{id}/
 
 
 ## Budgets
 
 ```http
-GET    /api/budgets/
-POST   /api/budgets/
+GET /api/budgets/
+POST /api/budgets/
+GET /api/budgets/{id}/
+PATCH /api/budgets/{id}/
+DELETE /api/budgets/{id}/
+
+
+## Savings Goals
+
+```http
+GET /api/savings-goals/
+POST /api/savings-goals/
+GET /api/savings-goals/{id}/
+PATCH /api/savings-goals/{id}/
+DELETE /api/savings-goals/{id}/
+
+
+## Savings Contributions
+
+```http
+GET /api/savings-contributions/
+POST /api/savings-contributions/
+GET /api/savings-contributions/{id}/
+PATCH /api/savings-contributions/{id}/
+DELETE /api/savings-contributions/{id}/
+
+
+## Notification
+
+```http
+GET /api/notifications/
+GET /api/notifications/{id}/
+PATCH /api/notifications/{id}/mark-as-read/
+PATCH /api/notifications/{id}/mark-all-as-read/
+DELETE /api/notifications/{id}/
 
 
 ## Analytics
 
+```http
+GET /api/analytics/dashboard/
 GET /api/analytics/monthly-summary/
 GET /api/analytics/category-breakdown/
+GET /api/analytics/cashflow/
+GET /api/analytics/budget-performance/
+GET /api/analytics/savings-progress/
 
 
 # Security
