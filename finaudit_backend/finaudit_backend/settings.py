@@ -70,10 +70,10 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timezone.timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timezone.timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timezone.timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
