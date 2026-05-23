@@ -32,7 +32,7 @@ def generate_verfication_token(user):
     EmailVerificationToken.objects.filter(user=user).delete()
     
     # Generate raw random token
-    raw_token = secrets.token_urlsafe(64)
+    raw_token = secrets.token_urlsafe(24).rstrip('=')
     
     # Hash token before storing
     hashed_token = hashlib.sha256(raw_token.encode()).hexdigest()
