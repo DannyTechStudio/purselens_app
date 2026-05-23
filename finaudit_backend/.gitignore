@@ -17,3 +17,10 @@ __pycache__/
 finaudit_env/
 venv/
 env/
+
+# Test directories & files
+test_files/
+*.http
+
+# Profile image folder
+media
