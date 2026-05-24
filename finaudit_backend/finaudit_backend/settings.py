@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.utils import timezone
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,14 +53,30 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
-    # 'accounts',
+    'axes',
+    
+    # Project apps,
     'accounts.apps.AccountsConfig',
+    'activity',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day',
+        'login': '5/minute',
+        'register': '10/hour',
+        'password_reset': '3/hour',
+    },
     
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -82,6 +99,7 @@ SIMPLE_JWT = {
 
 
 AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -94,7 +112,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
+
+# Axes configurations
+AXES_ENABLED = True
+AXES_FAILURE_LIMIT = 3                                      # Lock after 3 failed attempts
+AXES_ENABLE_COOLOFF_TIME = True
+AXES_COOLOFF_TIME = timedelta(minutes=30)                   # Lockout duration
+AXES_LOCKOUT_MESSAGE = "Too many failed login attempts. Please try again in 30 minutes."
+
+AXES_LOCK_PARAMETERS = [["email", "ip_address"]]         # Pairs email identity with local IP address
+
+AXES_RESET_ON_SUCCESS = True                                # Reset failed count on successful login
+AXES_LOCKOUT_CALLABLE = 'accounts.utils.handle_lockout'     # Custom error response handler
+AXES_HTTP_RESPONSE_CODE = 403
 
 ROOT_URLCONF = 'finaudit_backend.urls'
 
