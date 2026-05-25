@@ -57,3 +57,11 @@ def send_verification_email(user, raw_token):
         fail_silently=False,
     )
 
+
+def handle_lockout(request, credentials, *args, **kwargs):
+    from rest_framework.exceptions import PermissionDenied
+    raise PermissionDenied(
+        "Your account has been temporarily locked due to too many failed login attempts."
+        "Please try again in 30 minutes."
+    )
+
