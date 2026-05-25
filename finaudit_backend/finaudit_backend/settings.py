@@ -73,8 +73,8 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
         'user': '1000/day',
-        'login': '5/minute',
-        'register': '10/hour',
+        'login': '10/minute',
+        'register': '5/hour',
         'password_reset': '3/hour',
     },
     
@@ -117,7 +117,7 @@ MIDDLEWARE = [
 
 # Axes configurations
 AXES_ENABLED = True
-AXES_FAILURE_LIMIT = 3                                      # Lock after 3 failed attempts
+AXES_FAILURE_LIMIT = 5                                      # Lock after 5 failed attempts
 AXES_ENABLE_COOLOFF_TIME = True
 AXES_COOLOFF_TIME = timedelta(minutes=30)                   # Lockout duration
 AXES_LOCKOUT_MESSAGE = "Too many failed login attempts. Please try again in 30 minutes."
