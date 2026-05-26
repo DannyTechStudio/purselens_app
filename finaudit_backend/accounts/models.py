@@ -8,6 +8,16 @@ from django.utils import timezone
 from datetime import timedelta
 
 
+class UserProviderEnum(models.TextChoices):
+    LOCAL = "local", "Local"
+    GOOGLE = "google", "Google"
+    APPLE = "apple", "Apple"
+    FACEBOOK = "facebook", "Facebook"
+    TIKTOK = "tiktok", "TikTok"
+    TWITTER = "twitter", "Twitter"
+    LINKEDIN = "linkedin", "LinkedIn"
+
+
 # Create your models here.
 class User(AbstractUser):
     username = None
@@ -16,6 +26,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -28,6 +39,19 @@ class User(AbstractUser):
     
     def __str__(self):
         return self.full_name
+    
+    
+class UserSocialAccount(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="social_account")
+    provider = models.CharField(max_length=20)
+    provider_user_id = models.CharField(max_length=200)
+    is_primary = models.BooleanField()
+    email_at_provider_time = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"User: {self.user.first_name}, Provider: {self.provider}"
     
     
 class UserSettings(models.Model):
