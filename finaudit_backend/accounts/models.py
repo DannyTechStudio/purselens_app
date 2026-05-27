@@ -9,7 +9,6 @@ from datetime import timedelta
 
 
 class UserProviderEnum(models.TextChoices):
-    LOCAL = "local", "Local"
     GOOGLE = "google", "Google"
     APPLE = "apple", "Apple"
     FACEBOOK = "facebook", "Facebook"
@@ -49,6 +48,9 @@ class UserSocialAccount(models.Model):
     is_primary = models.BooleanField()
     email_at_provider_time = models.EmailField(unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ("provider", "provider_user_id")
     
     def __str__(self):
         return f"User: {self.user.first_name}, Provider: {self.provider}"
