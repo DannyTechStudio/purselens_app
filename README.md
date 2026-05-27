@@ -86,8 +86,7 @@ FinAudit_App/
 - Backend: Render / Railway / VPS
 
 ## Entity Relationship Diagram
-<img width="781" height="1159" alt="finaudit_ERD drawio" src="https://github.com/user-attachments/assets/738baefe-9b7a-446c-a8ad-04c0dd0907dd" />
-
+<img width="1953" height="1584" alt="fashion_store_ERD drawio" src="https://github.com/user-attachments/assets/3d8da206-f237-47d3-b28b-2b0e89fdb311" />
 
 # Backend Setup
 
