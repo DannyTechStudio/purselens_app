@@ -72,8 +72,9 @@ class VerifyEmailView(APIView):
         user = serializer.context['user']
         verification = serializer.context['verification']
         
-        # Activate user
+        # Activate user and mark verified
         user.is_active = True
+        user.is_verified = True
         user.save()
         
         # Delete token - one time use
