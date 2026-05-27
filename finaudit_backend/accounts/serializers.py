@@ -50,10 +50,8 @@ class VerifyEmailSerializer(serializers.Serializer):
     def validate_token(self, raw_token):
         raw_token = raw_token.strip()
         hash_token = hashlib.sha256(raw_token.encode()).hexdigest()
-        print("Incoming hash:", hash_token)
         
         stored = EmailVerificationToken.objects.first()
-        print("Stored hash: ", stored.token if stored else "None")
         
         try:
             verification = EmailVerificationToken.objects.select_related('user').get(token=hash_token)
@@ -123,7 +121,7 @@ class LoginSerializer(TokenObtainPairSerializer):
 class UserDetailReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'is_active', 'created_at', 'updated_at']
+        fields = ['id', 'first_name', 'last_name', 'email', 'is_active', 'is_verified', 'created_at', 'updated_at']
         
         
 class UserDetailWriteSerializer(serializers.ModelSerializer):
