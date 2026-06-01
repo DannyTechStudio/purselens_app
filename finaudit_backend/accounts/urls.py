@@ -35,6 +35,9 @@ urlpatterns = [
     
     # Profile
     path('profile/', ProfileView.as_view(), name='profile'),
+    
+    # Google OAuth endpoint route
+    # {domain}/accounts/google/login/callback/
 ]
 
 
