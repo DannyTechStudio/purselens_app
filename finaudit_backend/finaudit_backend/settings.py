@@ -228,14 +228,21 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "accounts.User"
+
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
+SOCIALACCOUNT_ADAPTER = 'accounts.adapters.SocialAccountAdapter'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'        # keeps email verification mandatory for email/password account creation
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'       # bypasses email verification for social logins
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True      # Edge cases 1 & 3
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
 FRONTEND_URL = os.environ.get('FRONTEND_URL')
