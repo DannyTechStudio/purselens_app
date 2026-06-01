@@ -5,8 +5,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import get_user_model
-from axes.helpers import get_lockout_response
 from axes.backends import AxesProxyHandler
+from allauth.socialaccount.models import SocialAccount
+
+from .models import UserSocialAccount, UserProviderEnum
 
 from .utils import (
     generate_verfication_token, 
@@ -309,6 +311,16 @@ class ChangePasswordView(APIView):
         request.user.set_password(serializer.validated_data['new_password'])
         request.user.save()
         
+        UserSocialAccount.objects.get_or_create(
+            user=request.user,
+            provider=UserProviderEnum.LOCAL,
+            defaults={
+                "provider_user_id": str(request.user.pk),
+                "is_primary": False,
+                "email_at_provider_time": request.user.email,
+            },
+        )
+        
         return Response({
             "success": True,
             "detail": "Password changed successfully."
@@ -347,6 +359,16 @@ class ResetPasswordView(APIView):
         user = serializer.validated_data['user']
         user.set_password(serializer.validated_data['new_password'])
         user.save()
+        
+        UserSocialAccount.objects.get_or_create(
+            user=user,
+            provider=UserProviderEnum.LOCAL,
+            defaults={
+                "provider_user_id": str(user.pk),
+                "is_primary": False,
+                "email_at_provider_time": user.email,
+            },
+        )
 
         return Response({
             "success": True,
