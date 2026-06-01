@@ -9,6 +9,7 @@ from datetime import timedelta
 
 
 class UserProviderEnum(models.TextChoices):
+    LOCAL = "local", "Local"
     GOOGLE = "google", "Google"
     APPLE = "apple", "Apple"
     FACEBOOK = "facebook", "Facebook"
