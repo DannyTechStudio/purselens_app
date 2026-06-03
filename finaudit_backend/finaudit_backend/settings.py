@@ -60,9 +60,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     
-    # Project apps,
+    # Project apps
     'accounts.apps.AccountsConfig',
     'activity',
+    'finances',
 ]
 
 REST_FRAMEWORK = {
