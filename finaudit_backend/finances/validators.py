@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator
 
 
 # Custom validators for enforcing 100 words for transaction description
