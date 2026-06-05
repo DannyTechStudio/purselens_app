@@ -80,7 +80,7 @@ class Transaction(models.Model):
         ]
     )
     type = models.CharField(choices=TransactionTypeEnum.choices, max_length=10)
-    category = models.ForeignKey(
+    category_id = models.ForeignKey(
         Category, 
         on_delete=models.SET_NULL,
         null=True, blank=True,
@@ -147,7 +147,7 @@ class Budget(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budgets')
     title = models.CharField(max_length=50)
-    category = models.ForeignKey(
+    category_id = models.ForeignKey(
         Category, 
         on_delete=models.SET_NULL,
         null=True, blank=True, 
@@ -173,7 +173,7 @@ class Budget(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'category', 'start_date', 'end_date'],
+                fields=['user', 'category_id', 'start_date', 'end_date'],
                 name='unique_user_budget'  
             )
         ]
