@@ -82,8 +82,7 @@ class Transaction(models.Model):
     type = models.CharField(choices=TransactionTypeEnum.choices, max_length=10)
     category_id = models.ForeignKey(
         Category, 
-        on_delete=models.SET_NULL,
-        null=True, blank=True,
+        on_delete=models.PROTECT,
         related_name='transactions'
     )
     description = models.CharField(max_length=1000, validators=[validate_max_words], null=True, blank=True)
@@ -147,10 +146,9 @@ class Budget(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budgets')
     title = models.CharField(max_length=50)
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         Category, 
-        on_delete=models.SET_NULL,
-        null=True, blank=True, 
+        on_delete=models.PROTECT,
         related_name='budgets'
     )
     budget_amount = models.DecimalField(
