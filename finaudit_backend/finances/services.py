@@ -10,8 +10,11 @@ from .models import (
     TransactionTypeEnum
 )
 
-class CategoryService:
 
+#------------------------------------
+# Category Service
+#------------------------------------
+class CategoryService:
     @staticmethod
     def _get_owned_category(user, category_id):
         try:
@@ -29,6 +32,13 @@ class CategoryService:
             )
         except Category.DoesNotExist:
             raise ValueError("Category not available for use.")
+
+    @staticmethod
+    def get_category(user, category_id):
+        try:
+            return Category.objects.get(pk=category_id, user=user)
+        except Category.DoesNotExist:
+            raise ValueError("Category not found")
 
     @staticmethod
     def get_user_categories(user):
@@ -83,8 +93,8 @@ class CategoryService:
         if new_name and new_name.lower() != category.name.lower():
             CategoryService._check_duplicate(user, new_name)
 
-        for k, v in updates.items():
-            setattr(category, k, v)
+        for field, value in updates.items():
+            setattr(category, field, value)
 
         category.full_clean()
         category.save()
@@ -105,8 +115,10 @@ class CategoryService:
         return category
 
 
+#------------------------------------
+# Transaction Service
+#------------------------------------
 class TransactionService:
-
     @staticmethod
     def _get_transaction(user, transaction_id):
         try:
@@ -116,6 +128,13 @@ class TransactionService:
             )
         except Transaction.DoesNotExist:
             raise ValueError("Transaction not found.")
+    
+    @staticmethod
+    def get_transaction(user, transaction_id):
+        try:
+            return Category.objects.get(pk=transaction_id, user=user)
+        except Category.DoesNotExist:
+            raise ValueError("Transaction not found")
 
     @staticmethod
     def _validate_active_transaction(transaction):
@@ -191,6 +210,37 @@ class TransactionService:
         transaction_obj.full_clean()
         transaction_obj.save()
         return transaction_obj
+    
+    @staticmethod
+    @transaction.atomic
+    def update_transaction(user, transaction_id, **updates):
+        transaction = TransactionService._get_transaction(user, transaction_id)
+        
+        TransactionService._validate_active_transaction(transaction)
+        
+        for field, value in updates.items():
+            setattr(transaction, field, value)
+            
+        TransactionService._validate_recurring_fields(
+            is_recurring=transaction.is_recurring,
+            frequency=transaction.frequency,
+            next_due_date=transaction.next_due_date
+        )
+            
+        TransactionService._validate_dates(
+            transaction_date=transaction.transaction_date,
+            next_due_date=transaction.next_due_date
+        )
+            
+        if transaction.category:
+            TransactionService._validate_category_type_match(
+                transaction.category,
+                transaction.transaction_type
+            )
+            
+        transaction.full_clean()
+        transaction.save()
+        return transaction
 
     @staticmethod
     @transaction.atomic
@@ -203,8 +253,11 @@ class TransactionService:
         transaction_obj.save(update_fields=["is_active"])
         return transaction_obj
 
-class BudgetService:
 
+#------------------------------------
+# Budget Service
+#------------------------------------
+class BudgetService:
     @staticmethod
     def _get_budget(user, budget_id):
         try:
@@ -214,6 +267,13 @@ class BudgetService:
             )
         except Budget.DoesNotExist:
             raise ValueError("Budget not found.")
+        
+    @staticmethod
+    def get_budget(user, budget_id):
+        try:
+            return Budget.objects.get(pk=budget_id, user=user)
+        except Budget.DoesNotExist:
+            raise ValueError("Budget not found")
 
     @staticmethod
     def get_user_budgets(user):
@@ -221,6 +281,11 @@ class BudgetService:
             user=user,
             is_active=True
         ).select_related("category")
+
+    @staticmethod
+    def _validate_active_budget(budget):
+        if not budget.is_active:
+            raise ValueError("Category inactive.")
 
     @staticmethod
     def _check_duplicate(user, category, start_date, end_date, exclude_id=None):
@@ -297,6 +362,58 @@ class BudgetService:
         budget.full_clean()
         budget.save()
         return budget
+    
+    @staticmethod
+    @transaction.atomic
+    def update_budget(user, budget_id, **updates):
+        budget = BudgetService._get_budget(user, budget_id)
+        
+        BudgetService._validate_active_budget(budget)
+        
+        for field, value in updates.items():
+            setattr(budget, field, value)
+            
+        BudgetService._check_duplicate(
+            user=user,
+            category=budget.category,
+            start_date=budget.start_date,
+            end_date=budget.end_date,
+            exclude_id=budget.pk
+        )
+            
+        if budget.start_date or budget.end_date:
+            BudgetService._validate_budget_dates(
+                budget.start_date,
+                budget.end_date
+            )
+            
+        if budget.period_type:
+            BudgetService._validate_budget_period_type(
+                budget.period_type
+            )
+            
+        BudgetService._validate_overlapping_budgets(
+            user=user,
+            category=budget.category,
+            start_date=budget.start_date,
+            end_date=budget.end_date,
+            exclude_id=budget.pk
+        )
+            
+        budget.full_clean()
+        budget.save()
+        return budget
+    
+    @staticmethod
+    @transaction.atomic
+    def deactivate_budget(user, budget_id):
+        budget_obj = BudgetService._get_budget(user, budget_id)
+        
+        BudgetService._validate_active_budget(budget_obj)
+        
+        budget_obj.is_active = False
+        budget_obj.save(update_fields=["is_active"])
+        return budget_obj
 
     @staticmethod
     def get_budget_spending(user, budget_id):
