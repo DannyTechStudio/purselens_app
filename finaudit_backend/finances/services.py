@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from .models import Category, Transaction, Budget, TransactionTypeEnum
+from utils.auth import ensure_authenticated
 
 User = get_user_model()
 
@@ -20,12 +21,6 @@ class CategoryService:
            - Prevent deletion if category is in use
            - Soft delete via is_active
     """
-    
-    @staticmethod
-    def _ensure_authenticated(user):
-        if not user or not user.is_authenticated:
-            raise ValueError("Signup required to perform this operation.")
-    
     @staticmethod
     def _validate_category_owner(user, category_id):
         category = CategoryService._get_category(user, category_id)
@@ -34,7 +29,7 @@ class CategoryService:
     
     @staticmethod
     def _get_owned_category(user, category_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         try:
             return Category.objects.get(
@@ -46,7 +41,7 @@ class CategoryService:
         
     @staticmethod
     def _get_usable_category(user, category_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         try:
             return Category.objects.get(
@@ -59,7 +54,7 @@ class CategoryService:
         
     @staticmethod
     def get_user_categories(user):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         return Category.objects.filter(
             user=user,
@@ -68,7 +63,7 @@ class CategoryService:
         
     @staticmethod
     def get_category(user, category_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         return CategoryService._get_owned_category(user, category_id)
         
     @staticmethod
@@ -94,7 +89,7 @@ class CategoryService:
 
     @staticmethod
     def create_category(user, name, type, is_system=False):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         if is_system:
             raise ValueError("Cannot create built-in system categories.")
@@ -120,7 +115,7 @@ class CategoryService:
     @staticmethod
     @transaction.atomic
     def update_category(user, category_id, **updates):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         category = CategoryService._get_owned_category(user, category_id)
         
@@ -146,7 +141,7 @@ class CategoryService:
     @staticmethod
     @transaction.atomic
     def deactivate_category(user, category_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         category = CategoryService._get_owned_category(user, category_id)
         
@@ -183,7 +178,7 @@ class TransactionService:
     # ------------------------------------
     @staticmethod
     def _get_transaction(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         try:
             return Transaction.objects.select_related(
@@ -201,7 +196,7 @@ class TransactionService:
             raise ValueError("Transaction has been deactivated.")
         
     @staticmethod
-    def _validate_category(uscategory):
+    def _validate_category(category):
         if not category.is_active:
             raise ValueError("This category has been deactivated.")
         
@@ -241,7 +236,7 @@ class TransactionService:
     #-----------------------------
     @staticmethod
     def get_user_transactions(user):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         return Transaction.objects.filter(
             user=user,
@@ -257,7 +252,7 @@ class TransactionService:
     
     @staticmethod
     def get_transaction(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         return TransactionService._get_transaction(
             user,
@@ -281,7 +276,7 @@ class TransactionService:
         frequency=None,
         next_due_date=None
     ):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         category = CategoryService._get_usable_category(user, category_id)
         
         TransactionService._validate_category(category)
@@ -321,7 +316,7 @@ class TransactionService:
     @staticmethod
     @transaction.atomic
     def update_transaction(user, transaction_id, **updates):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         transaction_obj = (
             Transaction.objects
@@ -381,7 +376,7 @@ class TransactionService:
     @staticmethod
     @transaction.atomic
     def deactivate_transaction(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
 
         transaction_obj = (
             Transaction.objects
@@ -404,7 +399,7 @@ class TransactionService:
     #--------------------------------------------
     @staticmethod
     def generate_next_occurrence(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
 
         transaction_obj = TransactionService._get_transaction(
             user,
@@ -447,7 +442,7 @@ class TransactionService:
     @staticmethod
     @transaction.atomic
     def pause_recurring_transaction(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         transaction_obj = (
             Transaction.objects
@@ -469,7 +464,7 @@ class TransactionService:
     @staticmethod
     @transaction.atomic
     def resume_recurring_transaction(user, transaction_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         transaction_obj = (
             Transaction.objects
@@ -501,7 +496,7 @@ class BudgetService:
     #----------------------------------
     @staticmethod
     def _get_budget_category(user, category_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         category_obj = CategoryService._get_usable_category(user, category_id)
 
@@ -509,7 +504,7 @@ class BudgetService:
     
     @staticmethod
     def _get_budget(user, budget_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         try:
             return Budget.objects.select_related(
@@ -523,7 +518,7 @@ class BudgetService:
     
     @staticmethod
     def get_budget(user, budget_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         return BudgetService._get_budget(user, budget_id)
     
     @staticmethod
@@ -533,7 +528,7 @@ class BudgetService:
 
     @staticmethod
     def get_user_budgets(user):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         return Budget.objects.filter(
             user=user,
@@ -607,7 +602,7 @@ class BudgetService:
         start_date,
         end_date
     ):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         category = BudgetService._get_budget_category(user, category)
         BudgetService._validate_budget_dates(start_date, end_date)
         BudgetService._check_duplicate(
@@ -649,7 +644,7 @@ class BudgetService:
     @staticmethod
     @transaction.atomic
     def update_budget(user, budget_id, **updates):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         budget_obj = BudgetService._get_budget(user, budget_id)
         
@@ -712,7 +707,7 @@ class BudgetService:
     @staticmethod
     @transaction.atomic
     def deactivate_budget(user, budget_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         budget_obj = BudgetService._get_budget(user, budget_id)
 
@@ -728,7 +723,7 @@ class BudgetService:
     #------------------------------------
     @staticmethod
     def get_budget_spending(user, budget_id):
-        CategoryService._ensure_authenticated(user)
+        ensure_authenticated(user)
         
         budget_obj = BudgetService._get_budget(user, budget_id)
         
