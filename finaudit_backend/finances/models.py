@@ -1,6 +1,7 @@
 import uuid
 from django.conf import settings
 from django.db import models
+from django.db.models.functions import Lower
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -54,7 +55,7 @@ class Category(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'name'],
+                fields=['user', Lower("name")],
                 name='unique_user_category'
             )
         ]
@@ -80,7 +81,7 @@ class Transaction(models.Model):
         ]
     )
     type = models.CharField(choices=TransactionTypeEnum.choices, max_length=10)
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         Category, 
         on_delete=models.PROTECT,
         related_name='transactions'
@@ -171,7 +172,7 @@ class Budget(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'category_id', 'start_date', 'end_date'],
+                fields=['user', 'category', 'start_date', 'end_date'],
                 name='unique_user_budget'  
             )
         ]
