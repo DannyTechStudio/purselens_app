@@ -3,6 +3,7 @@ from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from django.db import transaction
 from django.db.models import Q, Sum
+from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
@@ -66,6 +67,11 @@ class CategoryService:
         ).order_by("-created_at")
         
     @staticmethod
+    def get_category(user, category_id):
+        CategoryService._ensure_authenticated(user)
+        return CategoryService._get_owned_category(user, category_id)
+        
+    @staticmethod
     def _check_duplicate(user, name):
         exists = Category.objects.filter(
             user=user,
@@ -116,7 +122,7 @@ class CategoryService:
     def update_category(user, category_id, **updates):
         CategoryService._ensure_authenticated(user)
         
-        category = CategoryService._get_category(user, category_id)
+        category = CategoryService._get_owned_category(user, category_id)
         
         if category.is_system:
             raise ValueError("System built-in categories cannot be modified.")
@@ -142,7 +148,7 @@ class CategoryService:
     def deactivate_category(user, category_id):
         CategoryService._ensure_authenticated(user)
         
-        category = CategoryService._get_category(user, category_id)
+        category = CategoryService._get_owned_category(user, category_id)
         
         if category.is_system:
             raise ValueError("System built-in categories cannot be deactivated.")
@@ -177,6 +183,8 @@ class TransactionService:
     # ------------------------------------
     @staticmethod
     def _get_transaction(user, transaction_id):
+        CategoryService._ensure_authenticated(user)
+        
         try:
             return Transaction.objects.select_related(
                 "category"
@@ -193,7 +201,7 @@ class TransactionService:
             raise ValueError("Transaction has been deactivated.")
         
     @staticmethod
-    def _validate_category(category):
+    def _validate_category(uscategory):
         if not category.is_active:
             raise ValueError("This category has been deactivated.")
         
@@ -232,7 +240,7 @@ class TransactionService:
     #   Query methods
     #-----------------------------
     @staticmethod
-    def list_all_user_transactions(user):
+    def get_user_transactions(user):
         CategoryService._ensure_authenticated(user)
         
         return Transaction.objects.filter(
@@ -274,7 +282,7 @@ class TransactionService:
         next_due_date=None
     ):
         CategoryService._ensure_authenticated(user)
-        category = CategoryService._get_available_category(user, category_id)
+        category = CategoryService._get_usable_category(user, category_id)
         
         TransactionService._validate_category(category)
         TransactionService._validate_category_type_match(category, type)
@@ -325,11 +333,21 @@ class TransactionService:
         )
         
         TransactionService._validate_active_transaction(transaction_obj)
+        
+        new_category_id = updates.pop("category_id", None)
+        
+        if new_category_id:
+            transaction_obj.category = (
+                CategoryService._get_usable_category(
+                    user,
+                    new_category_id
+                )
+            )
 
         for field, value in updates.items():
             setattr(transaction_obj, field, value)
         
-        category = transaction_obj.category_id
+        category = transaction_obj.category
         if category: 
             TransactionService._validate_category(category)
             TransactionService._validate_category_type_match(
@@ -502,7 +520,12 @@ class BudgetService:
             )
         except Budget.DoesNotExist:
             raise ValueError("Budget not found.")
-        
+    
+    @staticmethod
+    def get_budget(user, budget_id):
+        CategoryService._ensure_authenticated(user)
+        return BudgetService._get_budget(user, budget_id)
+    
     @staticmethod
     def _validate_active_budget(budget):
         if not budget.is_active:
@@ -525,16 +548,19 @@ class BudgetService:
         )
 
     @staticmethod
-    def _check_duplicate(user, category, start_date, end_date):
-        exists = Budget.objects.filter(
+    def _check_duplicate(user, category, start_date, end_date, exclude_budget_id=None):
+        budget_exists = Budget.objects.filter(
             user=user,
             category=category,
             start_date=start_date,
             end_date=end_date,
             is_active=True
-        ).exists()
+        )
         
-        if exists:
+        if exclude_budget_id:
+            budget_exists = budget_exists.exclude(pk=exclude_budget_id)
+        
+        if budget_exists:
             raise ValueError("Budget already exists.") 
 
     @staticmethod
@@ -629,6 +655,16 @@ class BudgetService:
         
         BudgetService._validate_active_budget(budget_obj)
         
+        new_category_id = updates.pop("category", None)
+        
+        if new_category_id:
+            budget_obj.category = (
+                BudgetService._get_budget_category(
+                    user, 
+                    new_category_id
+                )
+            )
+        
         for field, value in updates.items():
             setattr(budget_obj, field, value)
             
@@ -652,7 +688,8 @@ class BudgetService:
             user=user,
             category=category,
             start_date=budget_obj.start_date,
-            end_date=budget_obj.end_date
+            end_date=budget_obj.end_date,
+            exclude_budget_id=budget_obj.pk
         )
         
         BudgetService._validate_overlapping_budgets(
@@ -710,31 +747,44 @@ class BudgetService:
         )['total'] or 0
         
         amount_remaining = budget_obj.budget_amount - amount_spent
+        percentage_used = (amount_spent / budget_obj.budget_amount) * 100
         
         return {
             "budget_amount": budget_obj.budget_amount,
             "amount_spent": amount_spent,
-            "amount_remaining": amount_remaining
+            "amount_remaining": amount_remaining,
+            "percentage_used": round(percentage_used, 2)
         }
         
     @staticmethod
-    def check_budget_status(user, budget_id, budget_amount, amount_spent, amount_remaining):
-        CategoryService._ensure_authenticated(user)
+    def check_budget_status(budget, amount_spent, amount_remaining):
         
-        budget_obj = BudgetService._get_budget(user, budget_id)
+        budget_obj = BudgetService._get_budget(budget.user, budget.pk)
         
         BudgetService._validate_active_budget(budget_obj)
         
-        if amount_spent >= (budget_amount * 0.8):
-            return f"WARNING! You have spent 80% of your budget on {budget_obj.category.name}. Your remaining amount for this budget is {amount_remaining}."
+        if amount_spent > budget_obj.budget_amount:
+            return {
+                "status": "EXCEEDED!",
+                "message": f"You have exceeded your budget limit - by {abs(amount_spent - budget_obj.budget_amount)}."
+            }
         
-        if amount_spent == budget_amount:
-            return f"REACHED! You have reached your budget limit - {budget_amount}"
+        if amount_spent == budget_obj.budget_amount:
+            return {
+                "status": "REACHED!",
+                "message": f"You have reached your budget limit - {budget_obj.budget_amount}."
+            }
         
-        if amount_spent > budget_amount:
-            return f"EXCEEDED! You have exceeded your budget limit - by {abs(amount_spent - budget_amount)}."
+        if amount_spent >= (budget_obj.budget_amount * Decimal("0.8")):
+            return {
+                "status": "WARNING!",
+                "message": f"You have spent 80% of your budget on {budget_obj.category.name}. Your remaining amount for this budget is {amount_remaining}."
+            }
         
-        return f"NORMAL! You have {amount_remaining} remaining out of your {budget_amount} limit."
+        return {
+            "status": "NORMAL!",
+            "message": f"You have {amount_remaining} remaining out of your {budget_obj.budget_amount} limit."
+        }
         
     @staticmethod
     def check_budget_impact(user, category_id, amount, transaction_date):
@@ -748,26 +798,19 @@ class BudgetService:
         
         if not budget_obj:
             return None
-                
-        budget_transactions = Transaction.objects.filter(
+        
+        spending = BudgetService.get_budget_spending(
             user=user,
-            type=TransactionTypeEnum.EXPENSE,
-            category=budget_obj.category,
-            transaction_date__gte=budget_obj.start_date,
-            transaction_date__lte=budget_obj.end_date,
+            budget_id=budget_obj.pk
         )
         
-        current_spent = budget_transactions.aggregate(
-            total=Sum('amount')
-        )['total'] or 0
-        
-        amount_spent = current_spent + amount
-        amount_remaining = budget_obj.budget_amount - amount_spent
+        amount_spent = spending["amount_spent"] + amount
+        amount_remaining = spending["budget_amount"] - amount_spent
         
         return BudgetService.check_budget_status(
             user=budget_obj.user,
             budget_id=budget_obj.pk,
-            budget_amount=budget_obj.budget_amount,
+            budget_amount=spending["budget_amount"],
             amount_spent=amount_spent,
             amount_remaining=amount_remaining,
         )
