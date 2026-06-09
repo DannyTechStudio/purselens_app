@@ -2,14 +2,10 @@ from rest_framework.views import APIView
 from rest_framework import permissions, status
 from django.core.exceptions import ValidationError
 
-from .models import Category, Transaction, Budget
 from .serializers import (
     CategoryResponseSerializer,
     CategoryCreateSerializer,
     CategoryUpdateSerializer,
-    AdminCategoryResponseSerializer,
-    AdminCategoryCreateSerializer,
-    AdminCategoryUpdateSerializer,
     TransactionResponseSerializer,
     TransactionCreateSerializer,
     TransactionUpdateSerializer,
