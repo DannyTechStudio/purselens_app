@@ -132,8 +132,8 @@ class TransactionService:
     @staticmethod
     def get_transaction(user, transaction_id):
         try:
-            return Category.objects.get(pk=transaction_id, user=user)
-        except Category.DoesNotExist:
+            return Transaction.objects.get(pk=transaction_id, user=user)
+        except Transaction.DoesNotExist:
             raise ValueError("Transaction not found")
 
     @staticmethod
