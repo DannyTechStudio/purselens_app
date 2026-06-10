@@ -149,7 +149,7 @@ class TransactionService:
     @staticmethod
     def _validate_category_type_match(category, transaction_type):
         if category.type != transaction_type:
-            raise ValueError("Type mismatch.")
+            raise ValueError("Transaction type mismatch.")
 
     @staticmethod
     def _validate_recurring_fields(is_recurring, frequency, next_due_date):
@@ -232,11 +232,10 @@ class TransactionService:
             next_due_date=transaction.next_due_date
         )
             
-        if transaction.category:
-            TransactionService._validate_category_type_match(
-                transaction.category,
-                transaction.transaction_type
-            )
+        TransactionService._validate_category_type_match(
+            transaction.category,
+            transaction.transaction_date
+        )
             
         transaction.full_clean()
         transaction.save()
