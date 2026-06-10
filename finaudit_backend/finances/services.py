@@ -234,7 +234,7 @@ class TransactionService:
             
         TransactionService._validate_category_type_match(
             transaction.category,
-            transaction.transaction_date
+            transaction.type
         )
             
         transaction.full_clean()
