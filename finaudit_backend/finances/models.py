@@ -138,8 +138,7 @@ class Transaction(models.Model):
             raise ValidationError(errors)
             
     def __str__(self):
-        return f"Transaction: {self.title} ({self.amount})"
-        
+        return f"Transaction: {self.title} ({self.amount})"    
         
 
 class Budget(models.Model):
