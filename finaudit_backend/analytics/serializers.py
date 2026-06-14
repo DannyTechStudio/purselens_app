@@ -6,7 +6,6 @@ class TopCategorySerializer(serializers.Serializer):
     category__id = serializers.UUIDField()
     category__name = serializers.CharField()
     total_spent = serializers.DecimalField(max_digits=12, decimal_places=2)
-    
 
 class BudgetOverviewFieldsSerializer(serializers.Serializer):
     total_budget_amount = serializers.DecimalField(max_digits=12, decimal_places=2)
@@ -16,7 +15,6 @@ class BudgetOverviewFieldsSerializer(serializers.Serializer):
     budgets_on_track = serializers.IntegerField(min=0)
     budget_at_risk = serializers.IntegerField(min=0)
     budget_exceeded = serializers.IntegerField(min=0)
-    
 
 class RecentTransactionsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +24,6 @@ class RecentTransactionsSerializer(serializers.ModelSerializer):
             "category", "description", "transaction_date", 
             "is_recurring", "frequency", "next_due_date"
         ]
-        
 
 class InsightCardSerializer(serializers.Serializer):
     type = serializers.CharField()
@@ -40,4 +37,3 @@ class AnalyticsOutputSerializer(serializers.Serializer):
     top_categories = TopCategorySerializer(many=True)
     recent_transactions = RecentTransactionsSerializer(many=True)
     insights = InsightCardSerializer(many=True)
-
