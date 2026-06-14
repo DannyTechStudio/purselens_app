@@ -40,7 +40,7 @@ def generate_verfication_token(user):
     EmailVerificationToken.objects.create(
         user=user,
         token=hashed_token,
-        expires_at = timezone.now() + timedelta(minutes=15)
+        expires_at = timezone.now() + timedelta(minutes=5)
     )
     
     return raw_token
