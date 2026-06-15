@@ -1,17 +1,86 @@
+from collections import defaultdict
 from django.db.models import Sum
+from django.utils import timezone
+from calendar import month_abbr
+
 from finances.models import Transaction
 from finances.services import TransactionService, BudgetService
 
 
 class AnalyticsService:
     """
-    Handles all calculation, aggregation, and insight logic 
-    for user financial overviews.
+        Handles all calculation, aggregation, and insight logic 
+        for user financial overviews.
     """
+    @staticmethod
+    def _get_income_transactions(user):
+        return Transaction.objects.filter(
+            user=user,
+            type="income",
+            is_active=True
+        )
+
+    @staticmethod
+    def _get_expense_transactions(user):
+        return Transaction.objects.filter(
+            user=user,
+            type="expense",
+            is_active=True
+        )
+        
+    @staticmethod
+    def _get_current_period_income(user):
+        now = timezone.now()
+        
+        return Transaction.objects.filter(
+            user=user,
+            type="income",
+            is_active=True,
+            transaction_date__year=now.year,
+            transaction_date__month=now.month,
+        )
+        
+    @staticmethod
+    def _get_current_period_expenses(user):
+        now = timezone.now()
+        
+        return Transaction.objects.filter(
+            user=user,
+            type="expense",
+            is_active=True,
+            transaction_date__year=now.year,
+            transaction_date__month=now.month,
+        )
+    
+    @staticmethod
+    def _build_expense_map(expense_transactions):
+        expense_map = {}
+        
+        for transaction in expense_transactions:
+            category_id = transaction.category.id
+            
+            expense_map[category_id] = (
+                expense_map.get(category_id, 0) + transaction.amount
+            )
+            
+        return expense_map
+    
+    @staticmethod
+    def _build_budget_map(budgets):
+        budget_map = {}
+
+        for budget in budgets:
+            category_id = budget.category.id
+
+            budget_map[category_id] = (
+                budget_map.get(category_id, 0)
+                + budget.budget_amount
+            )
+
+        return budget_map
 
     @staticmethod
     def get_financial_summary(income_transactions, expense_transactions) -> dict:
-        """Calculates total income, total expenses, and current wallet balance."""
         total_income = income_transactions.aggregate(total=Sum("amount"))["total"] or 0
         total_expense = expense_transactions.aggregate(total=Sum("amount"))["total"] or 0
         balance = total_income - total_expense
@@ -24,7 +93,9 @@ class AnalyticsService:
 
     @staticmethod
     def get_top_categories(expense_transactions, limit=5):
-        """Fetches the highest spending categories with totals."""
+        """
+            Fetches the highest spending categories with totals.
+        """
         return (
             expense_transactions
             .values("category__id", "category__name")
@@ -32,19 +103,15 @@ class AnalyticsService:
             .order_by("-total_spent")[:limit]
         )
 
-    @staticmethod
-    def get_budget_overview(expense_transactions, budgets) -> dict:
-        """Maps transactions against budgets to calculate overall utilization and risk states."""
-        # Group expense transactions by category
-        expense_map = {}
-        for transaction in expense_transactions:
-            expense_map[transaction.category.id] = expense_map.get(transaction.category.id, 0) + transaction.amount
-
-        # Group budget by category
-        budget_map = {}
-        for budget in budgets:
-            budget_map[budget.category.id] = budget_map.get(budget.category.id, 0) + budget.budget_amount
-
+    @classmethod
+    def get_budget_overview(cls, expense_transactions, budgets):
+        """
+            Maps transactions against budgets to calculate 
+            overall utilization and risk states.
+        """
+        expense_map = cls._build_expense_map(expense_transactions)
+        budget_map = cls._build_budget_map(budgets)
+        
         total_budget_amount = sum(budget_map.values())
         total_spent = sum(expense_map.values())
         remaining = total_budget_amount - total_spent
@@ -79,7 +146,9 @@ class AnalyticsService:
 
     @staticmethod
     def generate_insights(summary, budget_overview, top_categories) -> list:
-        """Generates dynamic feedback cards based on spending metrics."""
+        """
+            Generates dynamic feedback cards based on spending metrics.
+        """
         insights = []
         total_expense = summary["total_expense"]
         balance = summary["balance"]
@@ -135,8 +204,12 @@ class AnalyticsService:
                 }
             )
 
-        # Top category trends and dominance insights (Safely using .first() to prevent empty list crashes)
-        top_category = top_categories.first()
+        # Top category trends and dominance insights
+        top_categories = list(top_categories)
+        top_category = (
+            top_categories[0]
+            if top_categories else None
+        )
         if top_category:
             insights.append(
                 {
@@ -159,27 +232,30 @@ class AnalyticsService:
 
     @classmethod
     def get_user_analytics_data(cls, user) -> dict:
-        """The Master Orchestrator: Combines helper methods into a cohesive response."""
+        """
+            The Master Orchestrator: Combines helper methods into a 
+            cohesive response.
+        """
         
-        # 1. Gather raw querysets
-        income_transactions = Transaction.objects.filter(type="income", user=user)
-        expense_transactions = Transaction.objects.filter(type="expense", user=user)
+        # Gather raw querysets
+        income_transactions = cls._get_current_period_income(user)
+        expense_transactions = cls._get_current_period_expenses(user)
         budgets = BudgetService.get_user_budgets(user)
 
-        # 2. Extract specific calculations via helper methods
+        # Extract specific calculations using helper methods
         summary = cls.get_financial_summary(income_transactions, expense_transactions)
-        top_categories = cls.get_top_categories(expense_transactions, limit=5)
+        top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
         insights = cls.generate_insights(summary, budget_overview, top_categories)
 
-        # 3. Fetch independent services
+        # Fetch independent services
         recent_transactions = (
             TransactionService
             .list_user_transactions(user)
             .order_by("-created_at")[:10]
         )
 
-        # 4. Pack into clean output schema
+        # Pack into clean output schema
         return {
             "total_income": summary["total_income"],
             "total_expense": summary["total_expense"],
@@ -189,3 +265,132 @@ class AnalyticsService:
             "recent_transactions": recent_transactions,
             "insights": insights
         }
+
+    @classmethod
+    def get_monthly_summary(cls, user):
+        transactions = Transaction.objects.filter(
+            user=user,
+            is_active=True
+        )
+       
+        monthly_data = defaultdict(
+            lambda: {
+                "income": 0,
+                "expense": 0
+            }
+        )
+       
+        for transaction in transactions:
+            month_number = transaction.transaction_date.month
+
+            if transaction.type == "income":
+                monthly_data[month_number]["income"] += transaction.amount
+            else:
+                monthly_data[month_number]["expense"] += transaction.amount
+                
+        results = []
+        
+        for month_number in sorted(monthly_data.keys()):
+            income = monthly_data[month_number]["income"]
+            expense = monthly_data[month_number]["expense"]
+            
+            results.append(
+                {
+                    "month": month_abbr[month_number],
+                    "income": income,
+                    "expense": expense,
+                    "balance": income - expense
+                }
+            )
+            
+        return results
+           
+    @classmethod
+    def get_category_breakdown(cls, user):
+        expense_transactions = cls._get_expense_transactions(user)
+        total_expense = (
+            expense_transactions.aggregate(
+                total=Sum("amount")
+            )["total"] or 0
+        )
+        
+        categories = (expense_transactions
+            .values(
+                "category__id",
+                "category__name"
+            )
+            .annotate(
+                amount=Sum("amount")
+            )
+            .order_by("-amount")
+        )
+        
+        results = []
+        for category in categories:
+            percentage = (
+                (category["amount"] / total_expense) * 100
+                if total_expense > 0 else 0
+            )
+            
+            results.append(
+                {
+                    "category_id": category["category__id"],
+                    "category_name": category["category__name"],
+                    "amount": category["amount"],
+                    "percentage": round(percentage, 2)
+                }
+            )
+            
+        return results
+    
+    @classmethod
+    def get_budget_performance(cls, user):
+        budgets = BudgetService.get_user_budgets(user)
+        expense_transactions = cls._get_current_period_expenses(user)
+        expense_map = cls._build_expense_map(expense_transactions)
+        
+        results = []
+        for budget in budgets:
+            spent = expense_map.get(budget.category.id, 0)
+            remaining = (budget.budget_amount - spent)
+            utilization = (
+                (spent / budget.budget_amount) * 100
+                if budget.budget_amount > 0 else 0
+            )
+            
+            if spent > budget.budget_amount:
+                status = "exceeded"
+            elif spent >= (budget.budget_amount * 0.8):
+                status = "at_risk"
+            else:
+                status = "on_track"
+                
+            results.append(
+                {
+                    "category_id": budget.category.id,
+                    "category_name": budget.category.name,
+                    "budget_amount": budget.budget_amount,
+                    "spent": spent,
+                    "remaining": remaining,
+                    "utilization": round(utilization, 2),
+                    "status": status
+                }
+            )
+            
+        return results
+            
+    @classmethod
+    def get_cashflow(cls, user):
+        monthly_summary = cls.get_monthly_summary(user)
+        
+        return [
+            {
+                "month": item["month"],
+                "inflow": item["income"],
+                "outflow": item["expense"],
+                "net_flow": item["balance"]
+            }
+            for item in monthly_summary
+        ]
+    
+           
