@@ -7,7 +7,6 @@ from .serializers import (
     MonthlySummaryItemSerializer,
     CategoryBreakdownSerializer,
     CashflowSerializer,
-    BudgetOverviewFieldsSerializer,
     BudgetPerformanceSerializer,
 )
 from utils.response_helper_methods import success_response
