@@ -51,7 +51,7 @@ def send_verification_email(user, raw_token):
 
     send_mail(
         subject="FinAudit — Verify Your Email",
-        message=f"Hi {user.first_name},\n\nPlease verify your email by clicking the link below:\n{verification_link}\n\nThis link expires in 15 minutes.\n\nIf you did not create an account, ignore this email.",
+        message=f"Hi {user.first_name},\n\nPlease verify your email by clicking the link below:\n{verification_link}\n\nThis link expires in 5 minutes.\n\nIf you did not create an account, ignore this email.",
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
         fail_silently=False,
