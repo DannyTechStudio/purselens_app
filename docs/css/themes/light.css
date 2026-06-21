@@ -1,0 +1,49 @@
+/* Variables - Light Theme Colors */
+
+:root {
+    /* Base */
+    --bg: #ffff;
+    --bg-2: #f5f5f1;
+    --surface: #e1ecf5;
+    --surface-2: #F1F3F5;
+    --border: #49484845;
+    --box-shadow: #00000034;
+
+    /* Text */
+    --text-primary: #292b51;
+    --text-secondary: #1b1d36;
+    --text-muted: #9AA0A6;
+
+    /* Brand */
+    --primary: #283593;
+    --custom-blue: #091a63;
+    --custom-blue-2: #040429;
+    --deep-blue: #030820;
+    --primary-hover: #1F2A7A;
+    --custom-orange-text-color: #04043d;
+    --custom-orange-text-color-hover: #06065b;
+    --custom-orange: #fa8627;
+    --custom-orange-hover: #d46d18;
+    --sign-in-link-color: #2d2d2d;
+    --sign-in-link-color-hover: #181818;
+    --sign-in-link-bg: #d6dbe1;
+    --sign-in-link-bg-hover: #b9cee2;
+    --icons-bg: #e4e7e8;
+    --footer-link-color: #171754c5;
+    --footer-link-color-hover: #3e3efd;
+
+    /* Financial semantics */
+    --success: #2E7D32;
+    --success-bg: rgba(46, 125, 50, 0.1);
+
+    --danger: #C62828;
+    --danger-bg: rgba(198, 40, 40, 0.1);
+
+    /* UI states */
+    --warning: #F9A825;
+    --info: #1565C0;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+}
