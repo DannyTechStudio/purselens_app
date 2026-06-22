@@ -1,5 +1,6 @@
 from collections import defaultdict
 from django.db.models import Sum
+from decimal import Decimal
 from django.utils import timezone
 from calendar import month_abbr
 
@@ -124,12 +125,14 @@ class AnalyticsService:
         budgets_on_track = 0
         budgets_at_risk = 0
         budgets_exceeded = 0
+        
+        risk_threshold = Decimal("0.08")
 
         for category_id, budget_amount in budget_map.items():
             spent = expense_map.get(category_id, 0)
             if spent > budget_amount:
                 budgets_exceeded += 1
-            elif spent >= (budget_amount * 0.8):
+            elif spent >= (budget_amount * risk_threshold):
                 budgets_at_risk += 1
             else:
                 budgets_on_track += 1
@@ -141,7 +144,7 @@ class AnalyticsService:
             "overall_utilization": utilization_percentage,
             "budgets_on_track": budgets_on_track,
             "budgets_at_risk": budgets_at_risk,
-            "budget_exceeded": budgets_exceeded
+            "budgets_exceeded": budgets_exceeded
         }
 
     @staticmethod
@@ -153,7 +156,7 @@ class AnalyticsService:
         total_expense = summary["total_expense"]
         balance = summary["balance"]
         
-        exceeded = budget_overview["budget_exceeded"]
+        exceeded = budget_overview["budgets_exceeded"]
         at_risk = budget_overview["budgets_at_risk"]
         total_budget = budget_overview["total_budget_amount"]
 
@@ -358,9 +361,11 @@ class AnalyticsService:
                 if budget.budget_amount > 0 else 0
             )
             
+            risk_threshold = Decimal("0.08")
+            
             if spent > budget.budget_amount:
                 status = "exceeded"
-            elif spent >= (budget.budget_amount * 0.8):
+            elif spent >= (budget.budget_amount * risk_threshold):
                 status = "at_risk"
             else:
                 status = "on_track"
