@@ -137,8 +137,6 @@ class AnalyticsService:
         budgets_on_track = 0
         budgets_at_risk = 0
         budgets_exceeded = 0
-        
-        risk_threshold = Decimal("0.8")
 
         for category_id, budget_amount in budget_map.items():
             spent = expense_map.get(category_id, 0)
