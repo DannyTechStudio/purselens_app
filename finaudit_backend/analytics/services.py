@@ -73,10 +73,7 @@ class AnalyticsService:
         for budget in budgets:
             category_id = budget.category.id
 
-            budget_map[category_id] = (
-                budget_map.get(category_id, Decimal("0"))
-                + budget.budget_amount
-            )
+            budget_map[category_id] = budget.budget_amount
 
         return budget_map
 
@@ -380,6 +377,10 @@ class AnalyticsService:
                     "category_id": budget.category.id,
                     "category_name": budget.category.name,
                     "budget_amount": budget.budget_amount,
+                    "period": {
+                        "start_date": budget.start_date,
+                        "end_date": budget.end_date,
+                    },
                     "spent": spent,
                     "remaining": remaining,
                     "utilization": round(utilization, 2),
