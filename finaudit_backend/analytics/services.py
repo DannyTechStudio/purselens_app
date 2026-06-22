@@ -126,7 +126,7 @@ class AnalyticsService:
         budgets_at_risk = 0
         budgets_exceeded = 0
         
-        risk_threshold = Decimal("0.08")
+        risk_threshold = Decimal("0.8")
 
         for category_id, budget_amount in budget_map.items():
             spent = expense_map.get(category_id, 0)
@@ -361,7 +361,7 @@ class AnalyticsService:
                 if budget.budget_amount > 0 else 0
             )
             
-            risk_threshold = Decimal("0.08")
+            risk_threshold = Decimal("0.8")
             
             if spent > budget.budget_amount:
                 status = "exceeded"
