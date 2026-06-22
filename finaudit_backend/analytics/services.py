@@ -103,6 +103,18 @@ class AnalyticsService:
             .annotate(total_spent=Sum("amount"))
             .order_by("-total_spent")[:limit]
         )
+        
+    @staticmethod
+    def _get_budget_status(spent, budget_amount):
+        threshold = Decimal("0.8")
+        
+        if spent > budget_amount:
+            return "exceeded"
+        
+        if spent >= budget_amount * threshold:
+            return "at_risk"
+        
+        return "on_track"
 
     @classmethod
     def get_budget_overview(cls, expense_transactions, budgets):
@@ -130,9 +142,11 @@ class AnalyticsService:
 
         for category_id, budget_amount in budget_map.items():
             spent = expense_map.get(category_id, 0)
-            if spent > budget_amount:
+            status = cls._get_budget_status(spent, budget_amount)
+            
+            if status == "exceeded":
                 budgets_exceeded += 1
-            elif spent >= (budget_amount * risk_threshold):
+            elif status == "at_risk":
                 budgets_at_risk += 1
             else:
                 budgets_on_track += 1
@@ -361,14 +375,7 @@ class AnalyticsService:
                 if budget.budget_amount > 0 else 0
             )
             
-            risk_threshold = Decimal("0.8")
-            
-            if spent > budget.budget_amount:
-                status = "exceeded"
-            elif spent >= (budget.budget_amount * risk_threshold):
-                status = "at_risk"
-            else:
-                status = "on_track"
+            status = cls._get_budget_status(spent, budget.budget_amount)
                 
             results.append(
                 {
