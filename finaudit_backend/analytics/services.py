@@ -55,7 +55,7 @@ class AnalyticsService:
     
     @staticmethod
     def _build_expense_map(expense_transactions):
-        expense_map = {}
+        expense_map = defaultdict(Decimal)
         
         for transaction in expense_transactions:
             category_id = transaction.category.id
@@ -68,7 +68,7 @@ class AnalyticsService:
     
     @staticmethod
     def _build_budget_map(budgets):
-        budget_map = {}
+        budget_map = defaultdict(Decimal)
 
         for budget in budgets:
             category_id = budget.category.id
