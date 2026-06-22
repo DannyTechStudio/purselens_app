@@ -61,7 +61,7 @@ class AnalyticsService:
             category_id = transaction.category.id
             
             expense_map[category_id] = (
-                expense_map.get(category_id, 0) + transaction.amount
+                expense_map.get(category_id, Decimal("0")) + transaction.amount
             )
             
         return expense_map
@@ -74,7 +74,7 @@ class AnalyticsService:
             category_id = budget.category.id
 
             budget_map[category_id] = (
-                budget_map.get(category_id, 0)
+                budget_map.get(category_id, Decimal("0"))
                 + budget.budget_amount
             )
 
@@ -139,7 +139,7 @@ class AnalyticsService:
         budgets_exceeded = 0
 
         for category_id, budget_amount in budget_map.items():
-            spent = expense_map.get(category_id, 0)
+            spent = expense_map.get(category_id, Decimal("0"))
             status = cls._get_budget_status(spent, budget_amount)
             
             if status == "exceeded":
