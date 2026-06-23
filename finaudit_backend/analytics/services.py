@@ -269,9 +269,11 @@ class AnalyticsService:
 
         # Pack into clean output schema
         return {
-            "total_income": summary["total_income"],
-            "total_expense": summary["total_expense"],
-            "balance": summary["balance"],
+            "financial_overview": {
+                "total_income": summary["total_income"],
+                "total_expense": summary["total_expense"],
+                "balance": summary["balance"],
+            },
             "budgets_overview": budget_overview,
             "top_categories": top_categories,
             "recent_transactions": recent_transactions,
