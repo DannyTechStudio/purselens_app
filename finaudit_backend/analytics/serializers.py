@@ -24,15 +24,18 @@ class RecentTransactionsSerializer(serializers.ModelSerializer):
             "category", "description", "transaction_date", 
             "is_recurring", "frequency", "next_due_date"
         ]
+        
+class FinancialOverview(serializers.Serializer):
+    total_income = serializers.DecimalField(max_digits=12, decimal_places=2)
+    total_expense = serializers.DecimalField(max_digits=12, decimal_places=2)
+    balance = serializers.DecimalField(max_digits=12, decimal_places=2)
 
 class InsightCardSerializer(serializers.Serializer):
     type = serializers.CharField()
     message = serializers.CharField()
     
 class AnalyticsOutputSerializer(serializers.Serializer):
-    total_income = serializers.DecimalField(max_digits=12, decimal_places=2)
-    total_expense = serializers.DecimalField(max_digits=12, decimal_places=2)
-    balance = serializers.DecimalField(max_digits=12, decimal_places=2)
+    financial_overview = FinancialOverview()
     budgets_overview = BudgetOverviewFieldsSerializer()
     top_categories = TopCategorySerializer(many=True)
     recent_transactions = RecentTransactionsSerializer(many=True)
