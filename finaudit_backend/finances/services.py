@@ -308,11 +308,20 @@ class BudgetService:
             raise ValueError("Budget not found")
 
     @staticmethod
-    def get_user_budgets(user):
-        return Budget.objects.filter(
+    def get_user_budgets(user, filters: dict = None):
+        qs = Budget.objects.filter(
             user=user,
             is_active=True
         ).select_related("category")
+        
+        if filters:
+            if category := filters.get('category'):
+                qs = qs.filter(category=category)
+                
+            if period_type := filters.get('period_type'):
+                qs = qs.filter(period_type=period_type)
+                
+        return qs
 
     @staticmethod
     def _validate_active_budget(budget):
@@ -504,3 +513,5 @@ class BudgetService:
             new_spent,
             remaining
         )
+        
+        
