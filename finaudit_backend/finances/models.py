@@ -100,6 +100,8 @@ class Transaction(models.Model):
             models.Index(fields=['user']),
             models.Index(fields=['transaction_date']),
             models.Index(fields=['user', 'transaction_date']),
+            models.Index(fields=['user', 'type']),
+            models.Index(fields=['user', 'type', 'transaction_date']),
         ]
     
     def clean(self):
