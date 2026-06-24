@@ -238,7 +238,12 @@ class BudgetListCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        budgets = BudgetService.get_user_budgets(request.user)
+        filters = {
+            'category': request.query_params.get('category'),
+            'period_type': request.query_params.get('period_type'),
+        }
+        
+        budgets = BudgetService.get_user_budgets(request.user, filters)
 
         serializer = BudgetResponseSerializer(budgets, many=True)
 
