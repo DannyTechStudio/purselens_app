@@ -171,11 +171,32 @@ class TransactionService:
             raise ValueError("Invalid due date.")
 
     @staticmethod
-    def list_user_transactions(user):
-        return Transaction.objects.filter(
+    def list_user_transactions(user, filters: dict = None):
+        qs =  Transaction.objects.filter(
             user=user,
             is_active=True
         ).select_related("category")
+        
+        if filters:
+            if transaction_type := filters.get('type'):
+                qs = qs.filter(type=transaction_type)
+                
+            if category := filters.get('category'):
+                qs = qs.filter(category=category)
+                
+            if date_from := filters.get('date_from'):
+                qs = qs.filter(transaction_date__gte=date_from)
+                 
+            if date_to := filters.get('date_to'):
+                qs = qs.filter(transaction_date__lte=date_to)
+                
+            if (amount_min := filters.get('amount_min')) is not None:
+                qs = qs.filter(amount__gte=amount_min)
+                
+            if amount_max := filters.get('amount_max'):
+                qs = qs.filter(amount__gte=amount_max)
+
+        return qs
 
     @staticmethod
     def create_transaction(user, **data):
