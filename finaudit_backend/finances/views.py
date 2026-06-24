@@ -121,6 +121,7 @@ class TransactionListCreateView(APIView):
         filters = {
             'type': request.query_params.get('type'),
             'category': request.query_params.get('category'),
+            'is_recurring': request.query_params.get('is_recurring'),
             'date_from': request.query_params.get('date_from'),
             'date_to': request.query_params.get('date_to'),
             'amount_min': request.query_params.get('amount_min'),
