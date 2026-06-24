@@ -41,11 +41,20 @@ class CategoryService:
             raise ValueError("Category not found")
 
     @staticmethod
-    def get_user_categories(user):
-        return Category.objects.filter(
+    def get_user_categories(user, filters: dict = None):
+        qs = Category.objects.filter(
             user=user,
             is_active=True
         ).order_by("-created_at")
+        
+        if filters:
+            if category_type := filters.get('type'):
+                qs = qs.filter(type=category_type)
+                
+            if is_system := filters.get('is_system'):
+                qs = qs.filter(is_system=is_system)
+                
+        return qs
 
     @staticmethod
     def _check_duplicate(user, name):
@@ -172,7 +181,7 @@ class TransactionService:
 
     @staticmethod
     def list_user_transactions(user, filters: dict = None):
-        qs =  Transaction.objects.filter(
+        qs = Transaction.objects.filter(
             user=user,
             is_active=True
         ).select_related("category")
