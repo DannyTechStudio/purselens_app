@@ -118,9 +118,18 @@ class TransactionListCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
+        filters = {
+            'type': request.query_params.get('type'),
+            'category': request.query_params.get('category'),
+            'date_from': request.query_params.get('date_from'),
+            'date_to': request.query_params.get('date_to'),
+            'amount_min': request.query_params.get('amount_min'),
+            'amount_max': request.query_params.get('amount_max'),
+        }
+        
         transactions = (
             TransactionService
-            .list_user_transactions(request.user)
+            .list_user_transactions(request.user, filters)
         )
 
         serializer = TransactionResponseSerializer(transactions, many=True)
