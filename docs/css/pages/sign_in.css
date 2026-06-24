@@ -65,7 +65,7 @@ main {
 
 form {
     width: 90%;
-    padding: 20px 0 20px 5px;
+    padding: 25px 0 25px 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,7 +98,7 @@ fieldset input {
     border-radius: 5px;
 }
 
-#submit-btn {
+#login-btn {
     width: 80%;
     padding: 10px;
     margin: 0;
@@ -111,7 +111,7 @@ fieldset input {
     cursor: pointer;
 }
 
-#submit-btn:hover {
+#login-btn:hover {
     color: var(--custom-orange-text-color-hover);
     background-color: var(--custom-orange-hover);
 }
@@ -123,6 +123,7 @@ fieldset input {
     justify-content: center;
     width: 100%;
     padding: 0;
+    margin-bottom: 2rem;
 }
 
 .social-wrapper p {
@@ -134,7 +135,7 @@ fieldset input {
     align-items: center;
     text-align: center;
     gap: 0.3rem;
-    width: 70%;
+    width: 80%;
 }
 
 .divider-line {
@@ -148,7 +149,7 @@ fieldset input {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 65%;
+    width: 72%;
 }
 
 .oauth-wrapper a {
@@ -175,17 +176,17 @@ fieldset input {
     height: 18px;
 }
 
-.sign-in-wrapper {
+.sign-up-wrapper {
     display: flex;
     align-items: center;
     gap: 0.2rem;
 }
 
-.sign-in-wrapper p {
+.sign-up-wrapper p {
     color: var(--text-primary);
 }
 
-.sign-in-wrapper a {
+.sign-up-wrapper a {
     color: var(--deep-blue);
     text-decoration: none;
 }
