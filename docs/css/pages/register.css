@@ -40,6 +40,7 @@ main {
 .title-wrapper h2 {
     padding: 0;
     margin: 0;
+    color: var(--custom-blue);
 }
 
 .heading-wrapper {
@@ -53,11 +54,13 @@ main {
 .heading-wrapper h1 {
     padding: 0;
     margin: 0;
+    color: var(--custom-blue);
 }
 
 .heading-wrapper p {
     padding: 0;
     margin: 0;
+    color: var(--text-primary)
 }
 
 form {
@@ -84,7 +87,7 @@ fieldset {
 }
 
 fieldset label {
-    color: var(--deep-blue);
+    color: var(--text-primary);
 }
 
 fieldset input {
@@ -120,6 +123,10 @@ fieldset input {
     justify-content: center;
     width: 100%;
     padding: 0;
+}
+
+.social-wrapper p {
+    color: var(--text-primary);
 }
 
 .divider {
@@ -172,6 +179,10 @@ fieldset input {
     display: flex;
     align-items: center;
     gap: 0.2rem;
+}
+
+.sign-in-wrapper p {
+    color: var(--text-primary);
 }
 
 .sign-in-wrapper a {
