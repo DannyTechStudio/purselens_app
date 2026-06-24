@@ -184,6 +184,9 @@ class TransactionService:
             if category := filters.get('category'):
                 qs = qs.filter(category=category)
                 
+            if is_recurring := filters.get('is_recurring'):
+                qs = qs.filter(is_recurring=is_recurring)
+                
             if date_from := filters.get('date_from'):
                 qs = qs.filter(transaction_date__gte=date_from)
                  
