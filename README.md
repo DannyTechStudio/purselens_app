@@ -1,6 +1,6 @@
-# FinAudit
+# PurseLens
 
-FinAudit is a modern personal finance and budgeting web application designed to help users track income, expenses, budgets, savings goals, and financial performance through an intuitive and scalable platform.
+PurseLens is a modern personal finance and budgeting web application designed to help users track income, expenses, budgets, savings goals, and financial performance through an intuitive and scalable platform.
 
 The project is built with a separated frontend and backend architecture:
 
@@ -49,9 +49,9 @@ The project is built with a separated frontend and backend architecture:
 
 # Project Structure
 
-FinAudit_App/
+PurseLens_App/
 │
-├── finaudit_backend/
+├── purselens_backend/
 │   ├── apps/
 │   ├── config/
 │   ├── requirements/
@@ -92,26 +92,26 @@ FinAudit_App/
 
 ## 1. Clone Repository
 
-mkdir FinAudit_App
-git clone https://github.com/DannyTechStudio/finaudit_app.git
-cd FinAudit_App
+mkdir PurseLens_App
+git clone https://github.com/DannyTechStudio/purselens_app.git
+cd PurseLens_App
 
 ## 2. Create Virtual Environment
 
-cd finaudit_backend
-python -m venv finaudit_env
+cd purselens_backend
+python -m venv purselens_env
 
 ## 3. Activate Virtual Environment
 
 ### Windows
 
 ```powershell
-.\finaudit_env\Scripts\Activate.ps1
+.\purselens_env\Scripts\Activate.ps1
 
 ### Linux / macOS
 
 ```bash
-source finaudit_env/bin/activate
+source purselens_env/bin/activate
 
 ## 4. Install Dependencies
 
@@ -130,7 +130,7 @@ CREATE DATABASE finaudit_db;
 
 # Environment Variables
 
-Create a `.env` file inside `finaudit_backend/`.
+Create a `.env` file inside `purselens_backend/`.
 
 Example:
 
@@ -176,7 +176,7 @@ GitHub Pages will serve the `/docs` directory directly.
 Deployment URL format:
 
 ```text
-https://username.github.io/FinAudit_App/
+https://username.github.io/PurseLens_App/
 
 # API Architecture
 
@@ -296,7 +296,7 @@ GET /api/analytics/savings-progress/
 
 # Security
 
-FinAudit implements:
+PurseLens implements:
 - JWT authentication
 - Password hashing
 - Environment variable management
