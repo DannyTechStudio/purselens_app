@@ -26,7 +26,12 @@ class CategoryListCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get(self, request):
-        categories = CategoryService.get_user_categories(request.user)
+        filters = {
+            'type': request.query_params.get('type'),
+            'is_system': request.query_params.get('is_system'),
+        }
+        
+        categories = CategoryService.get_user_categories(request.user, filters)
         
         serializer = CategoryResponseSerializer(categories, many=True)
         
