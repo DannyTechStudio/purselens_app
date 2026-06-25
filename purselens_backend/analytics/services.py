@@ -2,9 +2,9 @@ from collections import defaultdict
 from django.db.models import Sum
 from decimal import Decimal
 from django.utils import timezone
-from calendar import month_abbr
+from calendar import month_abbr, monthrange
 
-from finances.models import Transaction
+from finances.models import Transaction, Budget
 from finances.services import TransactionService, BudgetService
 
 
@@ -52,6 +52,15 @@ class AnalyticsService:
             transaction_date__year=now.year,
             transaction_date__month=now.month,
         )
+        
+    @staticmethod
+    def _get_user_current_budgets(user):
+        current_date = timezone.now().date()
+        
+        month_start_date = current_date.replace(day=1)
+        month_end_date = current_date.replace(day=monthrange(current_date.year, current_date.month)[1])
+        
+        return Budget.objects.filter(user=user, is_active=True, start_date__lte=month_end_date, start_date__gte=month_start_date,)
     
     @staticmethod
     def _build_expense_map(expense_transactions):
@@ -119,6 +128,20 @@ class AnalyticsService:
             Maps transactions against budgets to calculate 
             overall utilization and risk states.
         """
+        for budget in budgets:
+            print(
+                budget.category.name,
+                budget.start_date,
+                budget.end_date
+            )
+        
+        first_budget = budgets.first() if hasattr(budgets, "first") else budgets[0]
+        period = {
+            "label": first_budget.start_date.strftime("%B %Y"),
+            "start_date": first_budget.start_date,
+            "end_date": first_budget.end_date,
+        }
+        
         expense_map = cls._build_expense_map(expense_transactions)
         budget_map = cls._build_budget_map(budgets)
         
@@ -153,7 +176,8 @@ class AnalyticsService:
             "overall_utilization": utilization_percentage,
             "budgets_on_track": budgets_on_track,
             "budgets_at_risk": budgets_at_risk,
-            "budgets_exceeded": budgets_exceeded
+            "budgets_exceeded": budgets_exceeded,
+            "period": period,
         }
 
     @staticmethod
@@ -252,7 +276,7 @@ class AnalyticsService:
         # Gather raw querysets
         income_transactions = cls._get_current_period_income(user)
         expense_transactions = cls._get_current_period_expenses(user)
-        budgets = BudgetService.get_user_budgets(user)
+        budgets = cls._get_user_current_budgets(user)
 
         # Extract specific calculations using helper methods
         summary = cls.get_financial_summary(income_transactions, expense_transactions)
