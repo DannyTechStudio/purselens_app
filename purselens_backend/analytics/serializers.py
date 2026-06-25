@@ -15,6 +15,7 @@ class BudgetOverviewFieldsSerializer(serializers.Serializer):
     budgets_on_track = serializers.IntegerField(min_value=0)
     budgets_at_risk = serializers.IntegerField(min_value=0)
     budgets_exceeded = serializers.IntegerField(min_value=0)
+    period = serializers.JSONField()
 
 class RecentTransactionsSerializer(serializers.ModelSerializer):
     class Meta:
