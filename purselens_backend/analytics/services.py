@@ -128,13 +128,6 @@ class AnalyticsService:
             Maps transactions against budgets to calculate 
             overall utilization and risk states.
         """
-        for budget in budgets:
-            print(
-                budget.category.name,
-                budget.start_date,
-                budget.end_date
-            )
-        
         first_budget = budgets.first() if hasattr(budgets, "first") else budgets[0]
         period = {
             "label": first_budget.start_date.strftime("%B %Y"),
