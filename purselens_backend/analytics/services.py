@@ -9,10 +9,6 @@ from finances.services import TransactionService, BudgetService
 
 
 class AnalyticsService:
-    """
-        Handles all calculation, aggregation, and insight logic 
-        for user financial overviews.
-    """
     @staticmethod
     def _get_income_transactions(user):
         return Transaction.objects.filter(
@@ -100,9 +96,6 @@ class AnalyticsService:
 
     @staticmethod
     def get_top_categories(expense_transactions, limit=5):
-        """
-            Fetches the highest spending categories with totals.
-        """
         return (
             expense_transactions
             .values("category__id", "category__name")
@@ -124,10 +117,6 @@ class AnalyticsService:
 
     @classmethod
     def get_budget_overview(cls, expense_transactions, budgets):
-        """
-            Maps transactions against budgets to calculate 
-            overall utilization and risk states.
-        """
         first_budget = budgets.first() if hasattr(budgets, "first") else budgets[0]
         period = {
             "label": first_budget.start_date.strftime("%B %Y"),
@@ -175,9 +164,6 @@ class AnalyticsService:
 
     @staticmethod
     def generate_insights(summary, budget_overview, top_categories) -> list:
-        """
-            Generates dynamic feedback cards based on spending metrics.
-        """
         insights = []
         total_expense = summary["total_expense"]
         balance = summary["balance"]
@@ -261,10 +247,6 @@ class AnalyticsService:
 
     @classmethod
     def get_user_analytics_data(cls, user) -> dict:
-        """
-            The Master Orchestrator: Combines helper methods into a 
-            cohesive response.
-        """
         
         # Gather raw querysets
         income_transactions = cls._get_current_period_income(user)
