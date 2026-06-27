@@ -10,75 +10,265 @@
     <link rel="shortcut icon" href="../../assets/images/PurseLens_logo.png" type="image/x-icon">
 </head>
 <body>
-    <header>
-        <div class="title-container">
-            <h1>PurseLens</h1>
+    <!-----------------------------------------------------
+        LEFT SIDE NAVIGATION WHEEL
+    ----------------------------------------------------->
+    <aside class="global-sidebar" aria-label="Main Naviagtion">
+
+        <div class="brand-logo-wrapper">
+            <h2>PurseLens</h2>
             <p class="title-descriptions">Personal Finance</p>
         </div>
-        <nav>
-            <div class="major-nav-links-wrapper">
-                <ul>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
+
+        <!-- Primary Navigation Links -->
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li>
+                    <a href="../../pages/dashboard/dashboard.html" class="nav-item active">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M6 1v3H1V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm14 12v3h-5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zM6 8v7H1V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm14-6v7h-5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1z" />
                         </svg>
-                        <a href="../../pages/dashboard/dashboard.html" class="active">Dashboard</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pages/transactions/transactions.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27m.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0z" />
                             <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5" />
                         </svg>
-                        <a href="../../pages/transactions/transactions.html">Transactions</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16">
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pages/budgets/budgets.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a2 2 0 0 1-1-.268M1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1" />
                         </svg>
-                        <a href="../../pages/budgets/budgets.html">Budgets</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
+                        <span>Budgets</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pages/analytics/analytics.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M4 11H2v3h2zm5-4H7v7h2zm5-5v12h-2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
                         </svg>
-                        <a href="../../pages/analytics/analytics.html">Analytics</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pages/categories/categories.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
                         </svg>
-                        <a href="../../pages/categories/categories.html">Categories</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="minor-nav-links-wrapper">
-                <ul>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <span>Categories</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Secondary Global Navigation Links -->
+            <ul class="nav-list system-links">
+                <li>
+                    <a href="../../pages/profile/profile.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
                         </svg>
-                        <a href="../../pages/profile/profile.html">Profile</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../pages/settings/settings.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
                             <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
                         </svg>
-                        <a href="../../pages/settings/settings.html">Settings</a>
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" aria-hidden="true">
                             <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
                             <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
                         </svg>
-                        <input type="submit" value="Logout">
-                    </li>
-                </ul>
-            </div>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
         </nav>
-    </header>
-    <main>
+    </aside>
 
-    </main>
+    <!-- MAIN RIGHT WORKSPACE WRAPPER -->
+    <div class="main-workspace-container">
+
+        <!-- THE TOP NAVBAR HEADER -->
+        <header class="top-utility-bar">
+            <!-- Global Search Form with proper name attributes for backend query handling -->
+            <form action="/transactions/search/" method="GET" class="search-form">
+                <label for="search-bar" class="visually-hidden">Search transactions</label>
+                <input type="search" name="q" id="search-bar" placeholder="Search transactions...">
+            </form>
+
+            <!-- User Notification & Profile Account Controls -->
+            <div class="user-utilities">
+                <button class="notification-btn" aria-label="View notifications">
+                    <span class="notification-badge">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+                        </svg>
+                    </span>
+                </button>
+                <div class="profile-chip">
+                    <img src="daniel-profile.jpg" alt="Daniel's profile picture">
+                    <span class="profile-name">Daniel</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- CORE PAGE WORKSPACE -->
+        <main class="dashboard-content-view">
+
+            <!-- Dashboard Screen Title Heading Intro Banner Block -->
+            <section class="welcome-heading-block" aria-labelledby="dashboard-title">
+                <span>Good Morning, Daniel</span>
+                <h1 id="dashboard-title">Dashboard</h1>
+                <p>Here's an overview of your finances.</p>
+            </section>
+
+            <section class="financial-summary-grid" aria-label="Financial Overview Summary">
+                <!-- Total Income Metric Card -->
+                <article class="metric-card income">
+                    <h3>Total Income</h3>
+                    <div class="metric-value">$8,450.00</div>
+                </article>
+            
+                <!-- Total Expenses Metric Card -->
+                <article class="metric-card expenses">
+                    <h3>Total Expenses</h3>
+                    <div class="metric-value">$3,120.50</div>
+                </article>
+            
+                <!-- Wallet Running Balance Metric Card -->
+                <article class="metric-card current-balance">
+                    <h3>Current Balance</h3>
+                    <div class="metric-value">$12,850.75</div>
+                </article>
+            </section>
+            <!-- MIDDLE CONTENT GRID: BUDGET VS INSIGHTS -->
+            <div class="dashboard-middle-grid">
+            
+                <!-- Budget Envelope Progress Overview Module -->
+                <section class="budget-overview-card" aria-labelledby="budget-heading">
+                    <div class="card-header">
+                        <h2 id="budget-heading">Budget Overview</h2>
+                        <time datetime="2026-06">June 2026</time>
+                    </div>
+                    <!-- Data breakdown list -->
+                    <dl class="budget-metrics-list">
+                        <dt>Total Budget</dt>
+                        <dd>$5,000.00</dd>
+                        <dt>Spent</dt>
+                        <dd>$3,120.50</dd>
+                        <dt>Remaining</dt>
+                        <dd class="positive">$1,879.50</dd>
+                    </dl>
+                    <!-- Visual Progress Ring Wrapper -->
+                    <div class="progress-ring-wrapper" aria-label="62% of monthly budget utilized">
+                        <span>62%</span> Utilized
+                    </div>
+                    <!-- Status Count Indicators -->
+                    <div class="status-chips">
+                        <div class="chip success"><strong>4</strong> On Track</div>
+                        <div class="chip warning"><strong>2</strong> At Risk</div>
+                        <div class="chip danger"><strong>1</strong> Exceeded</div>
+                    </div>
+                </section>
+            
+                <!-- AI Smart Recommendation Advice Cards List Module -->
+                <section class="insights-feed-card" aria-labelledby="insights-heading">
+                    <h2 id="insights-heading">Insights</h2>
+            
+                    <ul class="insights-list">
+                        <!-- Critical Alert Card -->
+                        <li class="insight-item danger">
+                            <h3>Food budget exceeded</h3>
+                            <p>You've spent $120 over your $600 allocation for June.</p>
+                        </li>
+                        <!-- Warning Alert Card -->
+                        <li class="insight-item warning">
+                            <h3>Spending Pattern</h3>
+                            <p>Food accounts for 37% of your total spending this month.</p>
+                        </li>
+                        <!-- Success Milestone Card -->
+                        <li class="insight-item success">
+                            <h3>Savings Goal</h3>
+                            <p>You are on track to hit your emergency fund goal.</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            
+            <!-- BOTTOM RECENT ACTIVITY & METRIC PROGRESS BLOCK -->
+            <div class="dashboard-bottom-grid">
+            
+                <!-- Recent Transaction History Data Feed Logs -->
+                <section class="recent-transactions-card" aria-labelledby="transactions-heading">
+                    <div class="card-header">
+                        <h2 id="transactions-heading">Recent Transactions</h2>
+                        <a href="/transactions" class="view-all-link">View All</a>
+                    </div>
+            
+                    <ul class="transaction-history-list">
+                        <li class="transaction-row expense">
+                            <span class="category-icon text-orange">🍴</span>
+                            <div class="transaction-meta">
+                                <strong>Whole Foods Market</strong>
+                                <small>Food • Today, 10:45 AM</small>
+                            </div>
+                            <span class="transaction-amount negative">-$145.20</span>
+                        </li>
+                        <li class="transaction-row expense">
+                            <span class="category-icon text-blue">🚗</span>
+                            <div class="transaction-meta">
+                                <strong>Shell Station</strong>
+                                <small>Transportation • Yesterday</small>
+                            </div>
+                            <span class="transaction-amount negative">-$45.00</span>
+                        </li>
+                    </ul>
+                </section>
+            
+                <!-- Top Ranked Spending Categories Progress Bars Layout -->
+                <section class="top-categories-card" aria-labelledby="top-cat-heading">
+                    <h2 id="top-cat-heading">Top Spending Categories</h2>
+            
+                    <ul class="category-progress-list">
+                        <!-- Food Item Row -->
+                        <li class="progress-bar-item">
+                            <div class="progress-labels">
+                                <span>🍴 Food</span>
+                                <strong>$720.00 / <small>$600</small></strong>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill danger" style="width: 100%;"></div>
+                            </div>
+                            <span class="utilization-label text-danger">120% utilized</span>
+                        </li>
+                        <!-- Shopping Item Row -->
+                        <li class="progress-bar-item">
+                            <div class="progress-labels">
+                                <span>🛍️ Shopping</span>
+                                <strong>$450.00 / <small>$800</small></strong>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar-fill primary" style="width: 56%;"></div>
+                            </div>
+                            <span class="utilization-label text-muted">56% utilized</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
