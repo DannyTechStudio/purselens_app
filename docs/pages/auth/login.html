@@ -19,7 +19,7 @@
                 <h1>Welcome back</h1>
                 <p>Secure access to your financial narrative.</p>
             </div>
-            <form action="" method="post">
+            <form action="/api/auth/login/" method="POST">
                 <fieldset>
                     <label for="email-input">Email</label>
                     <input type="email" name="email" id="email-input" placeholder="james.smith@example.com">
@@ -37,7 +37,7 @@
                     <hr class="divider-line">
                 </div>
                 <div class="oauth-wrapper">
-                    <a href="http://">
+                    <a href="http://{domain_main}/accounts/google/login/callback/">
                         <img src="../../assets/images/google-logo.png" alt="Google logo">
                         continue with Google
                     </a>
