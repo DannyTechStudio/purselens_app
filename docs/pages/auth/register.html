@@ -19,7 +19,7 @@
                 <h1>Create Your Free Account</h1>
                 <p>Join thousands who have taken control of their financial narrative.</p>
             </div>
-            <form action="" method="post">
+            <form action="/api/auth/register/" method="POST">
                 <fieldset>
                     <label for="first-name">First name</label>
                     <input type="text" name="first-name" id="first-name" placeholder="James">
@@ -45,7 +45,7 @@
                     <hr class="divider-line">
                 </div>
                 <div class="oauth-wrapper">
-                    <a href="http://">
+                    <a href="http://{domain_main}/accounts/google/login/callback/">
                         <img src="../../assets/images/google-logo.png" alt="Google logo">
                         continue with Google
                     </a>
