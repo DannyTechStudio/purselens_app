@@ -250,7 +250,7 @@ body {
 }
 
 #transaction-btn {
-    background-color:var(--custom-orange) ;
+    background-color:var(--custom-orange);
 }
 
 #transaction-btn:hover {
