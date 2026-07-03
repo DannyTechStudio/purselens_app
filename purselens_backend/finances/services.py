@@ -206,7 +206,7 @@ class TransactionService:
                 qs = qs.filter(amount__gte=amount_min)
                 
             if amount_max := filters.get('amount_max'):
-                qs = qs.filter(amount__gte=amount_max)
+                qs = qs.filter(amount__lte=amount_max)
 
         return qs
 
