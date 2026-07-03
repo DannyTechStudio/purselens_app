@@ -164,6 +164,43 @@
                 </div>
             </section>
 
+            <dialog id="category-modal-overlay">
+                <div class="cancel-btn-wrapper">
+                    <abbr title="Close">
+                        <button id="close-modal-btn">
+                            ⨉
+                        </button>
+                    </abbr>
+                </div>
+
+                <div class="main-container">
+                    <div class="heading-wrapper">
+                        <h1>Add Category</h1>
+                        <p>Organize your finances by creating categories that reflect your spending and income.</p>
+                    </div>
+
+                    <form class="category-form" action="/api/category/" method="POST">
+                        <fieldset class="input-fieldset">
+                            <label for="name-input">Name</label>
+                            <input type="text" id="name-input" placeholder="Transportation">
+                        </fieldset>
+                        
+                        <fieldset class="input-fieldset">
+                            <label for="category-type-dropdown">Category Type</label>
+                            <select name="category-type-dropdown" id="category-type-dropdown">
+                                <option value="Income">Income</option>
+                                <option value="Expense">Expense</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="btn-fieldset">
+                            <input type="button" value="Submit" id="add-category-btn">
+                            <input type="button" value="Cancel" id="cancel-btn">
+                        </fieldset>
+                    </form>
+                </div>
+            </dialog>
+
             <section class="financial-summary-grid" aria-label="Financial Overview Summary">
                 <article class="metric-card income">
                     <h3>Total Income</h3>
@@ -357,5 +394,7 @@
             </div>
         </main>
     </div>
+    
+    <script src="../../js/pages/dashboard.js"></script>
 </body>
 </html>
