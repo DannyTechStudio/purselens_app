@@ -6,10 +6,12 @@
     --bg-2: #f5f5f1;
     --surface: #e1ecf5;
     --surface-2: #F1F3F5;
-    --surface-3: #f4f4fc;
+    --surface-3: #dadae1;
+    --faded-bg: #9c92e320;
     --border: #49484845;
     --border-2: #49484832;
     --box-shadow: #00000034;
+    --notification-badge: #ef4444;
 
     /* Text */
     --text-primary: #292b51;
@@ -25,7 +27,7 @@
     --custom-orange-text-color: #04043d;
     --custom-orange-text-color-hover: #06065b;
     --custom-orange: #fa8627;
-    --custom-orange-hover: #d46d18;
+    --custom-orange-hover: #ee7d22;
     --sign-in-link-color: #2d2d2d;
     --sign-in-link-color-hover: #181818;
     --sign-in-link-bg: #d6dbe1;
@@ -35,15 +37,16 @@
     --footer-link-color-hover: #3e3efd;
 
     /* Financial semantics */
-    --success: #2E7D32;
-    --success-bg: rgba(46, 125, 50, 0.1);
+    --success: #14dd1e;
+    --success-2: #14dd1e2e;
+    --success-3: #14dd1e5a;
+    
+    --danger: #f20b0b;
+    --danger-2: #fa7a7a2b;
+    --danger-3: #f0181861;
 
-    --danger: #C62828;
-    --danger-2: #fa7a7a;
-    --danger-bg: rgba(198, 40, 40, 0.1);
-
-    /* UI states */
-    --warning: #F9A825;
+    --warning: #f39a0b;
+    --warning-2: #f39a0b33;
     --info: #1565C0;
 
     /* Shadows */
