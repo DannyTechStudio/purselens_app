@@ -257,14 +257,16 @@ body {
     background-color: var(--custom-orange-hover);
 }
 
-#category-modal-overlay {
+#category-modal-overlay,
+#budget-modal-overlay,
+#transaction-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -281,7 +283,9 @@ body {
     justify-content: center;
 }
 
-#close-modal-btn {
+#category-close-modal-btn,
+#budget-close-modal-btn,
+#transaction-close-modal-btn {
     border: 2px solid rgba(228, 227, 227, 0.173);
     font-size: 1.8rem;
     width: 45px;
@@ -293,26 +297,41 @@ body {
     cursor: pointer;
 }
 
-#close-modal:hover {
+#category-close-modal-btn:hover,
+#budget-close-modal-btn:hover,
+#transaction-close-modal-btn:hover {
     color: var(--deep-blue);
     background-color: var(--surface-2);
 }
 
-.main-container {
+.category-modal-main-container,
+.budget-modal-main-container,
+.transaction-modal-main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    width: 25%;
-    height: auto;
-    padding: 20px;
     background-color: var(--bg);
     border-radius: 10px;
 }
 
+.category-modal-main-container {
+    padding: 20px;
+    width: 30%;
+    height: 360px;
+}
+
+.budget-modal-main-container,
+.transaction-modal-main-container {
+    width: 35%;
+    height: 600px;
+    overflow: auto;
+    padding: 20px;
+}
+
 .heading-wrapper {
-    width: 90%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -324,14 +343,17 @@ body {
     color: var(--text-muted);
 }
 
-.category-form {
-    width: 90%;
-    height: auto;
+.category-form,
+.budget-form,
+.transaction-form {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 2rem;
+    gap: 1.5rem;
+    width: 80%;
+    overflow: auto;
 }
 
 .category-form fieldset {
@@ -378,9 +400,12 @@ body {
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+    border: none;
 }
 
-#add-category-btn {
+#add-category-btn,
+#add-budget-btn,
+#add-transaction-btn {
     padding: 10px;
     width: 60%;
     border: none;
