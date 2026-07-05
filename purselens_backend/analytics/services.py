@@ -56,7 +56,12 @@ class AnalyticsService:
         month_start_date = current_date.replace(day=1)
         month_end_date = current_date.replace(day=monthrange(current_date.year, current_date.month)[1])
         
-        return Budget.objects.filter(user=user, is_active=True, start_date__lte=month_end_date, start_date__gte=month_start_date,)
+        return Budget.objects.filter(
+            user=user, 
+            is_active=True, 
+            start_date__lte=month_end_date, 
+            end_date__gte=month_start_date,
+        )
     
     @staticmethod
     def _build_expense_map(expense_transactions):
@@ -117,7 +122,20 @@ class AnalyticsService:
 
     @classmethod
     def get_budget_overview(cls, expense_transactions, budgets):
-        first_budget = budgets.first() if hasattr(budgets, "first") else budgets[0]
+        if not budgets.exists():
+            return {
+                "total_budget_amount": Decimal("0"),
+                "total_spent": Decimal("0"),
+                "total_remaining": Decimal("0"),
+                "overall_utilization": 0,
+                "budgets_on_track": 0,
+                "budgets_at_risk": 0,
+                "budgets_exceeded": 0,
+                "period": None,
+            }
+            
+        first_budget = budgets.first()
+        
         period = {
             "label": first_budget.start_date.strftime("%B %Y"),
             "start_date": first_budget.start_date,
@@ -405,4 +423,3 @@ class AnalyticsService:
             for item in monthly_summary
         ]
     
-           
