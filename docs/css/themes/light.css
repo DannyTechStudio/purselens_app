@@ -17,6 +17,7 @@
     --text-primary: #292b51;
     --text-secondary: #1b1d36;
     --text-muted: #9AA0A6;
+    --text-muted-2: #4c4c4da2;
 
     /* Brand */
     --primary: #283593;
@@ -40,13 +41,17 @@
     --success: #14dd1e;
     --success-2: #14dd1e2e;
     --success-3: #14dd1e5a;
+    --success-4: #1de80a;
     
     --danger: #f20b0b;
     --danger-2: #fa7a7a2b;
     --danger-3: #f0181861;
+    --danger-4: #ef4444;
 
-    --warning: #f39a0b;
+    --warning: #f7bc5c;
     --warning-2: #f39a0b33;
+    --warning-3: #f59e0b;
+
     --info: #1565C0;
 
     /* Shadows */
