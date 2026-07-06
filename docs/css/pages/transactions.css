@@ -312,18 +312,6 @@ input[type="date"] {
     background-color: var(--bg);
 }
 
-.amount-cell {
-    font-weight: 600;
-}
-
-.amount-cell.positive {
-    color: var(--success);
-}
-
-.amount-cell.negative {
-    color: var(--custom-orange);
-}
-
 .transaction-type {
     padding: 4px 10px;
     border-radius: 20px;
@@ -380,9 +368,14 @@ input[type="date"] {
     background: #f1f5f9;
 }
 
-.btn-icon {
-    padding: 10px;
-    gap: 2rem;
+.actions-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.actions-cell button {
     border-radius: 50px;
     border: none;
     transition: all 0.3s ease-in-out;
@@ -390,8 +383,24 @@ input[type="date"] {
     cursor: pointer;
 }
 
-.btn-icon:hover {
-    background-color: var(--surface-3);
+.actions-cell abbr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+}
+
+.actions-cell abbr:hover {
+    background-color: var(--faded-bg-2);
+    cursor: pointer;
+}
+
+.actions-cell button svg {
+    width: 16px;
+    height: 16px;
+    color: #2e2e2e;
 }
 
 #transaction-modal-overlay {
@@ -527,7 +536,7 @@ input[type="date"] {
     cursor: pointer;
 }
 
-#add-category-btn:hover {
+#add-transaction-btn:hover {
     background-color: var(--custom-orange-hover);
 }
 
