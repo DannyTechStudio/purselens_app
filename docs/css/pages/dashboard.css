@@ -420,7 +420,9 @@ body {
     background-color: var(--custom-orange-hover);
 }
 
-.btn-fieldset input[value="Cancel"] {
+#category-modal-cancel-btn,
+#budget-modal-cancel-btn,
+#transaction-modal-cancel-btn {
     padding: 10px;
     width: 40%;
     border: 2px solid var(--border-2);
@@ -430,7 +432,9 @@ body {
     cursor: pointer;
 }
 
-.btn-fieldset input[value="Cancel"]:hover {
+#category-modal-cancel-btn:hover,
+#budget-modal-cancel-btn:hover,
+#transaction-modal-cancel-btn:hover {
     background-color: var(--surface-3);
 }
 
