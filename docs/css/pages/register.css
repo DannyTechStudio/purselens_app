@@ -10,7 +10,7 @@ main {
     justify-content: center;
     width: 100%;
     min-height: 100vh;
-    background-color: var(--surface-3);
+    background-color: var(--bg-2);
 }
 
 .main-container {
