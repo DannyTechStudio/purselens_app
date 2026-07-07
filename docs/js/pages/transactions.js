@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Budget Modal Functionality
+    // Transaction Modal Functionality
     function displayTransactionModal() {
         const transactionBtn = document.getElementById('transaction-btn');
         const transactionModal = document.getElementById('transaction-modal-overlay');
