@@ -447,20 +447,20 @@ footer {
     color: var(--custom-blue)
 }
 
-.footer-links {
+.footer-links-wrapper {
     width: 40%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.footer-links a {
+.footer-links {
     text-decoration: none;
-    color: var(--footer-link-color);
+    color: var(--links);
 }
 
-.footer-links a:hover {
-    color: var(--footer-link-color-hover);
+.footer-links:hover {
+    text-decoration: underline;
 }
 
 .copyright-wrapper p {
