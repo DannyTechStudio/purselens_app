@@ -168,7 +168,7 @@ fieldset input {
 }
 
 .oauth-wrapper a:hover {
-    background-color: rgb(211, 210, 210);
+    background-color: var(--faded-bg-2);
 }
 
 .oauth-wrapper img {
@@ -189,6 +189,7 @@ fieldset input {
 .sign-in-wrapper a {
     color: var(--links);
     text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
 
 .sign-in-wrapper a:hover {
