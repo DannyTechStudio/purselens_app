@@ -147,6 +147,68 @@
                     New Budget
                 </button>
             </section>
+
+            <!-- Budget Creation Modal -->
+            <div id="budget-modal-overlay">
+                <div class="cancel-btn-wrapper">
+                    <abbr title="Close">
+                        <button id="budget-close-modal-btn">⨉</button>
+                    </abbr>
+                </div>
+            
+                <div class="budget-modal-main-container">
+                    <div class="heading-wrapper">
+                        <h1>Add Budget</h1>
+                        <p>Create a budget to plan your spending and stay on track with your financial goals.</p>
+                    </div>
+            
+                    <form class="budget-form" action="/api/budgets/" method="POST">
+                        <fieldset class="input-fieldset">
+                            <label for="budget-title-input">Budget Title</label>
+                            <input type="text" name="title" id="budget-title-input" placeholder="Transportation Budget" required>
+                        </fieldset>
+            
+                        <fieldset class="input-fieldset">
+                            <label for="budget-category-input">Category</label>
+                            <input type="text" name="category" id="budget-category-input" placeholder="Transportation" required>
+                        </fieldset>
+            
+                        <fieldset class="input-fieldset">
+                            <label for="budget-amount-input">Amount</label>
+                            <input type="number" name="budget_amount" id="budget-amount-input" placeholder="200.00" min="1"
+                                required>
+                        </fieldset>
+            
+                        <fieldset class="input-fieldset">
+                            <label for="budget-period-type-select">Period Type</label>
+                            <select name="period_type" id="budget-period-type-select" required>
+                                <option value="" selected disabled>Select budget period type</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="biweekly">Every 2 weeks</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="quarterly">Quarterly</option>
+                                <option value="semiannual">Every 6 months</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </fieldset>
+            
+                        <fieldset class="input-fieldset">
+                            <label for="budget-start-date-input">Start Date</label>
+                            <input type="date" name="start_date" id="budget-start-date-input" placeholder="2026-04-01" required>
+                        </fieldset>
+            
+                        <fieldset class="input-fieldset">
+                            <label for="budget-end-date-input">Start Date</label>
+                            <input type="date" name="end_date" id="budget-end-date-input" placeholder="2026-04-30" required>
+                        </fieldset>
+            
+                        <fieldset class="btn-fieldset">
+                            <button type="Submit" id="add-budget-btn">Submit</button>
+                            <button type="button" id="budget-modal-cancel-btn">Cancel</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
             
             <section class="budget-summary-grid">
                 <div class="summary-card">
@@ -235,7 +297,7 @@
                     </div>
                 </article>
             </section>
-
         </main>
+    <script src="../../js/pages/budgets.js"></script>
 </body>
 </html>
