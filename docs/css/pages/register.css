@@ -158,11 +158,12 @@ fieldset input {
     width: 100%;
     padding: 8px;
     gap: 0.3rem;
+    border: 1px solid var(--border);
     border-radius: 20px;
     font-weight: bold;
-    color: var(--deep-blue);
+    color: var(--links);
     text-decoration: none;
-    background-color: rgb(219, 218, 218);
+    background-color: var(--faded-bg-3);
     transition: 0.3s ease-in-out;
 }
 
@@ -186,8 +187,12 @@ fieldset input {
 }
 
 .sign-in-wrapper a {
-    color: var(--deep-blue);
+    color: var(--links);
     text-decoration: none;
+}
+
+.sign-in-wrapper a:hover {
+    text-decoration: underline;
 }
 
 .input-validation-wrapper {
