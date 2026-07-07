@@ -360,12 +360,13 @@ input[type="date"] {
 }
 
 .page-btn.active {
+    font-weight: bold;
     background: var(--custom-orange);
     color: var(--text-primary);
 }
 
 .page-btn:hover:not(.active) {
-    background: #f1f5f9;
+    background: var(--faded-bg-2);
 }
 
 .actions-cell {
@@ -376,6 +377,8 @@ input[type="date"] {
 }
 
 .actions-cell button {
+    width: 35px;
+    height: 35px;
     border-radius: 50px;
     border: none;
     transition: all 0.3s ease-in-out;
@@ -383,24 +386,12 @@ input[type="date"] {
     cursor: pointer;
 }
 
-.actions-cell abbr {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50px;
-}
-
-.actions-cell abbr:hover {
+.actions-cell button:hover {
     background-color: var(--faded-bg-2);
-    cursor: pointer;
 }
 
 .actions-cell button svg {
-    width: 16px;
-    height: 16px;
-    color: #2e2e2e;
+    color: var(--text-muted-2);
 }
 
 #transaction-modal-overlay {
@@ -547,6 +538,7 @@ input[type="date"] {
     border-radius: 50px;
     font-size: 16px;
     background-color: var(--faded-bg);
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
 }
 
