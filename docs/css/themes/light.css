@@ -8,6 +8,8 @@
     --surface-2: #F1F3F5;
     --surface-3: #dadae1;
     --faded-bg: #9c92e320;
+    --faded-bg-2: #9b92e348;
+    --faded-bg-3: #bdcee565;
     --border: #49484845;
     --border-2: #49484832;
     --box-shadow: #00000034;
@@ -17,7 +19,7 @@
     --text-primary: #292b51;
     --text-secondary: #1b1d36;
     --text-muted: #9AA0A6;
-    --text-muted-2: #4c4c4da2;
+    --text-muted-2: #242222ef;
 
     /* Brand */
     --primary: #283593;
@@ -29,6 +31,7 @@
     --custom-orange-text-color-hover: #06065b;
     --custom-orange: #fa8627;
     --custom-orange-hover: #ee7d22;
+    --links: #3b82f6;
     --sign-in-link-color: #2d2d2d;
     --sign-in-link-color-hover: #181818;
     --sign-in-link-bg: #d6dbe1;
@@ -55,6 +58,6 @@
     --info: #1565C0;
 
     /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow-sm: 2px 2px 4px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
 }
