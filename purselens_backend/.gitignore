@@ -22,5 +22,9 @@ env/
 test_files/
 *.http
 
+# Personal playground directories & Files
+scripts/
+playground.py
+
 # Profile image folder
 media
