@@ -234,7 +234,6 @@ body {
     background-color: var(--faded-bg-2);
 }
 
-/* Metrics Grid Setup */
 .metrics-card-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -266,7 +265,6 @@ body {
     color: #fff;
 }
 
-/* Chart Container Layout */
 .charts-container {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -286,7 +284,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Category Legend styling */
 .category-list {
     list-style: none;
     padding: 0;
@@ -309,7 +306,6 @@ body {
     margin-right: 8px;
 }
 
-/* Colors matching the image */
 .income {
     background: #d97706;
 }
