@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.db import transaction
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Count
 from decimal import Decimal
 
 from .models import (
@@ -39,7 +39,24 @@ class CategoryService:
             return Category.objects.get(pk=category_id, user=user)
         except Category.DoesNotExist:
             raise ValueError("Category not found")
-
+        
+    @staticmethod
+    def get_most_used_category(user):
+        return (
+            Category.objects.filter(
+                user=user,
+                is_active=True,
+            ).annotate(
+                transaction_count=Count(
+                    "transactions",
+                    filter=Q(
+                        transactions__user=user,
+                        transactions__is_active=True
+                    )
+                )
+            ).order_by('-transaction_count').first()
+        )
+        
     @staticmethod
     def get_user_categories(user, filters: dict = None):
         qs = Category.objects.filter(
