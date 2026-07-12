@@ -5,7 +5,7 @@ from django.utils import timezone
 from calendar import month_abbr, monthrange
 
 from finances.models import Transaction, Budget
-from finances.services import TransactionService, BudgetService
+from finances.services import CategoryService, TransactionService, BudgetService
 
 
 class AnalyticsService:
@@ -181,7 +181,7 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def generate_insights(summary, budget_overview, top_categories) -> list:
+    def generate_insights(user, summary, budget_overview, top_categories) -> list:
         insights = []
         total_expense = summary["total_expense"]
         balance = summary["balance"]
@@ -189,6 +189,16 @@ class AnalyticsService:
         exceeded = budget_overview["budgets_exceeded"]
         at_risk = budget_overview["budgets_at_risk"]
         total_budget = budget_overview["total_budget_amount"]
+        
+        most_used_category = CategoryService.get_most_used_category(user)
+        
+        # Most used Category insights
+        insights.append(
+            {
+                "type": "info",
+                "message": f"{most_used_category.name} is the most used category with {most_used_category.transaction_count} transactions"
+            }
+        )
 
         # Budget state insights
         if exceeded > 0:
@@ -275,7 +285,7 @@ class AnalyticsService:
         summary = cls.get_financial_summary(income_transactions, expense_transactions)
         top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
-        insights = cls.generate_insights(summary, budget_overview, top_categories)
+        insights = cls.generate_insights(user, summary, budget_overview, top_categories)
 
         # Fetch independent services
         recent_transactions = (
