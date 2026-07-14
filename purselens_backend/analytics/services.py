@@ -212,7 +212,7 @@ class AnalyticsService:
             insights.append(
                 {
                     "type": "warning", 
-                    "message": f"{at_risk} budget(s) is nearing their limit(s)."
+                    "message": f"{at_risk} budget(s) is/are nearing their limit(s)."
                 }
             )
         if at_risk == 0 and exceeded == 0 and total_budget > 0:
