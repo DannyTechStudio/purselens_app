@@ -646,13 +646,30 @@ h2 {
 
 .category-metrics-wrapper a {
     width: 100%;
-    font-size: 0.85rem;
+    /* font-size: 0.85rem; */
     text-decoration: none;
     display: flex;
     align-items: center;
+    color: var(--links);
+    transition: all 0.3s ease-in-out;
+    margin-top: 1rem;
 }
 
 .category-metrics-wrapper a:hover {
+    text-decoration: underline;
+}
+
+.insights-feed-card .view-all-wrapper {
+    margin-top: 2rem;
+}
+
+.insights-feed-card .view-all-wrapper a {
+    text-decoration: none;
+    color: var(--links);
+    transition: all 0.3s ease-in-out;
+}
+
+.insights-feed-card .view-all-wrapper a:hover {
     text-decoration: underline;
 }
 
