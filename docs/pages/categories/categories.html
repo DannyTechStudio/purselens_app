@@ -114,7 +114,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search-icon" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
-                    <input type="search" name="q" id="search-bar" placeholder="Search transactions...">
+                    <input type="search" name="q" id="search-bar" placeholder="Search categories...">
                 </div>
             </form>
     
@@ -233,8 +233,6 @@
 
                         <!-- Repeat for other categories... -->
                     </div>
-
-                    <a href="#" class="view-all-link">View All Categories →</a>
                 </section>
         
                 <aside class="categories-insights">
@@ -242,45 +240,57 @@
                         <h2>Insights</h2>
         
                         <div class="insight-block info">
+                            <span class="label">Highest Spending</span>
+                            <div class="insight-row">
+                                <strong>Housing</strong>
+                                <p>65% of total budget</p>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-block warning">
+                            <span class="label">Warning</span>
+                            <div class="insight-row">
+                                <strong>Budgets</strong>
+                                <p>3 budget(s) is/are nearing their limits(s).</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-block info">
                             <span class="label">Most Used Category</span>
                             <div class="insight-row">
                                 <strong>Food & Dining</strong>
                                 <p>24 transactions this month</p>
                             </div>
                         </div>
-        
-                        <div class="insight-block warning">
-                            <span class="label">Highest Spending</span>
-                            <div class="insight-row">
-                                <strong>Housing</strong>
-                                <p>65% of total budget</p>
-                            </div>
-                        </div>
                         
-                        <div class="insight-block warning">
-                            <span class="label">Highest Spending</span>
+                        <div class="insight-block danger">
+                            <span class="label">Danger</span>
                             <div class="insight-row">
-                                <strong>Housing</strong>
-                                <p>65% of total budget</p>
+                                <strong>Budgets</strong>
+                                <p>You have exceeded 2 budget(s).</p>
                             </div>
                         </div>
-                        
-                        <div class="insight-block warning">
-                            <span class="label">Highest Spending</span>
-                            <div class="insight-row">
-                                <strong>Housing</strong>
-                                <p>65% of total budget</p>
-                            </div>
+
+                        <div class="view-all-wrapper">
+                            <a href="../insights/insights.html" id="view-all-link">
+                                View all insights
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                                </svg>
+                            </a>
                         </div>
-        
                     </div>
 
                     <!-- Call to Action Block -->
                     <div class="insight-cta">
-                        <div class="cta-icon">🎯</div>
                         <h3>Set New Limits</h3>
                         <p>Keep your spending in check by creating category budgets.</p>
-                        <button class="btn-outline">Create Budget</button>
+                        <button class="btn-outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a2 2 0 0 1-1-.268M1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1" />
+                            </svg>
+                            Create Budget
+                        </button>
                     </div>
                 </aside>
             </div>
@@ -288,5 +298,7 @@
     </div>
 
     <script src="../../js/pages/categories.js"></script>
+    <script src="../../js/pages/budgets.js"></script>
+    <!-- <script src="../../js/main.js"></script> -->
 </body>
 </html>
