@@ -97,9 +97,9 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timezone.timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timezone.timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timezone.timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': False,
+    'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
