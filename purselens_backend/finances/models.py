@@ -14,11 +14,13 @@ User = settings.AUTH_USER_MODEL
 class CategoryTypeEnum(models.TextChoices):
     INCOME = 'income', 'Income'
     EXPENSE = 'expense', 'Expense'
+    TRANSFER = 'transfer', 'Transfer'
 
 
 class TransactionTypeEnum(models.TextChoices):
     INCOME = 'income', 'Income'
     EXPENSE = 'expense', 'Expense'
+    TRANSFER = 'transfer', 'Transfer'
 
 
 class TransactionFrequencyEnum(models.TextChoices):
