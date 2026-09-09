@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Track Transactions  | PurseLens</title>
     <link rel="stylesheet" href="../../css/pages/transactions.css">
+    <link rel="stylesheet" href="../../css/pages/navbar.css">
+    <link rel="stylesheet" href="../../css/pages/modal.css">
     <link rel="stylesheet" href="../../css/themes/light.css">
     <link rel="stylesheet" href="../../css/themes/dark.css">
     <link rel="shortcut icon" href="../../assets/images/PurseLens_logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-----------------------------------------------------
@@ -198,32 +201,31 @@
                 </form>
             </section>
 
-            <!-- Transaction Creation Modal -->
             <div id="transaction-modal-overlay">
                 <div class="cancel-btn-wrapper">
-                    <button title="Close" id="transaction-close-modal-btn">⨉</button>
+                    <button title="Close and Continue" id="transaction-close-modal-btn">⨉</button>
                 </div>
             
-                <div class="transaction-modal-main-container">
+                <div class="transaction-modal-main-container" role="dialog" aria-modal="true">
                     <div class="heading-wrapper">
-                        <h1>Add Transaction</h1>
-                        <p>Record your transactions (income or expenses) to gain clarity on your financial habits.</p>
+                        <h2>Create Transaction</h2>
+                        <p>Record your transactions (either income or expenses) to gain clarity on your financial habits.</p>
                     </div>
             
                     <form class="transaction-form" action="/api/transactions/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label for="transaction-title-input">Title</label>
-                            <input type="text" name="title" id="transaction-title-input" placeholder="Kumasi transport fare" required>
+                            <label class="required" for="transaction-title-input">Title</label>
+                            <input type="text" name="title" id="transaction-title-input" placeholder="Kumasi transport fare"
+                                required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="transaction-amount-input">Amount</label>
-                            <input type="number" name="amount" id="transaction-amount-input" 
-                            placeholder="120.00" min="1" required>
+                            <label class="required" for="transaction-amount-input">Amount</label>
+                            <input type="number" name="amount" id="transaction-amount-input" placeholder="120.00" min="1" required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="transaction-type-select">Type</label>
+                            <label class="required" for="transaction-type-select">Type</label>
                             <select name="type" id="transaction-type-select" required>
                                 <option value="" selected disabled>Select transaction type</option>
                                 <option value="income">Income</option>
@@ -232,8 +234,9 @@
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="transaction-category-input">Category</label>
-                            <input type="text" name="category" id="transaction-category-input" placeholder="Transportation" required>
+                            <label class="required" for="transaction-category-input">Category</label>
+                            <input type="text" name="category" id="transaction-category-input" placeholder="Transportation"
+                                required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
@@ -243,9 +246,9 @@
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="transaction-date-input">Transaction Date</label>
-                            <input type="date" name="transaction_date" id="transaction-date-input" 
-                            placeholder="2026-04-05" required>
+                            <label class="required" for="transaction-date-input">Transaction Date</label>
+                            <input type="date" name="transaction_date" id="transaction-date-input" placeholder="2026-04-05"
+                                required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
@@ -446,7 +449,7 @@
             
                 <!-- Pagination Footer -->
                 <footer class="table-footer">
-                    <span class="showing-text">Showing 1 to 5 of 42 transactions</span>
+                    <span class="showing-text">Showing 1 to 6 of 42 transactions</span>
                     <div class="pagination">
                         <button class="page-btn">&lt;</button>
                         <button class="page-btn active">1</button>
@@ -462,5 +465,6 @@
     </div>
 
     <script src="../../js/pages/transactions.js"></script>
+    <script src="../../js/main.js"></script>
 </body>
 </html>
