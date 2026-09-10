@@ -42,6 +42,9 @@
     --footer-link-color-hover: #3e3efd;
 
     /* Financial semantics */
+    --income: #0077ff;
+    --expense: #ef4444;
+
     --success: #14dd1e;
     --success-2: #14dd1e2e;
     --success-3: #14dd1e5a;
@@ -51,6 +54,7 @@
     --danger-2: #fa7a7a2b;
     --danger-3: #ff00004e;
     --danger-4: #ef4444;
+    --danger-4: #f35c5c;
 
     --warning: #f7bc5c;
     --warning-2: #f39a0b33;
