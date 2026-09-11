@@ -271,7 +271,7 @@ class AnalyticsService:
                         }
                     )
 
-        return insights[:5]
+        return insights[:4]
 
     @classmethod
     def get_user_analytics_data(cls, user) -> dict:
