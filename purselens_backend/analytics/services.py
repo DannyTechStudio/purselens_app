@@ -173,7 +173,7 @@ class AnalyticsService:
             "total_budget_amount": total_budget_amount,
             "total_spent": total_spent,
             "total_remaining": remaining,
-            "overall_utilization": utilization_percentage,
+            "utilization_percent": utilization_percentage,
             "budgets_on_track": budgets_on_track,
             "budgets_at_risk": budgets_at_risk,
             "budgets_exceeded": budgets_exceeded,
