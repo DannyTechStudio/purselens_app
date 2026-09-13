@@ -1,5 +1,5 @@
 from collections import defaultdict
-from django.db.models import Sum
+from django.db.models import Q, Sum, Count
 from decimal import Decimal
 from django.utils import timezone
 from calendar import month_abbr, monthrange
@@ -101,12 +101,34 @@ class AnalyticsService:
 
     @staticmethod
     def get_top_categories(expense_transactions, limit=5):
-        return (
+        total_expense_transactions = expense_transactions.count()
+        
+        if total_expense_transactions == 0:
+            return []
+        
+        categories = (
             expense_transactions
             .values("category__id", "category__name")
-            .annotate(total_spent=Sum("amount"))
+            .annotate(
+                total_spent=Sum("amount"),
+                transaction_count=Count("id"),
+            )
             .order_by("-total_spent")[:limit]
         )
+        
+        return [
+            {
+                "category_id": category["category__id"],
+                "category_name": category["category__name"],
+                "total_spent": category["total_spent"],
+                "transaction_count": category["transaction_count"],
+                "transaction_percentage": (
+                    category["transaction_count"]
+                    / total_expense_transactions
+                ) * 100,
+            }
+            for category in categories
+        ]
         
     @staticmethod
     def _get_budget_status(spent, budget_amount):
