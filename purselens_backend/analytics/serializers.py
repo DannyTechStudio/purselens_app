@@ -1,6 +1,9 @@
 from rest_framework import serializers
+from django.contrib.auth import get_user_model
 
 from finances.models import Transaction
+
+User = get_user_model()
 
 class TopCategorySerializer(serializers.Serializer):
     category__id = serializers.UUIDField()
@@ -18,13 +21,25 @@ class BudgetOverviewFieldsSerializer(serializers.Serializer):
     period = serializers.JSONField()
 
 class RecentTransactionsSerializer(serializers.ModelSerializer):
+    category_id = serializers.UUIDField(source="category.id", read_only=True)
+    category_name = serializers.CharField(source="category.name", read_only=True)
+    
     class Meta:
         model = Transaction
         fields = [
             "title", "amount", "type", 
-            "category", "description", "transaction_date", 
+            "category_id", "category_name", "description", "transaction_date", 
             "is_recurring", "frequency", "next_due_date"
         ]
+        
+class UserSerializer(serializers.Serializer):
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
+    full_name = serializers.CharField(read_only=True)
+    
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "full_name"]
         
 class FinancialOverview(serializers.Serializer):
     total_income = serializers.DecimalField(max_digits=12, decimal_places=2)
@@ -36,6 +51,7 @@ class InsightCardSerializer(serializers.Serializer):
     message = serializers.CharField()
     
 class AnalyticsOutputSerializer(serializers.Serializer):
+    user = UserSerializer()
     financial_overview = FinancialOverview()
     budgets_overview = BudgetOverviewFieldsSerializer()
     top_categories = TopCategorySerializer(many=True)
