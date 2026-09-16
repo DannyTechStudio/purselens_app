@@ -318,6 +318,11 @@ class AnalyticsService:
 
         # Pack into clean output schema
         return {
+            "user": {
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "full_name": user.full_name,
+            },
             "financial_overview": {
                 "total_income": summary["total_income"],
                 "total_expense": summary["total_expense"],
