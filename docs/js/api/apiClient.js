@@ -78,18 +78,61 @@ async function apiRequest(endpoint, options = {}) {
 
     try {
         
-        response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            ...options,
-            method,
-            credentials: "include",
-            headers
-        });
+        response = await fetch(
+            `${API_BASE_URL}${endpoint}`,
+            {
+                ...options,
+                method,
+                credentials: "include",
+                headers
+            }
+        );
 
     } catch (error) {
         
         throw new Error(
             "Unable to connect to PurseLens server. Please check your internet connection."
         );
+    }
+
+    /*------------------------------------------------------------------
+        Access Token expired.
+        Try to refresh the session and retry the original request
+    -------------------------------------------------------------------*/
+    if (response.status === 401) {
+        try {
+
+            // Refresh both access & refresh tokens
+            await refreshAccessToken();
+
+            // Rebuild headers in case anything changed
+            headers = {
+                "Content-Type": "application/json",
+                ...options.headers
+            };
+
+            if (!["GET", "HEAD", "OPTIONS", "TRACE"].includes(method)) {
+                const csrfToken = await ensureCsrfToken();
+
+                headers["X-CSRFToken"] = csrfToken;
+            }
+
+            // Retry the original request once
+            response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                ...options,
+                method,
+                credentials: "include",
+                headers
+            });
+            
+        } catch (error) {
+
+            // Refresh token expired/invalid too
+            // Redirect to login page
+            redirectToLogin();
+
+            return;
+        }
     }
 
     let data = null;
@@ -170,3 +213,54 @@ async function apiDelete(endpoint, options = {}) {
     });
 }
 
+function redirectToLogin() {
+
+    sessionStorage.setItem(
+        "redirect_after_login",
+        window.location.href
+    );
+
+    window.location.href = "../../pages/auth/login.html";
+}
+
+
+let refreshPromise = null;
+
+async function refreshAccessToken() {
+
+    if (!refreshPromise) {
+
+        refreshPromise = (async () => {
+
+            try {
+                const csrfToken = await ensureCsrfToken();
+                
+                const response = await fetch(
+                    `${API_BASE_URL}/auth/token/refresh/`,
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrfToken
+                        }
+                    }
+                );
+                
+                if (!response.ok) {
+                    throw new Error("Refresh failed.");
+                }
+
+                return true;
+
+            } finally {
+
+                refreshPromise = null;
+            }
+        })();
+    }
+
+    return refreshPromise;
+}
+    
+    
