@@ -143,7 +143,8 @@ fieldset input {
 }
 
 fieldset input:focus {
-    outline: 2px solid var(--border-visible);
+    background-color: var(--surface);
+    border: 2px solid var(--border-visible);
 }
 
 #login-btn {
@@ -216,7 +217,7 @@ fieldset input:focus {
     aspect-ratio: 1;
     border-radius: 50%;
     background:
-        radial-gradient(farthest-side, var(--text-primary) 94%, #0000) top/5px 5px no-repeat,
+    radial-gradient(farthest-side, var(--text-primary) 94%, #0000) top/5px 5px no-repeat,
         conic-gradient(#0000 30%, var(--text-primary));
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
     animation: spin 1s infinite linear;
