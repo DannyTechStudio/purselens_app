@@ -15,8 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         clearError();
 
         // Form Elements
-        const email = document.getElementById("email-input").value.trim();
-        const password = document.getElementById("password-input").value.trim();
+        const emailInput = document.getElementById("email-input");
+        const passwordInput = document.getElementById("password-input");
+        
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
         if (!email || !password) {
 
@@ -47,12 +50,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             setTimeout(() => {
 
                 clearError();
+                redirectAfterLogin();
+                
             }, 2000);
 
-            setTimeout(() => {
-
-                window.location.href = "../../pages/dashboard/dashboard.html";
-            }, 2000);
+            emailInput.value = "";
+            passwordInput.value = "";
 
         } catch (error) {
 
@@ -72,6 +75,26 @@ document.addEventListener("DOMContentLoaded", async () => {
             setLoadingState(false);
         }
     });
+
+
+    function redirectAfterLogin() {
+        const redirectURL = sessionStorage.getItem("redirect_after_login");
+
+        sessionStorage.removeItem("redirect_after_login");
+
+        if (redirectURL) {
+            const url = new URL(redirectURL, window.location.origin);
+
+            if (url.origin === window.location.origin) {
+
+                window.location.href = url.href;
+
+                return;
+            }
+        }
+
+        window.location.href = "../../pages/dashboard/dashboard.html";
+    }
 
 
     function setLoadingState(isLoading) {
