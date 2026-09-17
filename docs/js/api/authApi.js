@@ -37,13 +37,6 @@ async function resendVerificationEmail(email) {
 } 
 
 
-async function refreshToken() {
-    return apiPost(
-        "/auth/token/refresh/"
-    );
-} 
-
-
 async function logout() {
     return apiPost(
         "/auth/logout/"
