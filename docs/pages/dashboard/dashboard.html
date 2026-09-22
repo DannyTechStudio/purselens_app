@@ -5,23 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Finance Dashboard | Income, Expenses & Budget Overview | PurseLens</title>
     <link rel="stylesheet" href="../../css/pages/dashboard.css">
+    <link rel="stylesheet" href="../../css/components/transaction-table.css">
+    <link rel="stylesheet" href="../../css/components/navbar.css">
+    <link rel="stylesheet" href="../../css/components/modal.css">
     <link rel="stylesheet" href="../../css/themes/light.css">
     <link rel="stylesheet" href="../../css/themes/dark.css">
     <link rel="shortcut icon" href="../../assets/images/PurseLens_logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
+
     <!-----------------------------------------------------
         LEFT SIDE NAVIGATION WHEEL
     ----------------------------------------------------->
     <aside class="global-sidebar" aria-label="Main Naviagtion">
 
         <div class="brand-logo-wrapper">
-            <h2>PurseLens</h2>
+
+            <span>PurseLens</span>
+
             <p class="title-descriptions">Personal Finance</p>
+
         </div>
 
         <nav class="sidebar-nav">
+
             <ul class="nav-list">
+
                 <li>
                     <a href="../../pages/dashboard/dashboard.html" class="nav-item active">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16" aria-hidden="true">
@@ -67,9 +78,22 @@
                         <span>Categories</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="../../pages/insights/insights.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stars"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                        </svg>
+                        <span>Insights</span>
+                    </a>
+                </li>
+
             </ul>
 
             <ul class="nav-list system-links">
+
                 <li>
                     <a href="../../pages/profile/profile.html" class="nav-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" aria-hidden="true">
@@ -90,7 +114,7 @@
                 </li>
 
                 <li>
-                    <a href="" class="nav-item">
+                    <a href="" class="nav-item logout">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" aria-hidden="true">
                             <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
                             <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
@@ -98,15 +122,22 @@
                         <span>Logout</span>
                     </a>
                 </li>
+
             </ul>
+
         </nav>
     </aside>
+
+    <span class="message-display"></span>
 
     <!-----------------------------------------------------
             MAIN WORKSPACE
     ----------------------------------------------------->
     <div class="main-workspace-container">
+
+
         <header class="top-utility-bar">
+
             <form action="/transactions/search/" method="GET" class="search-form">
                 <label for="search-bar" class="visually-hidden">Search transactions...</label>
                 
@@ -114,11 +145,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search-icon" viewBox="0 0 16 16" aria-hidden="true">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                     </svg>
+
                     <input type="search" name="q" id="search-bar" placeholder="Search transactions...">
                 </div>
             </form>
 
             <div class="user-utilities">
+
                 <button class="notification-btn" aria-label="View notifications">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
@@ -127,20 +160,28 @@
                 </button>
 
                 <div class="profile-chip">
-                    <img src="">
+                    <img id="user-profile-img" src="">
                 </div>
+
             </div>
+
         </header>
         
         <main class="dashboard-content-view">
+
             <section class="welcome-heading-block" aria-labelledby="dashboard-title">
+
                 <div class="welcome-heading-wrapper">
-                    <span>Good Morning, <strong>Daniel</strong></span>
+                    <div class="greetings-wrapper">
+                        <p id="greeting-output">Good Morning,</p>
+                        <span id="user-first-name"></span>
+                    </div>
                     <h1>Dashboard</h1>
-                    <p>Here's an overview of your finances.</p>
+                    <p>Here's the current overview of your finances.</p>
                 </div>
 
                 <div class="shortcuts-wrapper">
+
                     <button type="submit" id="budget-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M0 3a2 2 0 0 1 2-2h13.5a.5.5 0 0 1 0 1H15v2a1 1 0 0 1 1 1v8.5a1.5 1.5 0 0 1-1.5 1.5h-12A2.5 2.5 0 0 1 0 12.5zm1 1.732V12.5A1.5 1.5 0 0 0 2.5 14h12a.5.5 0 0 0 .5-.5V5H2a2 2 0 0 1-1-.268M1 3a1 1 0 0 0 1 1h12V2H2a1 1 0 0 0-1 1" />
@@ -164,26 +205,27 @@
                 </div>
             </section>
 
-            <!-- Category Creation Modal -->
+
+            <!------------------ Category Creation Modal --------------------->
             <div id="category-modal-overlay">
                 <div class="cancel-btn-wrapper">
-                    <button title="Close" id="category-close-modal-btn">⨉</button>
+                    <button title="Close and Continue" id="category-close-modal-btn">⨉</button>
                 </div>
 
-                <div class="category-modal-main-container">
+                <div class="category-modal-main-container" role="dialog" aria-modal="true">
                     <div class="heading-wrapper">
-                        <h1>Add Category</h1>
+                        <h2>Add Category</h2>
                         <p>Organize your finances by creating categories that reflect your spending and income.</p>
                     </div>
 
                     <form class="category-form" action="/api/category/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label for="category-name-input">Name</label>
+                            <label class="required" for="category-name-input">Name</label>
                             <input type="text" name="name" id="category-name-input" placeholder="Transportation" required>
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="category-type-dropdown">Category Type</label>
+                            <label class="required" for="category-type-dropdown">Category Type</label>
                             <select name="type" id="category-type-dropdown" required>
                                 <option value="" selected disabled>Select Category Type</option>
                                 <option value="income">Income</option>
@@ -199,37 +241,37 @@
                 </div>
             </div>
 
-            <!-- Budget Creation Modal -->
+            <!------------------ Budget Creation Modal ----------------------->
             <div id="budget-modal-overlay">
                 <div class="cancel-btn-wrapper">
-                    <button title="Close" id="budget-close-modal-btn">⨉</button>
+                    <button title="Close and Continue" id="budget-close-modal-btn">⨉</button>
                 </div>
 
-                <div class="budget-modal-main-container">
+                <div class="budget-modal-main-container" role="dialog" aria-modal="true">
                     <div class="heading-wrapper">
-                        <h1>Add Budget</h1>
+                        <h2>Add Budget</h2>
                         <p>Create a budget to plan your spending and stay on track with your financial goals.</p>
                     </div>
 
                     <form class="budget-form" action="/api/budgets/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label for="budget-title-input">Budget Title</label>
+                            <label class="required" for="budget-title-input">Budget Title</label>
                             <input type="text" name="title" id="budget-title-input" placeholder="Transportation Budget" required>
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="budget-category-input">Category</label>
+                            <label class="required" for="budget-category-input">Category</label>
                             <input type="text" name="category" id="budget-category-input" placeholder="Transportation" required>
                         </fieldset>
 
                         <fieldset class="input-fieldset">
-                            <label for="budget-amount-input">Amount</label>
+                            <label class="required" for="budget-amount-input">Amount</label>
                             <input type="number" name="budget_amount" id="budget-amount-input" 
                                 placeholder="200.00" min="1" required>
                         </fieldset>
 
                         <fieldset class="input-fieldset">
-                            <label for="budget-period-type-select">Period Type</label>
+                            <label class="required" for="budget-period-type-select">Period Type</label>
                             <select name="period_type" id="budget-period-type-select" required>
                                 <option value="" selected disabled>Select budget period type</option>
                                 <option value="weekly">Weekly</option>
@@ -242,12 +284,12 @@
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="budget-start-date-input">Start Date</label>
+                            <label class="required" for="budget-start-date-input">Start Date</label>
                             <input type="date" name="start_date" id="budget-start-date-input" placeholder="2026-04-01" required>
                         </fieldset>
 
                         <fieldset class="input-fieldset">
-                            <label for="budget-end-date-input">Start Date</label>
+                            <label class="required" for="budget-end-date-input">End Date</label>
                             <input type="date" name="end_date" id="budget-end-date-input" placeholder="2026-04-30" required>
                         </fieldset>
 
@@ -259,32 +301,32 @@
                 </div>
             </div>
 
-            <!-- Transaction Creation Modal -->
+            <!------------------ Transaction Creation Modal ------------------>
             <div id="transaction-modal-overlay">
                 <div class="cancel-btn-wrapper">
-                    <button title="Close" id="transaction-close-modal-btn">⨉</button>
+                    <button title="Close and Continue" id="transaction-close-modal-btn">⨉</button>
                 </div>
 
-                <div class="transaction-modal-main-container">
+                <div class="transaction-modal-main-container" role="dialog" aria-modal="true">
                     <div class="heading-wrapper">
-                        <h1>Add Transaction</h1>
-                        <p>Record your transactions (income or expenses) to gain clarity on your financial habits.</p>
+                        <h2>Create Transaction</h2>
+                        <p>Record your transactions (either income or expenses) to gain clarity on your financial habits.</p>
                     </div>
 
                     <form class="transaction-form" action="/api/transactions/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label for="transaction-title-input">Title</label>
+                            <label class="required" for="transaction-title-input">Title</label>
                             <input type="text" name="title" id="transaction-title-input" placeholder="Kumasi transport fare" required>
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="transaction-amount-input">Amount</label>
+                            <label class="required" for="transaction-amount-input">Amount</label>
                             <input type="number" name="amount" id="transaction-amount-input" 
                                 placeholder="120.00" min="1" required>
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="transaction-type-select">Type</label>
+                            <label class="required" for="transaction-type-select">Type</label>
                             <select name="type" id="transaction-type-select" required>
                                 <option value="" selected disabled>Select transaction type</option>
                                 <option value="income">Income</option>
@@ -293,7 +335,7 @@
                         </fieldset>
 
                         <fieldset class="input-fieldset">
-                            <label for="transaction-category-input">Category</label>
+                            <label class="required" for="transaction-category-input">Category</label>
                             <input type="text" name="category" id="transaction-category-input" placeholder="Transportation" required>
                         </fieldset>
 
@@ -303,7 +345,7 @@
                         </fieldset>
                         
                         <fieldset class="input-fieldset">
-                            <label for="transaction-date-input">Transaction Date</label>
+                            <label class="required" for="transaction-date-input">Transaction Date</label>
                             <input type="date" name="transaction_date" id="transaction-date-input" placeholder="2026-04-05" required>
                         </fieldset>
                         
@@ -342,205 +384,213 @@
                 </div>
             </div>
 
+
             <section class="financial-summary-grid" aria-label="Financial Overview Summary">
+                
                 <article class="metric-card income">
-                    <h3>Total Income</h3>
-                    <div class="metric-value">$8,450.00</div>
+                    <h3>
+                        TOTAL INCOME
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-up-icon lucide-trending-up income">
+                            <path d="M16 7h6v6" />
+                            <path d="m22 7-8.5 8.5-5-5L2 17" />
+                        </svg>
+                    </h3>
+                    <div class="metric-value" id="total-income-value"></div>
                 </article>
             
                 <article class="metric-card expenses">
-                    <h3>Total Expenses</h3>
-                    <div class="metric-value">$3,120.50</div>
+                    <h3>
+                        TOTAL EXPENSES
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-down-icon lucide-trending-down expense">
+                            <path d="M16 17h6v-6" />
+                            <path d="m22 17-8.5-8.5-5 5L2 7" />
+                        </svg>
+                    </h3>
+                    <div class="metric-value" id="total-expenses-value"></div>
                 </article>
             
                 <article class="metric-card current-balance">
-                    <h3>Current Balance</h3>
-                    <div class="metric-value">$5,329.50</div>
+                    <h3>
+                        CURRENT BALANCE
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet-icon lucide-wallet balance">
+                            <path
+                                d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+                            <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+                        </svg>
+                    </h3>
+                    <div class="metric-value" id="balance-value"></div>
                 </article>
             </section>
 
             <div class="dashboard-middle-grid">
+
                 <section class="budget-overview-card" aria-labelledby="budget-heading">
+                    
                     <div class="card-header">
-                        <h2 id="budget-heading">Budget Overview</h2>
-                        <time datetime="2026-06">June 2026</time>
+                        <div class="card-header-sub">
+                            <h2 class="budget-heading">Budget Overview</h2>
+                            <span id="date-display"></span>
+                        </div>
+                        <p>Get a clear picture of your budget, spending, and remaining funds.</p>
                     </div>
 
                     <div class="budget-metrics-wrapper">
-                        <div class="status-category-metrics-wrapper">
-                            <dl class="budget-metrics-list">
-                                <span>
-                                    <dt>Total Budget</dt>
-                                    <dd>$3,000.00</dd>
-                                </span>
-
-                                <span>
-                                    <dt>Total Spent</dt>
-                                    <dd>$3,340.00</dd>
-                                </span>
-
-                                <span>
-                                    <dt>Remaining</dt>
-                                    <dd>$-340.00</dd>
-                                </span>
-                            </dl>
-
-                            <div class="status-chips">
-                                <div class="chip success">
-                                    <span><strong>0</strong>on track</span>
-                                </div>
-
-                                <div class="chip warning">
-                                    <span><strong>3</strong>at risk</span>
-                                </div>
-
-                                <div class="chip danger">
-                                    <span><strong>1</strong>exceeded</span>
-                                </div>
-                            </div>
+                        <div class="budget-metrics-card">
+                            <span class="card-title">Total Budget</span>
+                            <h3 id="total-budget-value"></h3>
+                            <small>Planned spending</small>
                         </div>
 
-                        <div class="progress-ring-wrapper" aria-label="62% of monthly budget utilized">
-                            <span>111.33%</span>
-                            <p>Ultilized</p>
+                        <div class="budget-metrics-card">
+                            <span class="card-title">Total Spent</span>
+                            <h3 id="total-spent-value"></h3>
+                            <small><span id="spent-percent"></span> of budget</small>
+                        </div>
+                        
+                        <div class="budget-metrics-card">
+                            <span class="card-title">Remaining</span>
+                            <h3 id="remain-value"></h3>
+                            <small><span id="remain-percent"></span> available</small>
+                        </div>
+                    </div>
+                            
+                    <div class="budget-progress-wrapper">
+
+                        <progress id="utilization-progress" aria-label="Budget utilization"></progress>
+
+                        <div class="sub-budget-progress-wrapper">
+                            <p class="util-summary"><span id="ttl-budget-amt-spent"></span> spent of <span id="ttl-budget-amt"></span></p>
+                            <p class="budget-amt-remain"><span id="budget-amt-remain"></span> remaining</p>
                         </div>
                     </div>
 
                     <div class="category-metrics-wrapper">
-                        <h3>Categories:</h3>
-
-                        <div class="category-wrapper">
-                            <span class="category-metrics">Food <strong>$1200.00</strong></span>
-                            <span class="category-metrics">Utilities <strong>$400.00</strong></span>
-                            <span class="category-metrics">Transportation <strong>$600.00</strong></span>
+                        <div class="chip">
+                            <span class="state success">●</span>
+                            <strong id="budget-on-track"></strong>
+                            <small class="chip-text">On Track</small>
                         </div>
+                
+                        <div class="chip">
+                            <span class="state warning">●</span>
+                            <strong id="budget-at-risk"></strong>
+                            <small class="chip-text">At Risk</small>
+                        </div>
+                        
+                        <div class="chip">
+                            <span class="state danger">●</span>
+                            <strong id="budget-exceeded"></strong>
+                            <small class="chip-text">Exceeded</small>
+                        </div>
+                    </div>
 
-                        <a href="../../pages/budgets/budgets.html">
-                            View budget performance
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8" />
+                    <a href="../../pages/budgets/budgets.html">
+                        View budgets performances
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                        </svg>
+                    </a>
+
+                </section>
+            
+                <aside class="insights-feed-card" aria-labelledby="insights-heading">
+                    <h2 class="insights-heading">Insights</h2>
+            
+                    <div class="insight-container"></div>
+                    
+                    <div class="view-all-wrapper">
+                        <a href="../insights/insights.html" class="insights-view-all-link">
+                            View all insights
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
                             </svg>
                         </a>
                     </div>
-                </section>
-            
-                <section class="insights-feed-card" aria-labelledby="insights-heading">
-                    <h2 id="insights-heading">Insights</h2>
-            
-                    <ul class="insights-list">
-                        <li class="insight-item danger">
-                            <h3>Food budget exceeded</h3>
-                            <p>You've exceeded one budget for June.</p>
-                        </li>
-
-                        <li class="insight-item info">
-                            <h3>Spending Pattern</h3>
-                            <p>Food accounts for 40% of your total spending this month.</p>
-                        </li>
-
-                        <li class="insight-item success">
-                            <h3>Savings Goal</h3>
-                            <p>You are on track to hit your emergency fund goal.</p>
-                        </li>
-
-                        <li class="insight-item warning">
-                            <h3>Budget Alert</h3>
-                            <p>Three(3) budgets are nearing their limits.</p>
-                        </li>
-                    </ul>
-
-                    <div class="view-all-wrapper">
-                        <a href="../insights/insights.html">View all insights</a>
-                    </div>
-                </section>
+                </aside>
             </div>
             
             <div class="dashboard-bottom-grid">
-            
-                <section class="recent-transactions-card" aria-labelledby="transactions-heading">
-                    <div class="card-header">
-                        <h2 id="transactions-heading">Recent Transactions</h2>
-                        <a href="../../pages/transactions/transactions.html" class="view-all-link">View All</a>
+                
+                <section class="line-chart-section">
+                    <div class="chart-wrapper">
+                        <h2>Monthly Spending</h2>
+                        <canvas id="line-chart"></canvas>
+
+                        <div class="chart-empty-state" id="chart-empty-state">
+                            <p>No monthly data yet</p>
+                            <span>
+                                Add some income or expense transactions to see your trends over time.
+                            </span>
+                        </div>
                     </div>
-            
-                    <ul class="transaction-history-list">
-                        <li class="transaction-row expense">
-                            <div class="transaction-meta">
-                                <strong>Whole Foods Market</strong>
-                                <small>Food • Today, 10:45 AM</small>
-                            </div>
-                            <span class="transaction-amount negative">-$145.20</span>
-                        </li>
-
-                        <li class="transaction-row expense">
-                            <div class="transaction-meta">
-                                <strong>Shell Station</strong>
-                                <small>Transportation • Yesterday</small>
-                            </div>
-                            <span class="transaction-amount negative">-$45.00</span>
-                        </li>
-
-                        <li class="transaction-row expense">
-                            <div class="transaction-meta">
-                                <strong>Shell Station</strong>
-                                <small>Transportation • Yesterday</small>
-                            </div>
-                            <span class="transaction-amount negative">-$45.00</span>
-                        </li>
-
-                        <li class="transaction-row expense">
-                            <div class="transaction-meta">
-                                <strong>Shell Station</strong>
-                                <small>Transportation • Yesterday</small>
-                            </div>
-                            <span class="transaction-amount negative">-$45.00</span>
-                        </li>
-
-                        <li class="transaction-row expense">
-                            <div class="transaction-meta">
-                                <strong>Shell Station</strong>
-                                <small>Transportation • Yesterday</small>
-                            </div>
-                            <span class="transaction-amount negative">-$45.00</span>
-                        </li>
-                    </ul>
                 </section>
+
+                <aside class="top-categories-card" aria-labelledby="top-cat-heading">
+                    <h2 class="top-cat-heading">Top Spending Categories</h2>
             
-                <section class="top-categories-card" aria-labelledby="top-cat-heading">
-                    <h2 id="top-cat-heading">Top Spending Categories</h2>
-            
-                    <ul class="top-category-list">
-                        <li class="category-list-item">
-                            <span>Food</span>
-                            <strong>$1230.00</strong>
-                        </li>
+                    <div class="category-rank-wrapper"></div>
 
-                        <li class="category-list-item">
-                            <span>Shopping</span>
-                            <strong>$730.00</strong>
-                        </li>
+                    <a href="../categories/categories.html">
+                        View all categories
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+                            viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                        </svg>
+                    </a>
+                </aside>
+            </div>
 
-                        <li class="category-list-item">
-                            <span>Transportation</span>
-                            <strong>$580.00</strong>
-                        </li>
+            <div class="recent-transactions-wrapper">
+                <h2 class="transactions-heading">Recent Transactions</h2>
+                
+                <section class="transactions-table-container" aria-labelledby="transactions-heading">
+                    
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th class="header-type">Type</th>
+                                <th class="header-title">Title</th>
+                                <th class="header-description">Description</th>
+                                <th class="header-category">Category</th>
+                                <th class="header-date">Date</th>
+                                <th class="header-amount">Amount</th>
+                                <th class="actions-cell-heading">Actions</th>
+                            </tr>
+                        </thead>
 
-                        <li class="category-list-item">
-                            <span>Utilities</span>
-                            <strong>$350.00</strong>
-                        </li>
+                        <tbody class="table-body">
+                            <!-- Transaction Row goes here -->
+                        </tbody>
+                        
+                    </table>
 
-                        <li class="category-list-item">
-                            <span>Entertainment</span>
-                            <strong>$450.00</strong>
-                        </li>
-                    </ul>
+                    <!-- Pagination Footer -->
+                    <footer class="table-footer">
+                        <span class="showing-text">Showing 1 to 6 of 42 transactions</span>
+                        <div class="pagination">
+                            <button class="page-btn">&lt;</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn">•••</button>
+                            <button class="page-btn">&gt;</button>
+                        </div>
+                    </footer>
                 </section>
             </div>
         </main>
     </div>
     
+    <script src="../../js/api/apiClient.js"></script>
     <script src="../../js/pages/dashboard.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="../../js/components/charts.js"></script>
+    <script src="../../js/components/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
