@@ -17,6 +17,7 @@
     --notification-badge: #ef4444;
 
     /* Text */
+    --text-contrast: #ffff;
     --text-primary: #292b51;
     --text-secondary: #1b1d36;
     --text-muted: #9aa0a6;
