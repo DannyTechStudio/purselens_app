@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    font-family: Nunito, sans-serif;
+    font-family: Nunito, Verdana;
     background-color: var(--bg-2);
     color: var(--text-primary);
     min-height: 100vh;
@@ -161,7 +161,7 @@ body.modal-open {
 }
 
 .input-fieldset label {
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-primary);
 }
 
