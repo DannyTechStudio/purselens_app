@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    font-family: Nunito, Verdana;
+    font-family: Nunito, Times serif;
     background-color: var(--bg-2);
     color: var(--text-primary);
     min-height: 100vh;
@@ -197,7 +197,7 @@ a {
 }
 
 .greetings-wrapper span {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--custom-orange);
 }
@@ -490,7 +490,6 @@ a {
 .budget-metrics-card small,
 .budget-metrics-card small span {
     font-size: 0.9rem;
-    font-weight: 600;
     color: var(--text-primary);
 }
 
@@ -666,7 +665,8 @@ a {
 }
 
 .chart-empty-state p {
-    font-weight: 700;
+    text-align: center;
+    font-weight: 500;
     color: var(--text-muted);
 }
 
