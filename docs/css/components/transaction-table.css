@@ -10,7 +10,7 @@ html {
 }
 
 body {
-    font-family: Nunito, Verdana;
+    font-family: Nunito, Times serif;
     background-color: var(--bg-2);
     color: var(--text-primary);
     min-height: 100vh;
@@ -61,6 +61,10 @@ a {
     letter-spacing: 0.5px;
 }
 
+.transaction-row {
+    height: auto;
+}
+
 .transactions-table td {
     padding: 16px;
     border-bottom: 1px solid var(--border);
@@ -78,6 +82,10 @@ a {
     color: var(--text-primary);
     border: 1px solid var(--border-2);
     
+}
+
+.transaction-type.transfer {
+    background-color: var(--surface);
 }
 
 .transaction-type.income {
@@ -132,11 +140,13 @@ a {
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
+    height: auto;
 }
 
 .actions-cell button {
     width: 35px;
     height: 35px;
+    padding: 10px;
     border-radius: 50px;
     border: none;
     transition: all 0.3s ease-in-out;
@@ -152,14 +162,19 @@ a {
     color: var(--text-muted-2);
 }
 
+.title-cell,
+.description-cell {
+    width: 20%;
+}
+
 .header-type,
 .header-amount,
 .actions-cell-heading {
-    width: 10%;
+    width: 5%;
 }
 
 .header-category,
 .header-date {
-    width: 15%;
+    width: 10%;
 }
 
