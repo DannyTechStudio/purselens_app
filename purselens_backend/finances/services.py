@@ -201,7 +201,7 @@ class TransactionService:
         qs = Transaction.objects.filter(
             user=user,
             is_active=True
-        ).select_related("category")
+        ).select_related("category").order_by("-created_at")
         
         if filters:
             if transaction_type := filters.get('type'):
@@ -329,7 +329,7 @@ class BudgetService:
         qs = Budget.objects.filter(
             user=user,
             is_active=True
-        ).select_related("category")
+        ).select_related("category").order_by("created_at")
         
         if filters:
             if category := filters.get('category'):
