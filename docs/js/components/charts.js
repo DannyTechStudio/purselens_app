@@ -13,12 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const monthlySummaries = response.data || [];
 
             if (monthlySummaries.length === 0) {
-
+                
                 chartContainer.style.display = 'none';
                 chartEmptyState.style.display = 'flex';
-
+                
+                chartEmptyState.innerHTML = `
+                    <p>No monthly data yet</p>
+                    <span>
+                        Add some income or expense transactions to see your trends over time.
+                    </span>
+                `;
+                
                 return;
             }
+            
 
             chartContainer.style.display = 'block';
             chartEmptyState.style.display = 'none';
@@ -105,6 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Failed to load monthly summary:', error);
+
+            chartContainer.style.display = 'none';
+            chartEmptyState.style.display = 'flex';
+
+            chartEmptyState.innerHTML = `
+                <p>Falied to load monthly summary:<br> ${error.message}.</p>
+            `;
         }
 
     }
