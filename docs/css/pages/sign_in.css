@@ -11,7 +11,7 @@ html {
 }
 
 body {
-    font-family: Nunito, sans-serif;
+    font-family: Nunito, Times serif;
     background-color: var(--bg-2);
 }
 
@@ -123,7 +123,6 @@ fieldset {
 }
 
 fieldset label {
-    font-weight: 600;
     color: var(--text-primary);
 }
 
