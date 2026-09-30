@@ -14,7 +14,7 @@ html {
 body {
     color: var(--text-primary);
     background-color: var(--bg);
-    font-family: Nunito, sans-serif;
+    font-family: Nunito, Times serif;
     -webkit-font-smoothing: antialiased;
 }
 
