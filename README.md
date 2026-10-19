@@ -82,8 +82,11 @@ PurseLens_App/
 - JavaScript
 
 ## Deployment
-- Frontend: GitHub Pages
+- Frontend: GitHub Pages / Vercel
 - Backend: Render / Railway / VPS
+
+## System Architecture & Data Pipeline
+
 
 ## Entity Relationship Diagram
 <img width="1787" height="1641" alt="finaudit_ERD drawio" src="https://github.com/user-attachments/assets/0dd520d0-3ad5-426f-a1d7-6c2c19cb4734" />
