@@ -86,7 +86,7 @@ PurseLens_App/
 - Backend: Render / Railway / VPS
 
 ## System Architecture & Data Pipeline
-
+<img width="1522" height="921" alt="purselens_backend_architecture_diagram drawio" src="https://github.com/user-attachments/assets/bfc77b0f-0c80-4180-a497-971d5c351d97" />
 
 ## Entity Relationship Diagram
 <img width="1787" height="1641" alt="finaudit_ERD drawio" src="https://github.com/user-attachments/assets/0dd520d0-3ad5-426f-a1d7-6c2c19cb4734" />
