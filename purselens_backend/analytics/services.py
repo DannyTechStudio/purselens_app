@@ -2,7 +2,8 @@ from collections import defaultdict
 from django.db.models import Q, Sum, Count
 from decimal import Decimal
 from django.utils import timezone
-from calendar import month_abbr, monthrange
+from datetime import timedelta, date
+from calendar import month_abbr, monthrange, month_name, month
 
 from finances.models import Transaction, Budget
 from finances.services import CategoryService, TransactionService, BudgetService
@@ -202,6 +203,127 @@ class AnalyticsService:
             "period": period,
         }
 
+    @classmethod
+    def period_resolver(cls, period):
+        period_constants = [
+            'all_time',
+            'current_month',
+            'last_month', 
+            'last_3_months_current_month_inclusive',
+            'last_3_months_current_month_exclusive',
+            'last_6_months_current_month_inclusive',
+            'last_6_months_current_month_exclusive',
+            'current_year',
+            'last_year',
+        ]
+        
+        if period not in period_constants:
+            raise ValueError(
+                f"Unsupported analytical period: {period}"
+            )
+        
+        # current_date = timezone.now().date()
+        current_date = timezone.localdate()
+        
+        first_day_of_current_month = current_date.replace(day=1)
+        
+        def get_month_start(months_back):
+            month_index = first_day_of_current_month.month - months_back
+            year = first_day_of_current_month.year
+            
+            while month_index <= 0:
+                month_index += 12
+                year -=1
+                
+            return first_day_of_current_month.replace(
+                year=year,
+                month=month_index
+            )
+        
+        if period == "all_time":
+            return {
+                "period_type": "all_time",
+                "start_date": None,
+                "end_date": None,
+                "label": "All time",
+            }
+        
+        if period == "current_month":
+            return {
+                "period_type": "current_month",
+                "start_date": first_day_of_current_month,
+                "end_date": current_date,
+                "label": "Current month",
+            }
+            
+        if period == "last_month":
+            end_date = first_day_of_current_month - timedelta(days=1)
+            start_date = end_date.replace(day=1)
+            
+            return {
+                "period_type": "last_month",
+                "start_date": start_date,
+                "end_date": end_date,
+                "label": "Last month"
+            }
+            
+        if period == "last_3_months_current_month_inclusive":
+            return {
+                "period_type": period,
+                "start_date": get_month_start(2),
+                "end_date": current_date,
+                "label": "Last 3 months (Current month inclusive)"
+            }
+        
+        if period == "last_3_months_current_month_exclusive":
+            end_date = first_day_of_current_month - timedelta(days=1)
+            
+            return {
+                "period_type": period,
+                "start_date": get_month_start(3),
+                "end_date": end_date,
+                "label": "Last 3 months (Current month exclusive)"
+            }
+            
+        if period == "last_6_months_current_month_inclusive":
+            return {
+                "period_type": period,
+                "start_date": get_month_start(5),
+                "end_date": current_date,
+                "label": "Last 6 months (Current month inclusive)"
+            }
+            
+        if period == "last_6_months_current_month_exclusive":
+            end_date = first_day_of_current_month - timedelta(days=1)
+
+            return {
+                "period_type": period,
+                "start_date": get_month_start(6),
+                "end_date": end_date,
+                "label": "Last 6 months (This month exclusive)"
+            }
+            
+        if period == "current_year":
+            return {
+                "period_type": "current_year",
+                "start_date": current_date.replace(
+                    month=1,
+                    day=1,
+                ),
+                "end_date": current_date,
+                "label": "Current year"
+            }
+            
+        if period == "last_year":
+            last_year = current_date.year - 1
+
+            return {
+                "period_type": "last_year",
+                "start_date": date(last_year, 1, 1),
+                "end_date": date(last_year, 12, 31),
+                "label": "Last year"
+            }
+            
     @staticmethod
     def generate_insights(user, summary, budget_overview, top_categories) -> list:
         insights = []
@@ -293,7 +415,7 @@ class AnalyticsService:
                         }
                     )
 
-        return insights[:4]
+        return insights
 
     @classmethod
     def get_user_analytics_data(cls, user) -> dict:
@@ -307,13 +429,13 @@ class AnalyticsService:
         summary = cls.get_financial_summary(income_transactions, expense_transactions)
         top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
-        insights = cls.generate_insights(user, summary, budget_overview, top_categories)
+        insights = cls.generate_insights(user, summary, budget_overview, top_categories)[:4]
 
         # Fetch independent services
         recent_transactions = (
             TransactionService
             .list_user_transactions(user)
-            .order_by("-created_at")[:10]
+            .order_by("-created_at")[:5]
         )
 
         # Pack into clean output schema
@@ -374,26 +496,44 @@ class AnalyticsService:
         return results
            
     @classmethod
-    def get_category_breakdown(cls, user):
+    def get_category_breakdown(cls, user, period):
+        # Resolve the requested analytical period
+        period_data = cls.period_resolver(period)
+        
+        start_date = period_data["start_date"]
+        end_date = period_data["end_date"]
+        
+        # Retrieve user's expense type transactions 
         expense_transactions = cls._get_expense_transactions(user)
+        
+        # Apply date boundaries only when the period is date-bounded
+        if start_date is not None and end_date is not None:
+            expense_transactions = expense_transactions.filter(
+                transaction_date__gte=start_date,
+                transaction_date__lte=end_date,
+            )
+        
+        # Calculate total expenses for the selected period
         total_expense = (
             expense_transactions.aggregate(
                 total=Sum("amount")
-            )["total"] or 0
+            )["total"] or Decimal("0.00")
         )
         
+        # Group transactions by category and calculate category totals
         categories = (expense_transactions
             .values(
                 "category__id",
-                "category__name"
+                "category__name",
             )
             .annotate(
-                amount=Sum("amount")
+                amount=Sum("amount"),
             )
             .order_by("-amount")
         )
         
         results = []
+        
         for category in categories:
             percentage = (
                 (category["amount"] / total_expense) * 100
@@ -405,11 +545,15 @@ class AnalyticsService:
                     "category_id": category["category__id"],
                     "category_name": category["category__name"],
                     "amount": category["amount"],
-                    "percentage": round(percentage, 2)
+                    "percentage": round(percentage, 2),
                 }
             )
             
-        return results
+        return {
+            "period": period_data,
+            "total_expense": total_expense,
+            "categories": results,
+        }
     
     @classmethod
     def get_budget_performance(cls, user):
