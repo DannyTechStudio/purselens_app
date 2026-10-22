@@ -63,12 +63,23 @@ class MonthlySummaryItemSerializer(serializers.Serializer):
     income = serializers.DecimalField(max_digits=12, decimal_places=2)
     expense = serializers.DecimalField(max_digits=12, decimal_places=2)
     balance = serializers.DecimalField(max_digits=12, decimal_places=2)
-
-class CategoryBreakdownSerializer(serializers.Serializer):
+    
+class PeriodSerializer(serializers.Serializer):
+    period_type = serializers.CharField()
+    start_date = serializers.DateField(allow_null=True)
+    end_date = serializers.DateField(allow_null=True)
+    label = serializers.CharField()
+    
+class CategoriesSerializer(serializers.Serializer):
     category_id = serializers.UUIDField()
     category_name = serializers.CharField()
     amount = serializers.DecimalField(max_digits=12, decimal_places=2)
     percentage = serializers.DecimalField(max_digits=6, decimal_places=2)
+
+class CategoryBreakdownSerializer(serializers.Serializer):
+    period = PeriodSerializer()
+    total_expense = serializers.DecimalField(max_digits=12, decimal_places=2)
+    categories = CategoriesSerializer(many=True)
 
 class CashflowSerializer(serializers.Serializer):
     month = serializers.CharField()
