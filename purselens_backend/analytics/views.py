@@ -42,9 +42,14 @@ class CategoryBreakdownView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        data = AnalyticsService.get_category_breakdown(request.user)
+        period = request.query_params.get("period", "all_time")
         
-        serializer = CategoryBreakdownSerializer(instance=data, many=True)
+        data = AnalyticsService.get_category_breakdown(
+            request.user,
+            period,
+        )
+        
+        serializer = CategoryBreakdownSerializer(instance=data)
 
         return success_response(
             message="Your category break down retrieved successfully.",
