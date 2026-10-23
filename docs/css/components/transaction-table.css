@@ -36,66 +36,6 @@ a {
     font-size: clamp(1rem, 1.2vw, 1rem);
 }
 
-.transactions-table-container {
-    background: var(--bg-2);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    margin-top: 20px;
-    overflow: hidden;
-}
-
-.transactions-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.transactions-table th {
-    background-color: var(--bg-2);
-    border-bottom: 1px solid var(--border);
-    padding: 16px;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
-.transaction-row {
-    height: auto;
-}
-
-.transactions-table td {
-    padding: 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    text-transform: capitalize;
-    color: var(--text-primary);
-    background-color: var(--bg);
-}
-
-.transaction-type {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-primary);
-    border: 1px solid var(--border-2);
-    
-}
-
-.transaction-type.transfer {
-    background-color: var(--surface);
-}
-
-.transaction-type.income {
-    background-color: var(--success-3);
-}
-
-.transaction-type.expense {
-    background-color: var(--danger-3);
-} 
-
 .table-footer {
     display: flex;
     justify-content: space-between;
@@ -135,33 +75,6 @@ a {
     background: var(--faded-bg-2);
 }
 
-.actions-cell {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    height: auto;
-}
-
-.actions-cell button {
-    width: 35px;
-    height: 35px;
-    padding: 10px;
-    border-radius: 50px;
-    border: none;
-    transition: all 0.3s ease-in-out;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-.actions-cell button:hover {
-    background-color: var(--faded-bg-2);
-}
-
-.actions-cell button svg {
-    color: var(--text-muted-2);
-}
-
 .title-cell,
 .description-cell {
     width: 20%;
@@ -178,3 +91,216 @@ a {
     width: 10%;
 }
 
+.transactions-table-container {
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.transactions-table th {
+    background-color: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.transaction-row {
+    position: relative;
+    background-color: var(--bg);
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.transactions-table td {
+    padding: 14px 16px;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: var(--text-primary);
+    background: transparent;
+    vertical-align: middle;
+}
+
+.transaction-row:hover {
+    background-color: var(--faded-bg-2);
+    background-color: var(--surface);
+    box-shadow:
+        inset 0 0 0 var(--border),
+        inset 0 1px 1px var(--border),
+        0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    z-index: 1;
+}
+
+.transaction-row:active {
+    background-color: var(--surface);
+}
+
+.transaction-row:focus-visible {
+    outline: 2px solid var(--custom-orange);
+    outline-offset: -2px;
+    z-index: 1;
+}
+
+.transaction-row:last-child td {
+    border-bottom: 1px solid var(--border);
+}
+
+.transaction-type {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    border: 1px solid var(--border-2);
+}
+
+.transaction-type.transfer {
+    background-color: var(--surface);
+}
+
+.transaction-type.income {
+    background-color: var(--success-3);
+}
+
+.transaction-type.expense {
+    background-color: var(--danger-3);
+}
+
+.title-cell {
+    font-weight: 600;
+}
+
+.description-cell {
+    color: var(--text-muted-2);
+}
+
+.date-cell,
+.amount-cell {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.amount-cell {
+    font-weight: 600;
+}
+
+.actions-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    height: 80px;
+    white-space: nowrap;
+}
+
+.actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.actions-cell .btn-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.actions-cell .btn-icon:hover {
+    background-color: var(--surface-3);
+}
+
+.actions-cell .btn-icon:active {
+    transform: scale(0.92);
+}
+
+.actions-cell .btn-icon:focus-visible {
+    outline: 2px solid var(--custom-orange);
+    outline-offset: 1px;
+}
+
+.actions-cell .btn-icon svg {
+    width: 14px;
+    height: 14px;
+    transition: color 0.2s ease;
+}
+
+.actions-cell .btn-icon .bi.bi-pencil-square {
+    color: var(--warning-3);
+    color: var(--custom-orange);
+}
+
+.actions-cell .btn-icon .bi.bi-trash3 {
+    color: var(--danger-4);
+}
+
+.actions-cell .btn-icon:hover svg {
+    background-color: var(--surface);
+}
+
+@media (hover: hover) {
+    .actions-wrapper {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    .transaction-row:hover .actions-wrapper,
+    .transaction-row:focus-within .actions-wrapper {
+        opacity: 1;
+    }
+}
+
+/* ---------- Empty state ---------- */
+.empty-transaction-state {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    text-transform: none;
+    cursor: default;
+}
+
+/* ---------- Column widths ---------- */
+.title-cell,
+.description-cell {
+    width: 20%;
+}
+
+.header-type,
+.header-amount,
+.actions-cell-heading {
+    width: 5%;
+}
+
+.header-category,
+.header-date {
+    width: 10%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .transaction-row,
+    .actions-cell button,
+    .actions-wrapper {
+        transition: none;
+    }
+}
