@@ -13,6 +13,8 @@ from .serializers import (
     BudgetCreateSerializer,
     BudgetUpdateSerializer,
 )
+
+from .pagination import TransactionPagination, CategoryPagination, BudgetPagination
 from .services import CategoryService, TransactionService, BudgetService
 from utils.response_helper_methods import success_response, error_response
 
@@ -20,26 +22,55 @@ from utils.response_helper_methods import success_response, error_response
 # Create your views here.
 
 #-----------------------------------------------
-# Category Views
+#   Category Views
 #-----------------------------------------------
 class CategoryListCreateView(APIView):
+    # Allow only authenticated users
     permission_classes = [permissions.IsAuthenticated]
     
+    # Read category data
     def get(self, request):
+        # Instantiate category metadata
         filters = {
             'type': request.query_params.get('type'),
             'is_system': request.query_params.get('is_system'),
         }
         
-        categories = CategoryService.get_user_categories(request.user, filters)
+        # Fetch user-owned category
+        categories = CategoryService.get_user_categories(
+            request.user, 
+            filters
+        )
         
-        serializer = CategoryResponseSerializer(categories, many=True)
+        # Instantiate the category pagination class
+        paginator = CategoryPagination()
+        
+        # Paginate the queryset
+        paginated_categories = paginator.paginate_queryset(
+            categories,
+            request, 
+            view=self
+        )
+        
+        # Serialize only the paginated data 
+        serializer = CategoryResponseSerializer(
+            paginated_categories, 
+            many=True
+        )
+        
+        paginated_data = {
+            "count": paginator.page.paginator.count,
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "result": serializer.data,        
+        }
         
         return success_response(
             message="Categories retrieved successfully.",
-            data=serializer.data
+            data=paginated_data
         )
-        
+    
+    
     def post(self, request):
         serializer = CategoryCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -120,9 +151,12 @@ class CategoryDetailView(APIView):
 # Transaction Views
 #-----------------------------------------------
 class TransactionListCreateView(APIView):
+    # Allow only authenticated users
     permission_classes = [permissions.IsAuthenticated]
 
+    # Read transaction data
     def get(self, request):
+        # Instantiate filtering metadata
         filters = {
             'type': request.query_params.get('type'),
             'category': request.query_params.get('category'),
@@ -133,18 +167,41 @@ class TransactionListCreateView(APIView):
             'amount_max': request.query_params.get('amount_max'),
         }
         
+        # Fetch user-owned transaction data
         transactions = (
             TransactionService
             .list_user_transactions(request.user, filters)
         )
+        
+        # Instantiate the transaction pagination class
+        paginator = TransactionPagination()
+        
+        # Paginate the queryset
+        paginated_transactions = paginator.paginate_queryset(
+            transactions,
+            request,
+            view=self
+        )
 
-        serializer = TransactionResponseSerializer(transactions, many=True)
+        # Serialize the paginated data
+        serializer = TransactionResponseSerializer(
+            paginated_transactions, 
+            many=True
+        )
+        
+        pagination_data = {
+            "count": paginator.page.paginator.count,
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "result": serializer.data,
+        }
 
         return success_response(
             message="Transactions retrieved successfully.",
-            data=serializer.data
+            data=pagination_data
         )
 
+    # Create transaction
     def post(self, request):
         serializer = TransactionCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -193,6 +250,7 @@ class TransactionDetailView(APIView):
                 status.HTTP_404_NOT_FOUND
             )
 
+
     def patch(self, request, transaction_id):
         serializer = TransactionUpdateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -216,6 +274,7 @@ class TransactionDetailView(APIView):
         except ValueError as e:
             return error_response(str(e))
 
+
     def delete(self, request, transaction_id):
         try:
             TransactionService.deactivate_transaction(
@@ -232,25 +291,54 @@ class TransactionDetailView(APIView):
 
 
 #-----------------------------------------------
-# Budget Views
+#   Budget Views
 #-----------------------------------------------
 class BudgetListCreateView(APIView):
+    # Allow only authenticated user
     permission_classes = [permissions.IsAuthenticated]
 
+    # Read budget data
     def get(self, request):
+        # Instantiate filtering metadata
         filters = {
             'category': request.query_params.get('category'),
             'period_type': request.query_params.get('period_type'),
         }
         
-        budgets = BudgetService.get_user_budgets(request.user, filters)
+        # Fetch user-owned budget data
+        budgets = BudgetService.get_user_budgets(
+            request.user, 
+            filters
+        )
+        
+        # Instantiate the budget pagination class
+        paginator = BudgetPagination()
+        
+        # Paginate the queryset
+        paginated_budgets = paginator.paginate_queryset(
+            budgets,
+            request,
+            view=self
+        )
 
-        serializer = BudgetResponseSerializer(budgets, many=True)
+        # Serialize the paginated data
+        serializer = BudgetResponseSerializer(
+            paginated_budgets, 
+            many=True
+        )
+        
+        paginated_data = {
+            "count": paginator.page.paginator.count,
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "result": serializer.data
+        }
 
         return success_response(
             message="Budgets retrieved successfully.",
-            data=serializer.data
+            data=paginated_data
         )
+
 
     def post(self, request):
         serializer = BudgetCreateSerializer(data=request.data)
