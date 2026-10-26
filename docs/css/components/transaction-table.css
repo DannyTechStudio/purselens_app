@@ -38,41 +38,50 @@ a {
 
 .table-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 16px;
     background: var(--bg-2);
 }
 
-.showing-text {
-    font-size: 13px;
-    color: #64748b;
-}
-
 .pagination {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     gap: 8px;
 }
 
-.page-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--border);
-    background: var(--bg-2);
-    border-radius: 6px;
+.pagination-display {
+    display: flex;
+    align-items: center;
+}
+
+.count-text {
+    font-size: 14px;
+    color: var(--custom-orange);
+}
+
+.pagination-btn-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-btn {
+    border: none;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+    background-color: transparent;
+    border-radius: 50px;
     cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
+    transition: all 0.3s ease-in-out;
 }
 
-.page-btn.active {
-    font-weight: bold;
-    background: var(--custom-orange);
-    color: var(--text-contrast);
-}
-
-.page-btn:hover:not(.active) {
-    background: var(--faded-bg-2);
+.pagination-btn:hover {
+    background-color: var(--surface-3);
 }
 
 .title-cell,
