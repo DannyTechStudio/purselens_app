@@ -74,7 +74,7 @@ a {
 }
 
 .message-display.success {
-    color: var(--text-primary);
+    color: white;
     background-color: var(--success);
 }
 
@@ -410,6 +410,7 @@ a {
 
 .insights-view-all-link:hover,
 .top-categories-card a:hover {
+    text-underline-offset: 3px;
     text-decoration: underline;
 }
 
@@ -432,7 +433,7 @@ a {
 .card-header-sub {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .card-header p {
@@ -449,13 +450,15 @@ a {
     font-weight: 500;
 }
 
-.card-header span {
-    font-size: 0.8rem;
+.card-header-sub span {
+    font-size: 0.9rem;
     font-weight: 700;
-    padding: 4px 8px;
+    padding: 2px 8px;
     color: var(--custom-orange);
-    border-radius: 10px;
-    background-color: var(--bg-2);
+    color: var(--orange-text);
+    border: 1px solid var(--orange-border);
+    background-color: var(--orange-bg);
+    border-radius: 50px;
 }
 
 .budget-metrics-wrapper {
@@ -591,6 +594,7 @@ a {
 }
 
 .budget-overview-card a:hover {
+    text-underline-offset: 3px;
     text-decoration: underline;
 }
 
@@ -609,10 +613,10 @@ a {
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.5rem;
-    padding: 5px 10px;
-    background-color: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    padding: 10px 10px;
+    background-color: var(--faded-bg-3);
+    background-color: var(--surface-4);
+    border-radius: 5px;
 }
 
 .top-cat-empty-state,
