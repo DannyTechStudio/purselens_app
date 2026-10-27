@@ -436,7 +436,7 @@
                     <div class="card-header">
                         <div class="card-header-sub">
                             <h2 class="budget-heading">Budget Overview</h2>
-                            <span id="date-display"></span>
+                            <span id="date-display" class="date-display"></span>
                         </div>
                         <p>Get a clear picture of your budget, spending, and remaining funds.</p>
                     </div>
@@ -503,7 +503,9 @@
                 <aside class="insights-feed-card" aria-labelledby="insights-heading">
                     <h2 class="insights-heading">Insights</h2>
             
-                    <div class="insight-container"></div>
+                    <div class="insight-container">
+                        <!-- Fetched insights rendered here. -->
+                    </div>
                     
                     <div class="view-all-wrapper">
                         <a href="../insights/insights.html" class="insights-view-all-link">
@@ -521,7 +523,10 @@
                 <section class="line-chart-section">
                     <div class="chart-wrapper">
                         <h2>Monthly Spending</h2>
-                        <canvas id="line-chart"></canvas>
+
+                        <canvas id="line-chart">
+                            <!-- Charts rendered here -->
+                        </canvas>
 
                         <div class="chart-empty-state" id="chart-empty-state"></div>
                     </div>
