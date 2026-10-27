@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalSpent = Number(budgetOverview.total_spent);
         const totalRemaining = Number(budgetOverview.total_remaining);
 
-        dateDisplay.textContent = budgetOverview.period;
+        dateDisplay.textContent = budgetOverview.period.label;
 
         budgetTtlVal.textContent = `$${totalBudget.toFixed(2)}`;
         budgeTtlSpentVal.textContent = `$${totalSpent.toFixed(2)}`;
