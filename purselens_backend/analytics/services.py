@@ -196,7 +196,7 @@ class AnalyticsService:
             "total_budget_amount": total_budget_amount,
             "total_spent": total_spent,
             "total_remaining": remaining,
-            "utilization_percent": utilization_percentage,
+            "overall_utilization": utilization_percentage,
             "budgets_on_track": budgets_on_track,
             "budgets_at_risk": budgets_at_risk,
             "budgets_exceeded": budgets_exceeded,
@@ -401,17 +401,17 @@ class AnalyticsService:
             insights.append(
                 {
                     "type": "info", 
-                    "message": f"{top_category['category__name']} is your highest spending category."
+                    "message": f"{top_category['category_name']} is your highest spending category."
                 }
             )
             
             if total_expense > 0:
-                percentage = (top_category["total_spent"] / total_expense) * 100
-                if percentage >= 40:
+                spending_percentage = (top_category["total_spent"] / total_expense) * 100
+                if spending_percentage >= 40:
                     insights.append(
                         {
                             "type": "warning",
-                            "message": f"{top_category['category__name']} accounts for {percentage:.2f}% of your expenses."
+                            "message": f"{top_category['category_name']} accounts for {spending_percentage:.2f}% of your expenses."
                         }
                     )
 
@@ -535,7 +535,7 @@ class AnalyticsService:
         results = []
         
         for category in categories:
-            percentage = (
+            spending_percentage = (
                 (category["amount"] / total_expense) * 100
                 if total_expense > 0 else 0
             )
@@ -545,7 +545,7 @@ class AnalyticsService:
                     "category_id": category["category__id"],
                     "category_name": category["category__name"],
                     "amount": category["amount"],
-                    "percentage": round(percentage, 2),
+                    "spending_percentage": round(spending_percentage, 2),
                 }
             )
             
