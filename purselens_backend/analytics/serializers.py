@@ -6,9 +6,11 @@ from finances.models import Transaction
 User = get_user_model()
 
 class TopCategorySerializer(serializers.Serializer):
-    category__id = serializers.UUIDField()
-    category__name = serializers.CharField()
+    category_id = serializers.UUIDField()
+    category_name = serializers.CharField()
     total_spent = serializers.DecimalField(max_digits=12, decimal_places=2)
+    transaction_count = serializers.IntegerField()
+    transaction_percentage = serializers.DecimalField(max_digits=6, decimal_places=2)
 
 class BudgetOverviewFieldsSerializer(serializers.Serializer):
     total_budget_amount = serializers.DecimalField(max_digits=12, decimal_places=2)
