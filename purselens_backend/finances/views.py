@@ -193,7 +193,7 @@ class TransactionListCreateView(APIView):
             "count": paginator.page.paginator.count,
             "next": paginator.get_next_link(),
             "previous": paginator.get_previous_link(),
-            "result": serializer.data,
+            "results": serializer.data,
         }
 
         return success_response(
@@ -331,7 +331,7 @@ class BudgetListCreateView(APIView):
             "count": paginator.page.paginator.count,
             "next": paginator.get_next_link(),
             "previous": paginator.get_previous_link(),
-            "result": serializer.data
+            "results": serializer.data
         }
 
         return success_response(
