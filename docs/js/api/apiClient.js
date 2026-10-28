@@ -19,18 +19,11 @@ function getCsrfToken() {
 
 
 async function ensureCsrfToken() {
-
-    console.log("ensureCsrfToken() called");
-
     let csrfToken = getCsrfToken();
-
-    console.log("Existing CSRF token:", csrfToken);
 
     if (csrfToken) {
         return csrfToken 
     }
-
-    console.log("Requesting CSRF cookie...");
 
     const response = await fetch(`${API_BASE_URL}/auth/csrf/`, {
         
@@ -38,16 +31,12 @@ async function ensureCsrfToken() {
         credentials: "include"
     });
 
-    console.log("CSRF response:", response.status);
-
     if (!response.ok) {
         
         throw new Error("Unable to initialize CSRF protection.");
     }
 
     csrfToken = getCsrfToken();
-
-    console.log("CSRF token after initialization:", csrfToken);
 
     if (!csrfToken) {
 
@@ -74,12 +63,16 @@ async function apiRequest(endpoint, options = {}) {
         headers["X-CSRFToken"] = csrfToken;
     }
 
+    const url = /^https?:\/\//i.test(endpoint)
+        ? endpoint
+        : `${API_BASE_URL}${endpoint}`;
+
     let response;
 
     try {
         
         response = await fetch(
-            `${API_BASE_URL}${endpoint}`,
+            url,
             {
                 ...options,
                 method,
@@ -106,7 +99,7 @@ async function apiRequest(endpoint, options = {}) {
             await refreshAccessToken();
 
             // Rebuild headers in case anything changed
-            headers = {
+            const retryHeaders = {
                 "Content-Type": "application/json",
                 ...options.headers
             };
@@ -114,7 +107,7 @@ async function apiRequest(endpoint, options = {}) {
             if (!["GET", "HEAD", "OPTIONS", "TRACE"].includes(method)) {
                 const csrfToken = await ensureCsrfToken();
 
-                headers["X-CSRFToken"] = csrfToken;
+                retryHeaders["X-CSRFToken"] = csrfToken;
             }
 
             // Retry the original request once
@@ -122,7 +115,7 @@ async function apiRequest(endpoint, options = {}) {
                 ...options,
                 method,
                 credentials: "include",
-                headers
+                retryHeaders
             });
             
         } catch (error) {
