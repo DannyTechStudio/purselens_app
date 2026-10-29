@@ -210,11 +210,14 @@ body.modal-open {
 #add-budget-btn,
 #add-transaction-btn {
     width: 60%;
+    color: white;
     border: none;
     background-color: var(--custom-orange);
 }
 
-#add-category-btn:hover {
+#add-category-btn:hover,
+#add-budget-btn:hover
+#add-transaction-btn:hover {
     background-color: var(--custom-orange-hover);
 }
 
@@ -222,12 +225,13 @@ body.modal-open {
 #budget-modal-cancel-btn,
 #transaction-modal-cancel-btn {
     width: 40%;
-    border: 2px solid var(--border-2);
-    background-color: var(--surface);
+    border: 1px solid var(--border-2);
+    color: var(--text-muted);
+    background-color: var(--surface-2);
 }
 
 #category-modal-cancel-btn:hover,
 #budget-modal-cancel-btn:hover,
 #transaction-modal-cancel-btn:hover {
-    background-color: var(--surface-3);
+    background-color: var(--surface);
 }
