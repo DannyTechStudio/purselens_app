@@ -194,15 +194,13 @@ fieldset input:focus {
     font-weight: bold;
     border: none;
     border-radius: 8px;
-    color: #1a1a1a;
-    color: var(--text-primary);
+    color: var(--bg);
     background-color: var(--custom-orange);
     transition: 0.3s ease-in-out;
     cursor: pointer;
 }
 
 #submit-btn:hover {
-    color: var(--custom-orange-text-color-hover);
     background-color: var(--custom-orange-hover);
 }
 
