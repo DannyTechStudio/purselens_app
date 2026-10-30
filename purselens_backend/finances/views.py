@@ -9,6 +9,7 @@ from .serializers import (
     TransactionResponseSerializer,
     TransactionCreateSerializer,
     TransactionUpdateSerializer,
+    TransactionFilterSerializer,
     BudgetResponseSerializer,
     BudgetCreateSerializer,
     BudgetUpdateSerializer,
@@ -62,7 +63,7 @@ class CategoryListCreateView(APIView):
             "count": paginator.page.paginator.count,
             "next": paginator.get_next_link(),
             "previous": paginator.get_previous_link(),
-            "result": serializer.data,        
+            "results": serializer.data,        
         }
         
         return success_response(
@@ -156,16 +157,16 @@ class TransactionListCreateView(APIView):
 
     # Read transaction data
     def get(self, request):
-        # Instantiate filtering metadata
-        filters = {
-            'type': request.query_params.get('type'),
-            'category': request.query_params.get('category'),
-            'is_recurring': request.query_params.get('is_recurring'),
-            'date_from': request.query_params.get('date_from'),
-            'date_to': request.query_params.get('date_to'),
-            'amount_min': request.query_params.get('amount_min'),
-            'amount_max': request.query_params.get('amount_max'),
-        }
+        # Validate transaction filtering parameters
+        filter_serializer = TransactionFilterSerializer(
+            data=request.query_params
+        )
+        
+        # Run validation and raise an exception if invalid
+        filter_serializer.is_valid(raise_exception=True)
+        
+        # Retrieve validated filter values
+        filters = filter_serializer.validated_data
         
         # Fetch user-owned transaction data
         transactions = (
@@ -183,9 +184,9 @@ class TransactionListCreateView(APIView):
             view=self
         )
 
-        # Serialize the paginated data
+        # Serialize the paginated transactions
         serializer = TransactionResponseSerializer(
-            paginated_transactions, 
+            paginated_transactions,
             many=True
         )
         
