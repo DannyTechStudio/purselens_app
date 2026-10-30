@@ -203,28 +203,32 @@ class TransactionService:
             is_active=True
         ).select_related("category").order_by("-created_at")
         
-        if filters:
-            if transaction_type := filters.get('type'):
-                qs = qs.filter(type=transaction_type)
-                
-            if category := filters.get('category'):
-                qs = qs.filter(category=category)
-                
-            if is_recurring := filters.get('is_recurring'):
-                qs = qs.filter(is_recurring=is_recurring)
-                
-            if date_from := filters.get('date_from'):
-                qs = qs.filter(transaction_date__gte=date_from)
-                 
-            if date_to := filters.get('date_to'):
-                qs = qs.filter(transaction_date__lte=date_to)
-                
-            if (amount_min := filters.get('amount_min')) is not None:
-                qs = qs.filter(amount__gte=amount_min)
-                
-            if amount_max := filters.get('amount_max'):
-                qs = qs.filter(amount__lte=amount_max)
-
+        if not filters:
+            return qs
+        
+        if transaction_type := filters.get("type"):
+            qs = qs.filter(type=transaction_type)
+            
+        if category := filters.get("category"):
+            qs = qs.filter(category_id=category)
+            
+        if "is_recurring" in filters:
+            qs = qs.filter(is_recurring=filters["is_recurring"])
+            
+        if start_date := filters.get("start_date"):
+            qs = qs.filter(transaction_date__gte=start_date)
+             
+        if end_date := filters.get("end_date"):
+            qs = qs.filter(transaction_date__lte=end_date)
+        
+        min_amount = filters.get("min_amount")
+        if min_amount is not None:
+            qs = qs.filter(amount__gte=min_amount)
+        
+        max_amount = filters.get("max_amount")
+        if max_amount is not None:
+            qs = qs.filter(amount__lte=max_amount)
+            
         return qs
 
     @staticmethod
