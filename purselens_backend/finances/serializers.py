@@ -70,7 +70,41 @@ class TransactionResponseSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = "__all__"
 
+class TransactionFilterSerializer(serializers.Serializer):
+    type = serializers.ChoiceField(
+        choices=["income", "expense", "transfer"],
+        required=False
+    )
+    category = serializers.UUIDField(required=False)
+    is_recurring = serializers.BooleanField(required=False)
+    start_date = serializers.DateField(required=False)
+    end_date = serializers.DateField(required=False)
+    min_amount = serializers.DecimalField(max_digits=12, decimal_places=2, min_value=0, required=False)
+    max_amount = serializers.DecimalField(max_digits=12, decimal_places=2, min_value=0, required=False)
 
+    def validate(self, attrs):
+        start_date = attrs.get("start_date")
+        end_date = attrs.get("end_date")
+        
+        min_amount = attrs.get("min_amount")
+        max_amount = attrs.get("max_amount")
+        
+        if start_date and end_date and start_date > end_date:
+            raise serializers.ValidationError({
+                "end_date": "The end date must be on or after the start date."
+            })
+    
+        if (
+            min_amount is not None 
+            and max_amount is not None 
+            and min_amount > max_amount
+        ):
+            raise serializers.ValidationError({
+                "max_amount": "The maximum amount must be greater than or equal to the minimum amount."
+            })
+            
+        return attrs
+    
 
 """
     Budget Serializers
