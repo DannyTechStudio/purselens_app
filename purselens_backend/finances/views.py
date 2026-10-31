@@ -11,6 +11,7 @@ from .serializers import (
     TransactionUpdateSerializer,
     TransactionFilterSerializer,
     BudgetResponseSerializer,
+    BudgetFilterSerializer,
     BudgetCreateSerializer,
     BudgetUpdateSerializer,
 )
@@ -301,10 +302,15 @@ class BudgetListCreateView(APIView):
     # Read budget data
     def get(self, request):
         # Instantiate filtering metadata
-        filters = {
-            'category': request.query_params.get('category'),
-            'period_type': request.query_params.get('period_type'),
-        }
+        filter_serializer = BudgetFilterSerializer(
+            data=request.query_params
+        )
+        
+        # Run validation and raise an exception if invalid
+        filter_serializer.is_valid(raise_exception=True)
+        
+        # Retrieve validated filter values
+        filters = filter_serializer.validated_data
         
         # Fetch user-owned budget data
         budgets = BudgetService.get_user_budgets(
