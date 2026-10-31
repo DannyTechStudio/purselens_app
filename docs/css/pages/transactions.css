@@ -218,10 +218,10 @@ a {
 }
 
 .type-chip span {
-    padding: 8px 16px;
+    padding: 8px 10px;
     background: var(--bg-2);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
     display: inline-block;
@@ -244,19 +244,49 @@ input[type="date"] {
     outline: none;
 }
 
-.apply-filters-btn {
-    background: var(--custom-orange);
-    color: var(--text-contrast);
+.separator {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.filter-group input:focus {
+    border: 2px solid var(--border-visible);
+    background-color: var(--surface);
+}
+
+.filter-group.amount-range-filter-wrapper input {
+    width: 120px;
+}
+
+.apply-filters-btn,
+.reset-filters-btn {
     padding: 8px 20px;
-    border: none;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
     font-weight: 500;
     transition: all 0.3s ease-in-out;
 }
 
+.apply-filters-btn {
+    border: none;
+    background: var(--custom-orange);
+    color: var(--text-contrast);
+}
+
 .apply-filters-btn:hover {
     background-color: var(--custom-orange-hover);
+}
+
+.reset-filters-btn {
+    border: 1px solid var(--border);
+    background-color: var(--surface-2);
+    color: var(--text-muted);
+}
+
+.reset-filters-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--surface);
 }
 
 .empty-transaction-state {
