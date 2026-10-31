@@ -335,13 +335,29 @@ class BudgetService:
             is_active=True
         ).select_related("category").order_by("-created_at")
         
-        if filters:
-            if category := filters.get('category'):
-                qs = qs.filter(category=category)
-                
-            if period_type := filters.get('period_type'):
-                qs = qs.filter(period_type=period_type)
-                
+        if not filters:
+            return qs
+        
+        if category := filters.get("category"):
+            qs = qs.filter(category=category)
+            
+        if type := filters.get("type"):
+            qs = qs.filter(period_type=type)
+            
+        if start_date := filters.get("start_date"):
+            qs = qs.filter(start_date__gte=start_date)
+             
+        if end_date := filters.get("end_date"):
+            qs = qs.filter(end_date__lte=end_date)
+        
+        min_amount = filters.get("min_amount")
+        if min_amount is not None:
+            qs = qs.filter(budget_amount__gte=min_amount)
+        
+        max_amount = filters.get("max_amount")
+        if max_amount is not None:
+            qs = qs.filter(budget_amount__lte=max_amount)
+            
         return qs
 
     @staticmethod
