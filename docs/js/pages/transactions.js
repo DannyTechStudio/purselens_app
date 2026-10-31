@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevPaginationBtn = document.getElementById("prev-paginate-btn");
     const nextPaginationBtn = document.getElementById("next-paginate-btn");
 
-
     /*-------------------------------------------------------
             TRACk PAGINATION STATE
     -------------------------------------------------------*/
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /*-------------------------------------------------------
-            RENDERING RECENT TRANSACTIONs
+            RENDERING RECENT TRANSACTIONS
     -------------------------------------------------------*/
     function renderTransactionsData(data) {
         const transactions = data;
@@ -171,14 +170,26 @@ document.addEventListener('DOMContentLoaded', () => {
             updatePaginationUI()
 
             // Disabling Pagination buttons when previous or next URL are null
-            if (paginationState.nextUrl === null) {
-                nextPaginationBtn.disabled = "true";
+            if (
+                paginationState.nextUrl === null &&
+                paginationState.previousUrl !== null
+            ) {
+                nextPaginationBtn.disabled = true;
                 nextPaginationBtn.style.cursor = "not-allowed";
-            }
 
-            if (paginationState.previousUrl === null) {
-                prevPaginationBtn.disabled = "true";
+                prevPaginationBtn.disabled = false;
+                prevPaginationBtn.style.cursor = "pointer";
+            }
+            
+            if (
+                paginationState.previousUrl === null &&
+                paginationState.nextUrl !== null
+            ) {
+                prevPaginationBtn.disabled = true;
                 prevPaginationBtn.style.cursor = "not-allowed";
+
+                nextPaginationBtn.disabled = false;
+                nextPaginationBtn.style.cursor = "pointer";
             }
             
             msgDisplay.textContent = response.message;
@@ -215,6 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadTransactions();
 
+    // Make the function accessible to other JavaScript files
+    window.loadTransactions = loadTransactions;
+
 
     /*-------------------------------------------------------
             PAGINATION BUTTONS FUNCTIONALITIES
@@ -225,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             loadTransactions(paginationState.nextUrl);
 
-            console.log(loadTransactions(paginationState.nextUrl));
+            console.log(paginationState.nextUrl);
             
         }
     });
@@ -237,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             loadTransactions(paginationState.previousUrl);
 
-            console.log(loadTransactions(paginationState.previousUrl));
+            console.log(paginationState.previousUrl);
 
         }
     });
