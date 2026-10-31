@@ -167,12 +167,12 @@
             </section>
 
             <section class="filter-block">
-                <form action="/api/transactions/" method="GET" class="filter-form">
+                <form id="filter-form" action="/api/transactions/" method="GET" class="filter-form">
             
                     <div class="filter-group type-filter-wrapper">
                         <label class="type-chip">
                             <input type="radio" name="type" value="all" checked hidden>
-                            <span>All transactions</span>
+                            <span>All</span>
                         </label>
                         <label class="type-chip">
                             <input type="radio" name="type" value="income" hidden>
@@ -195,23 +195,24 @@
                     <div class="filter-group category-filter-wrapper">
                         <select name="category" id="category-filter">
                             <option value="">All Categories</option>
-                            <option value="food">Food</option>
-                            <option value="utilities">Utilities</option>
+                            <!-- Other category options will be fetch -->
                         </select>
                     </div>
             
                     <div class="filter-group date-filter-wrapper">
-                        <input type="date" name="start_date" aria-label="Start Date">
+                        <span class="separator">From</span>
+                        <input type="date" id="start-date" name="start_date" aria-label="Start Date">
                         <span class="separator">to</span>
-                        <input type="date" name="end_date" aria-label="End Date">
+                        <input type="date" id="end-date" name="end_date" aria-label="End Date">
                     </div>
             
                     <div class="filter-group amount-range-filter-wrapper">
-                        <input type="number" name="min_amount" placeholder="Minimum amount" min="0">
-                        <input type="number" name="max_amount" placeholder="Maximum amount" min="0">
+                        <input type="number" name="min_amount" placeholder="Min amount" min="0">
+                        <input type="number" name="max_amount" placeholder="Max amount" min="0">
                     </div>
             
-                    <button type="submit" class="apply-filters-btn">Apply Filters</button>
+                    <button type="submit" class="apply-filters-btn">Apply filters</button>
+                    <button type="reset" class="reset-filters-btn">Reset</button>
                 </form>
             </section>
 
@@ -355,6 +356,8 @@
     </div>
 
     <script src="../../js/pages/transactions.js"></script>
+    <script src="../../js/components/transaction-categories.js"></script>
+    <script src="../../js/components/transaction-filters.js"></script>
     <script src="../../js/api/apiClient.js"></script>
     <script src="../../js/components/main.js"></script>
 </body>
