@@ -222,17 +222,18 @@ a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 #budget-btn,
 #category-btn {
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    background-color: var(--surface);
 }
 
 #budget-btn:hover,
 #category-btn:hover {
+    color: var(--text-contrast);
     background-color: var(--custom-orange);
 }
 
