@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         categories.forEach(category => {
             const selectOption = document.createElement('option');
 
-            selectOption.value = category.name;
+            selectOption.value = category.id;
             selectOption.textContent = category.name;
 
             transCatFilterSelect.append(
