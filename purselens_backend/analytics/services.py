@@ -578,6 +578,7 @@ class AnalyticsService:
                     "category_name": budget.category.name,
                     "budget_amount": budget.budget_amount,
                     "period": {
+                        "period_type": budget.period_type,
                         "start_date": budget.start_date,
                         "end_date": budget.end_date,
                     },
