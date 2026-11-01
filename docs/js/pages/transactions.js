@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTransactions();
 
     // Make the function accessible to other JavaScript files
-    window.loadTransactions = loadTransactions;
+    window.loadTrans = loadTransactions;
 
 
     /*-------------------------------------------------------
