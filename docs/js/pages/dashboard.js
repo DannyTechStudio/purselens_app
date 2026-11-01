@@ -355,8 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             
-            console.error("Dashboard error:", error);
-            
             msgDisplay.textContent = error.message;
             msgDisplay.classList.add('error');
             msgDisplay.style.display = "flex";
