@@ -9,6 +9,7 @@ from .serializers import (
     CashflowSerializer,
     BudgetPerformanceSerializer,
 )
+from .pagination import BudgetOverviewPagination
 from utils.response_helper_methods import success_response
 
 # Create your views here.
@@ -62,11 +63,27 @@ class BudgetPerformanceView(APIView):
     def get(self, request):
         data = AnalyticsService.get_budget_performance(request.user)
         
-        serializer = BudgetPerformanceSerializer(instance=data, many=True)
+        paginator = BudgetOverviewPagination()
+        
+        paginated_budget_overview = paginator.paginate_queryset(
+            data, request, view=self
+        )
+        
+        serializer = BudgetPerformanceSerializer(
+            paginated_budget_overview, 
+            many=True
+        )
+        
+        pagination_data = {
+            "count": paginator.page.paginator.count,
+            "next": paginator.get_next_link(),
+            "previous": paginator.get_previous_link(),
+            "results": serializer.data,
+        }
         
         return success_response(
             message="Your budgets performance retrieved successfully.",
-            data=serializer.data
+            data=pagination_data
         )
 
 class CashflowView(APIView):
