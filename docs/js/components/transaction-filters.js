@@ -91,11 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const queryString = queryParams.toString();
 
         const endpoint = queryString ? `/transactions/?${queryString}` : "/transactions/";
-
-        console.log("Transaction filter endpoint:", endpoint);
         
         // Fetch filtered transactions
-        await window.loadTransactions(endpoint);
+        await window.loadTrans(endpoint);
     });
 
 
@@ -108,8 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
 
             // Fetch all transactions without filtering parameters
-            window.loadTransactions("/transactions/");
-        });
+            window.loadTrans("/transactions/");
+        }, 0);
     });
-    
+
 });
