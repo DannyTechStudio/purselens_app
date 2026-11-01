@@ -92,6 +92,7 @@ class CashflowSerializer(serializers.Serializer):
 class BudgetPerformanceSerializer(serializers.Serializer):
     category_id = serializers.UUIDField()
     category_name = serializers.CharField()
+    budget_title = serializers.CharField()
     budget_amount = serializers.DecimalField(max_digits=12, decimal_places=2)
     period = serializers.JSONField()
     spent = serializers.DecimalField(max_digits=12, decimal_places=2)
