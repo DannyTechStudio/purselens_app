@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Your Budgets | PurseLens</title>
     <link rel="stylesheet" href="../../css/pages/budgets.css">
+    <link rel="stylesheet" href="../../css/components/navbar.css">
+    <link rel="stylesheet" href="../../css/components/modal.css">
     <link rel="stylesheet" href="../../css/themes/light.css">
     <link rel="stylesheet" href="../../css/themes/dark.css">
     <link rel="shortcut icon" href="../../assets/images/PurseLens_logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-----------------------------------------------------
             LEFT SIDE NAVIGATION WHEEL
-        ----------------------------------------------------->
+    ------------------------------------------------------>
     <aside class="global-sidebar" aria-label="Main Naviagtion">
     
         <div class="brand-logo-wrapper">
@@ -67,6 +70,17 @@
                         <span>Categories</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="../../pages/insights/insights.html" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stars"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z" />
+                        </svg>
+                        <span>Insights</span>
+                    </a>
+                </li>
             </ul>
     
             <ul class="nav-list system-links">
@@ -90,7 +104,7 @@
                 </li>
     
                 <li>
-                    <a href="" class="nav-item">
+                    <a href="" class="nav-item logout">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" aria-hidden="true">
                             <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
                             <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
@@ -101,10 +115,12 @@
             </ul>
         </nav>
     </aside>
+
+    <span class="message-display"></span>
     
     <!-----------------------------------------------------
                 MAIN WORKSPACE
-        ----------------------------------------------------->
+    ---------------------------------------------------->
     <div class="main-workspace-container">
         <header class="top-utility-bar">
             <form action="/budgets/search/" method="GET" class="search-form">
@@ -148,6 +164,96 @@
                 </button>
             </section>
 
+            <section class="filter-block">
+                <form action="/api/budgets/" method="GET" class="filter-form" id="filter-form">
+                    <div class="filter-group">
+                        <select name="category" id="budget-cat-select">
+                            <option value="">All Categories</option>
+                            <!-- Other user-owned categories will be fetched & displayed here -->
+                        </select>
+                    </div>
+                        
+                    <div class="filter-group">
+                        <select name="type" id="budget-period-types">
+                            <option value="">Budget Period Types</option>
+                            <option value="">All Period Types</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="biweekly">Bi-Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="semiannual">Semi-Annual</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <span class="separator">From</span>
+                        <input type="date" id="start-date" name="start_date" aria-label="Start Date">
+                        <span class="separator">to</span>
+                        <input type="date" id="end-date" name="end_date" aria-label="End Date">
+                    </div>
+
+                    <div class="filter-group amount-range-filter-wrapper">
+                        <input id="trans-min-amount" type="number" name="min_amount" placeholder="Min amount" min="0">
+                        <input id="trans-max-amount" type="number" name="max_amount" placeholder="Max amount" min="0">
+                    </div>
+
+                    <button type="submit" class="apply-filters-btn">Apply Filters</button>
+                    <button type="reset" class="reset-filters-btn">Reset</button>
+                </form>
+            </section>
+
+            <section class="budgets-table-container">
+                <table class="budgets-table">
+                    <thead>
+                        <tr>
+                            <th class="header-title">Title</th>
+                            <th class="header-category">Category</th>
+                            <th class="header-amount">Amount</th>
+                            <th class="header-type">Period Type</th>
+                            <th class="header-date">Start Date</th>
+                            <th class="header-date">End Date</th>
+                            <th class="actions-cell-heading">Actions</th>
+                        </tr>
+                    </thead>
+            
+                    <tbody class="table-body">
+                        <!-- Budget Rows goes here -->
+                    </tbody>
+                </table>
+            
+                <!-- Pagination Footer -->
+                <footer class="table-footer">
+                    <div class="pagination">
+                        <div class="pagination-display">
+                            <p class="count-text"> Showing
+                                <span class="count-display" id="start-count">1</span> to
+                                <span class="count-display" id="stop-count">10</span> of
+                                <span class="count-display" id="total-count">253</span> transactions
+                            </p>
+                        </div>
+                    
+                        <div class="pagination-btn-wrapper">
+                            <button class="pagination-btn" id="prev-paginate-btn" title="Newer budgets">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chevron-left preview-icon">
+                                    <path d="m15 18-6-6 6-6" />
+                                </svg>
+                            </button>
+                    
+                            <button class="pagination-btn" id="next-paginate-btn" title="Older budgets">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chevron-right preview-icon">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+
             <!-- Budget Creation Modal -->
             <div id="budget-modal-overlay">
                 <div class="cancel-btn-wrapper">
@@ -164,23 +270,23 @@
             
                     <form class="budget-form" action="/api/budgets/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label for="budget-title-input">Budget Title</label>
+                            <label class="required" for="budget-title-input">Budget Title</label>
                             <input type="text" name="title" id="budget-title-input" placeholder="Transportation Budget" required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="budget-category-input">Category</label>
+                            <label class="required" for="budget-category-input">Category</label>
                             <input type="text" name="category" id="budget-category-input" placeholder="Transportation" required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="budget-amount-input">Amount</label>
+                            <label class="required" for="budget-amount-input">Amount</label>
                             <input type="number" name="budget_amount" id="budget-amount-input" placeholder="200.00" min="1"
                                 required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="budget-period-type-select">Period Type</label>
+                            <label class="required" for="budget-period-type-select">Period Type</label>
                             <select name="period_type" id="budget-period-type-select" required>
                                 <option value="" selected disabled>Select budget period type</option>
                                 <option value="weekly">Weekly</option>
@@ -193,12 +299,12 @@
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="budget-start-date-input">Start Date</label>
+                            <label class="required" for="budget-start-date-input">Start Date</label>
                             <input type="date" name="start_date" id="budget-start-date-input" placeholder="2026-04-01" required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label for="budget-end-date-input">Start Date</label>
+                            <label class="required" for="budget-end-date-input">Start Date</label>
                             <input type="date" name="end_date" id="budget-end-date-input" placeholder="2026-04-30" required>
                         </fieldset>
             
@@ -210,94 +316,11 @@
                 </div>
             </div>
             
-            <section class="budget-summary-grid">
-                <div class="summary-card">
-                    <span>Total Budget</span>
-                    <div class="main-value">$4,500.00</div>
-                </div>
-
-                <div class="summary-card">
-                    <span>Total Spent</span>
-                    <div class="main-value">$2,845.50</div>
-                </div>
-
-                <div class="summary-card">
-                    <span>Remaining</span>
-                    <div class="main-value">$1,654.50</div>
-                </div>
-
-                <div class="summary-card">
-                    <span>Overall Utilization</span>
-                    <div class="main-value">63% <small>of total budget</small></div>
-                </div>
-            </section>
-            
-            <section class="category-budget-grid">
-
-                <!-- Example: At Risk -->
-                <article class="budget-card">
-                    <div class="card-top">
-                        <h3>Food & Dining</h3>
-                        <span class="status-badge at-risk">At Risk</span>
-                    </div>
-            
-                    <div class="card-stats">
-                        <div class="stat-row">
-                            <span>$750.00</span>
-                            <small>spent of</small>
-                            <span>$800.00</span>
-                        </div>
-
-                        <div class="progress-container">
-                            <div class="progress-fill warning" style="width: 93%"></div>
-                        </div>
-                        <span class="utilization-text">93% utilized</span>
-                    </div>
-                </article>
-            
-                <!-- Example: Exceeded -->
-                <article class="budget-card">
-                    <div class="card-top">
-                        <h3>Shopping</h3>
-                        <span class="status-badge exceeded">Exceeded</span>
-                    </div>
-            
-                    <div class="card-stats">
-                        <div class="stat-row">
-                            <span>$550.00</span>
-                            <small>spent of</small>
-                            <span>$400.00</span>
-                        </div>
-
-                        <div class="progress-container">
-                            <div class="progress-fill danger" style="width: 100%"></div>
-                        </div>
-                        <div class="utilization-text">137% utilized ($150 over)</div>
-                    </div>
-                </article>
-
-                <!-- Example: On Track -->
-                <article class="budget-card">
-                    <div class="card-top">
-                        <h3>Entertainment</h3>
-                        <span class="status-badge on-track">On Track</span>
-                    </div>
-            
-                    <div class="card-stats">
-                        <div class="stat-row">
-                            <span>$250.00</span>
-                            <small>spent of</small>
-                            <span>$450.00</span>
-                        </div>
-
-                        <div class="progress-container">
-                            <div class="progress-fill on-track" style="width: 56%"></div>
-                        </div>
-                        <div class="utilization-text">56% utilized</div>
-                    </div>
-                </article>
-            </section>
         </main>
     <script src="../../js/pages/budgets.js"></script>
+    <script src="../../js/components/budget-categories.js"></script>
+    <script src="../../js/components/budget-filters.js"></script>
+    <script src="../../js/api/apiClient.js"></script>
+    <script src="../../js/components/main.js"></script>
 </body>
 </html>
