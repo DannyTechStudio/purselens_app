@@ -576,6 +576,7 @@ class AnalyticsService:
                 {
                     "category_id": budget.category.id,
                     "category_name": budget.category.name,
+                    "budget_title": budget.title,
                     "budget_amount": budget.budget_amount,
                     "period": {
                         "period_type": budget.period_type,
