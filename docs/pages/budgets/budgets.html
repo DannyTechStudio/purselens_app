@@ -149,22 +149,65 @@
         </header>
 
         <main class="budget-content-view">
-            <!-- Budget Page Header -->
-            <section class="page-header">
-                <div class="header-text">
-                    <h1>Active Budgets</h1>
-                    <p>Track your current spending limits</p>
-                </div>
+            <section class="budget-perf-section">
+                <div class="budget-perf-wrapper">
+                    <div class="header-section">
+                        <div class="header-wrapper">
+                            <h1>Budget Performance</h1>
+                            <p>Track your budget allocations, spending, remaining balances, <br>and utilization across categories.</p>
+                        </div>
+                        
+                        <button type="submit" id="budget-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                                viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                            </svg>
+                            New Budget
+                        </button>
+                    </div>
 
-                <button type="submit" id="budget-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                    </svg>
-                    New Budget
-                </button>
+                    <div class="budget-perf-card-wrapper">
+                        <!-- Budget card -->
+                    </div>
+
+                    <div class="pagination">
+                        <div class="pagination-display">
+                            <p class="count-text"> Showing
+                                <span class="count-display" id="budget-perf-start-count"></span> to
+                                <span class="count-display" id="budget-perf-stop-count"></span> of
+                                <span class="count-display" id="budget-perf-total-count"></span> budget performances
+                            </p>
+                        </div>
+                    
+                        <div class="pagination-btn-wrapper">
+                            <button class="pagination-btn" id="perf-prev-paginate-btn" title="Newer budgets performance">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chevron-left preview-icon">
+                                    <path d="m15 18-6-6 6-6" />
+                                </svg>
+                            </button>
+                    
+                            <button class="pagination-btn" id="perf-next-paginate-btn" title="Older budgets performance">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chevron-right preview-icon">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section class="filter-block">
+            <!-- Budget Page Header -->
+            <section class="filter-section">
+                <div class="filter-block-header">
+                    <h2>Active Budgets</h2>
+                    <p>Explore your budgets, track allocated amounts and expenses, and manage your <br>spending across categories.</p>
+                </div>
+
                 <form action="/api/budgets/" method="GET" class="filter-form" id="filter-form">
                     <div class="filter-group">
                         <select name="category" id="budget-cat-select">
@@ -227,9 +270,9 @@
                     <div class="pagination">
                         <div class="pagination-display">
                             <p class="count-text"> Showing
-                                <span class="count-display" id="start-count">1</span> to
-                                <span class="count-display" id="stop-count">10</span> of
-                                <span class="count-display" id="total-count">253</span> transactions
+                                <span class="count-display" id="start-count"></span> to
+                                <span class="count-display" id="stop-count"></span> of
+                                <span class="count-display" id="total-count"></span> transactions
                             </p>
                         </div>
                     
@@ -318,6 +361,7 @@
             
         </main>
     <script src="../../js/pages/budgets.js"></script>
+    <script src="../../js/components//budget-performance.js"></script>
     <script src="../../js/components/budget-categories.js"></script>
     <script src="../../js/components/budget-filters.js"></script>
     <script src="../../js/api/apiClient.js"></script>
