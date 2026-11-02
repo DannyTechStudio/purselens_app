@@ -58,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
             budgetTableBody.innerHTML = `
                 <tr>
                     <td colspan="7">
-                        <p id="budget-table-msg-display">No budgets available.</p>
+                        <p id="budget-table-msg-display">
+                            There are currently no budgets to display.<br>
+                            Create a new budget to begin monitoring your spending across categories.
+                        </p>
                     </td>
                 </tr> `;
             
