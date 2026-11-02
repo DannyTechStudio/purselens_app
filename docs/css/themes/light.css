@@ -58,7 +58,6 @@
     --danger: #f20b0b;
     --danger-2: #fa7a7a2b;
     --danger-3: #ff00004e;
-    --danger-4: #ef4444;
     --danger-4: #f35c5c;
 
     --warning: #f7bc5c;
@@ -67,6 +66,18 @@
     --warning-4: #ffa6006c;
 
     --info: #1075e81b;
+
+    --on-track-color: #047857;
+    --on-track-bg: #ECFDF5;
+    --on-track-border: #A7F3D0;
+
+    --at-risk-color: #B45309;
+    --at-risk-bg: #FFFBEB;
+    --at-risk-border: #FDE68A;
+
+    --exceeded-color: #BE123C;
+    --exceeded-bg: #FFF1F2;
+    --exceeded-border: #FECDD3;
 
     /* Shadows */
     --shadow-sm: 2px 2px 4px rgba(0,0,0,0.08);
