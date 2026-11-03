@@ -173,20 +173,24 @@ a {
     border-radius: 20px;
     font-size: 12px;
     font-weight: 500;
-    color: var(--text-primary);
-    border: 1px solid var(--border-2);
 }
 
 .transaction-type.transfer {
-    background-color: var(--surface);
+    color: var(--transfer);
+    border: 1px solid var(--transfer-border);
+    background-color: var(--transfer-bg);
 }
 
 .transaction-type.income {
-    background-color: var(--success-3);
+    color: var(--on-track-color);
+    border: 1px solid var(--on-track-border);
+    background-color: var(--on-track-bg);
 }
 
 .transaction-type.expense {
-    background-color: var(--danger-3);
+    color: var(--exceeded-color);
+    border: 1px solid var(--exceeded-border);
+    background-color: var(--exceeded-bg);
 }
 
 .description-cell {
