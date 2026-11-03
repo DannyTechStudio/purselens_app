@@ -201,7 +201,7 @@ class TransactionService:
         qs = Transaction.objects.filter(
             user=user,
             is_active=True
-        ).select_related("category").order_by("-created_at")
+        ).select_related("category").order_by("-transaction_date")
         
         if not filters:
             return qs
@@ -333,7 +333,7 @@ class BudgetService:
         qs = Budget.objects.filter(
             user=user,
             is_active=True
-        ).select_related("category").order_by("-created_at")
+        ).select_related("category").order_by("-budget_date")
         
         if not filters:
             return qs
