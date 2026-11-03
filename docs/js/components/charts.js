@@ -58,10 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             data: incomeData,
 
                             pointRadius: 1,
-                            pointHoverRadius: 6,
-                            borderWidth: 3,
+                            pointHoverRadius: 2,
+                            borderWidth: 2,
                             borderColor: '#0077ff',
-                            tension: 0.42
+                            tension: 0
                         },
 
                         {
@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             data: expenseData,
 
                             pointRadius: 1,
-                            pointHoverRadius: 6,
-                            borderWidth: 3,
+                            pointHoverRadius: 2,
+                            borderWidth: 2,
                             borderColor: '#ef4444',
-                            tension: 0.42
+                            tension: 0
                         }
                     ]
                 },
