@@ -333,7 +333,7 @@ class BudgetService:
         qs = Budget.objects.filter(
             user=user,
             is_active=True
-        ).select_related("category").order_by("-budget_date")
+        ).select_related("category").order_by("-created_at")
         
         if not filters:
             return qs
