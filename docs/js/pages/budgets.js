@@ -157,29 +157,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updatePaginationUI();
 
-            // Disabling Pagination buttons when previous or next URL are null
-            if (
-                paginationState.nextUrl === null &&
-                paginationState.previousUrl !== null
-            ) {
-                nextPaginationBtn.disabled = true;
-                nextPaginationBtn.style.cursor = "not-allowed";
+            // Update pagination buttons state
+            prevPaginationBtn.disabled = paginationState.previousUrl === null;
+            prevPaginationBtn.style.cursor = prevPaginationBtn.disabled
+                ? "not-allowed"
+                : "pointer";
 
-                prevPaginationBtn.disabled = false;
-                prevPaginationBtn.style.cursor = "pointer";
-            }
+            nextPaginationBtn.disabled = paginationState.nextUrl === null;
+            nextPaginationBtn.style.cursor = nextPaginationBtn.disabled
+                ? "not-allowed"
+                : "pointer";
 
-            if (
-                paginationState.previousUrl === null &&
-                paginationState.nextUrl !== null
-            ) {
-                prevPaginationBtn.disabled = true;
-                prevPaginationBtn.style.cursor = "not-allowed";
-
-                nextPaginationBtn.disabled = false;
-                nextPaginationBtn.style.cursor = "pointer";
-            }
-
+            // Display success message with timeout
             msgDisplay.textContent = response.message;
             msgDisplay.classList.add('success');
             msgDisplay.style.display = "flex";
