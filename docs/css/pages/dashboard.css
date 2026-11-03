@@ -228,7 +228,7 @@ a {
 #budget-btn,
 #category-btn {
     color: var(--text-primary);
-    background-color: var(--surface);
+    background-color: var(--faded-bg);
 }
 
 #budget-btn:hover,
