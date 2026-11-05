@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             budgetTitle.textContent = budget.title;
             budgetCategory.textContent = budget.category_name;
-            budgetAmount.textContent = budget.budget_amount;
+            budgetAmount.textContent = `$${budget.budget_amount}`;
             budgetPeriodType.textContent = budget.period_type;
             budgetStartDate.textContent = budget.start_date;
             budgetEndDate.textContent = budget.end_date;
