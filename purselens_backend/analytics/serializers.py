@@ -62,6 +62,7 @@ class AnalyticsOutputSerializer(serializers.Serializer):
 
 class MonthlySummaryItemSerializer(serializers.Serializer):
     month = serializers.CharField()
+    year = serializers.IntegerField(min_value=1900, max_value=9999)
     income = serializers.DecimalField(max_digits=12, decimal_places=2)
     expense = serializers.DecimalField(max_digits=12, decimal_places=2)
     balance = serializers.DecimalField(max_digits=12, decimal_places=2)
@@ -76,7 +77,7 @@ class CategoriesSerializer(serializers.Serializer):
     category_id = serializers.UUIDField()
     category_name = serializers.CharField()
     amount = serializers.DecimalField(max_digits=12, decimal_places=2)
-    percentage = serializers.DecimalField(max_digits=6, decimal_places=2)
+    spending_percentage = serializers.DecimalField(max_digits=6, decimal_places=2)
 
 class CategoryBreakdownSerializer(serializers.Serializer):
     period = PeriodSerializer()
@@ -85,6 +86,7 @@ class CategoryBreakdownSerializer(serializers.Serializer):
 
 class CashflowSerializer(serializers.Serializer):
     month = serializers.CharField()
+    year = serializers.IntegerField(min_value=1900, max_value=9999)    
     inflow = serializers.DecimalField(max_digits=12, decimal_places=2)
     outflow = serializers.DecimalField(max_digits=12, decimal_places=2)
     net_flow = serializers.DecimalField(max_digits=12, decimal_places=2)
