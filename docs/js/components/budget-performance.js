@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const spentWrapper = document.createElement("div");
             
             const spentVal = document.createElement("span");
-            spentVal.textContent = performance.spent;
+            spentVal.textContent = `$${performance.spent}`;
 
             const spentValSupText = document.createElement("span");
             spentValSupText.textContent = "spent"
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalValSupText = document.createElement("span");
             
             const totalVal = document.createElement("span");
-            totalVal.textContent = performance.budget_amount;
+            totalVal.textContent = `$${performance.budget_amount}`;
 
             const progressBar = document.createElement("progress");
             progressBar.value = performance.spent;
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const remainWrapper = document.createElement("div");
             
             const remainVal = document.createElement("span");
-            remainVal.textContent = performance.remaining;
+            remainVal.textContent = `$${performance.remaining}`;
 
             const remainValSupText = document.createElement("span");
             remainValSupText.textContent = " remaining";
@@ -303,28 +303,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updatePaginationUI();
 
-            if (
-                paginationState.nextUrl === null &&
-                paginationState.previousUrl !== null
-            ) {
-                budgetPerfPagPrevBtn.disabled = true;
-                budgetPerfPagPrevBtn.style.cursor = "not-allowed";
-
-                budgetPerfPagNextBtn.disabled = false;
-                budgetPerfPagNextBtn.style.cursor = "pointer";
-            }
-
-            if (
-                paginationState.previousUrl === null &&
-                paginationState.nextUrl !== null
-            ) {
-                budgetPerfPagPrevBtn.disabled = true;
-                budgetPerfPagPrevBtn.style.cursor = "not-allowed";
-
-                budgetPerfPagNextBtn.disabled = false;
-                budgetPerfPagNextBtn.style.cursor = "pointer";
-            }
-
+            // Update pagination buttons state
+            budgetPerfPagPrevBtn.disabled = paginationState.previousUrl === null;
+            budgetPerfPagPrevBtn.style.cursor = budgetPerfPagPrevBtn.disabled
+                ? "not-allowed"
+                : "pointer";
+                
+            budgetPerfPagNextBtn.disabled = paginationState.nextUrl === null;
+            budgetPerfPagNextBtn.style.cursor = budgetPerfPagNextBtn.disabled
+                ? "not-allowed"
+                : "pointer";
+            
         } catch (e) {
 
             budgetPerfCardWrapper.innerHTML = `
