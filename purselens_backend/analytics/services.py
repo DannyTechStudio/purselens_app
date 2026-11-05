@@ -472,6 +472,7 @@ class AnalyticsService:
        
         for transaction in transactions:
             month_number = transaction.transaction_date.month
+            transaction_year = transaction.transaction_date.year
 
             if transaction.type == "income":
                 monthly_data[month_number]["income"] += transaction.amount
@@ -487,6 +488,7 @@ class AnalyticsService:
             results.append(
                 {
                     "month": month_abbr[month_number],
+                    "year": transaction_year,
                     "income": income,
                     "expense": expense,
                     "balance": income - expense
@@ -599,6 +601,7 @@ class AnalyticsService:
         return [
             {
                 "month": item["month"],
+                "year": item["year"],
                 "inflow": item["income"],
                 "outflow": item["expense"],
                 "net_flow": item["balance"]
