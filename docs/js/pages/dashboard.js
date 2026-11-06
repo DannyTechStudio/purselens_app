@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             transactionDes.textContent = transaction.description;
             transactionCategory.textContent = transaction.category_name;
             transactionDate.textContent = transaction.transaction_date;
-            transactionAmt.textContent = transaction.amount;
+            transactionAmt.textContent = `$${transaction.amount}`;
             
             transactionTypeVal.classList.add('transaction-type');
 
