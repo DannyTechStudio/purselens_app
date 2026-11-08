@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             year: "numeric"
         });
 
-        return `${formattedStartDate} - ${formattedEndDate}`;
+        return `${formattedStartDate}-${formattedEndDate}`;
     }
 
     /*------------------------------------------------------
@@ -100,20 +100,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const budgetStatus = document.createElement("small");
 
             if (performance.status === "on_track") {
-
-                budgetStatus.textContent = ("On track");
+                budgetStatus.textContent = ("● On track");
                 budgetStatus.classList.add("on-track");
             }
             
             if (performance.status === "at_risk") {
-
-                budgetStatus.textContent = ("At risk");
+                budgetStatus.textContent = ("● At risk");
                 budgetStatus.classList.add("at-risk");
             }
             
             if (performance.status === "exceeded") {
-
-                budgetStatus.textContent = ("Exceeded");
+                budgetStatus.textContent = ("● Exceeded");
                 budgetStatus.classList.add("exceeded");
             }
             
@@ -159,31 +156,38 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const spentAmtWrapper2 = document.createElement("div");
             
+            progressBar.classList.add("on-track");
+
             const remainWrapper = document.createElement("div");
             
             const remainVal = document.createElement("span");
-            remainVal.textContent = `$${performance.remaining}`;
-
+            
             const remainValSupText = document.createElement("span");
-            remainValSupText.textContent = " remaining";
 
-            const remainWrapper2 = document.createElement("div");
+            if (Number(performance.spent) < Number(performance.budget_amount)) {
+                remainVal.textContent = `$${Number(performance.remaining).toFixed(2)} remaining`;
+            }
+
+            if (Number(performance.spent) > Number(performance.budget_amount)) {
+                const overBudgetAmt = performance.spent - performance.budget_amount;
+                remainVal.textContent = `$${(overBudgetAmt).toFixed(2)} over budget`;
+            }
+            
+            if (Number(performance.spent) === Number(performance.budget_amount)) {
+                remainVal.textContent = `$${performance.remaining} budget limit reached`;
+            }
+
+            const percentWrapper = document.createElement("div");
             
             const percentVal = document.createElement("span");
             percentVal.textContent = `${performance.utilization}%`;
 
             const percentValSupText = document.createElement("span");
             
-            const periodWrapper = document.createElement("div");
-            
-            const typeWrapper = document.createElement("div");
-            const periodTypeSupText = document.createElement("span");
+            const cardFooter = document.createElement("div");
             
             const periodTypeVal = document.createElement("span");
             periodTypeVal.textContent = performance.period.period_type;
-
-            const durationWrapper = document.createElement("div");
-            const durationValSupText = document.createElement("span");
 
             const formattedDates = formatDate(
                 performance.period.start_date, performance.period.end_date
@@ -192,8 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const durationVal = document.createElement("span");
             durationVal.textContent = formattedDates;
 
-            cardTitleWrapper.append(cardTitle, catTitleWrapper);
-            catTitleWrapper.append(catWrapper, budgetStatus);
+            cardTitleWrapper.append(catTitleWrapper, budgetStatus);
+            catTitleWrapper.append(cardTitle, catWrapper);
             catWrapper.append(catNameSupText, catNameVal);
 
             progWrapper.append(spentAmtWrapper, progressBar, spentAmtWrapper2);
@@ -202,18 +206,16 @@ document.addEventListener("DOMContentLoaded", () => {
             spentWrapper.append(spentVal, spentValSupText);
             totalWrapper.append(totalValSupText, totalVal);
             
-            spentAmtWrapper2.append(remainWrapper, remainWrapper2);
+            spentAmtWrapper2.append(remainWrapper, percentWrapper);
             remainWrapper.append(remainVal, remainValSupText);
-            remainWrapper2.append(percentValSupText, percentVal);
+            percentWrapper.append(percentValSupText, percentVal);
 
-            periodWrapper.append(typeWrapper, durationWrapper);
-            typeWrapper.append(periodTypeSupText, periodTypeVal);
-            durationWrapper.append(durationValSupText, durationVal);
+            cardFooter.append(periodTypeVal, durationVal);
 
             budgetPerfCard.append(
                 cardTitleWrapper,
                 progWrapper,
-                periodWrapper,
+                cardFooter,
             );
 
             budgetPerfCardWrapper.append(budgetPerfCard);
@@ -231,7 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
             catTitleWrapper.classList.add("category-title-wrapper");
             catNameSupText.classList.add("faded");
             catNameSupText.innerText = "Category: ";
-            catNameVal.classList.add("not-faded");
+            catNameVal.classList.add("faded");
             catNameVal.id = "category-name";
             
             progWrapper.classList.add("progress-wrapper");
@@ -258,24 +260,30 @@ document.addEventListener("DOMContentLoaded", () => {
             remainVal.id = "remaining";
             remainValSupText.classList.add("faded");
             
-            remainWrapper2.classList.add("remain-wrapper");
+            percentWrapper.classList.add("remain-wrapper");
             percentVal.classList.add("not-faded");
             percentVal.id = "util-percent";
             percentValSupText.classList.add("faded");
+
+            if (performance.status === "on_track") {
+                remainVal.classList.add("on-track-text");
+                percentVal.classList.add("on-track-text");
+            }
             
-            periodWrapper.classList.add("period-wrapper");
+            if (performance.status === "at_risk") {
+                remainVal.classList.add("at-risk-text");
+                percentVal.classList.add("at-risk-text");
+            }
             
-            typeWrapper.classList.add("type-wrapper");
-            periodTypeSupText.classList.add("faded");
-            periodTypeSupText.textContent = "Period Type:";
-            periodTypeVal.classList.add("not-faded");
-            periodTypeVal.id = "period-type";
+            if (performance.status === "exceeded") {
+                remainVal.classList.add("exceeded-text");
+                percentVal.classList.add("exceeded-text");
+            }
             
-            durationWrapper.classList.add("duration-wrapper");
-            durationValSupText.classList.add("faded");
-            durationValSupText.textContent = "Duration:";
-            durationVal.classList.add("not-faded");
-            durationVal.id = "period-duration";
+            cardFooter.classList.add("card-footer");
+            periodTypeVal.classList.add("faded");
+            periodTypeVal.style.textTransform = "capitalize";
+            durationVal.classList.add("faded");
 
         });
     }
