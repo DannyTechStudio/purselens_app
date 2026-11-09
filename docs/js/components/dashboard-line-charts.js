@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (monthlySummaries.length === 0) {
                 
-                chartContainer.style.display = 'none';
                 chartEmptyState.style.display = 'flex';
                 
                 chartEmptyState.innerHTML = `
@@ -27,8 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-
-            chartContainer.style.display = 'block';
             chartEmptyState.style.display = 'none';
 
             const monthlyData = new Map(
@@ -114,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Failed to load monthly summary:', error);
 
-            chartContainer.style.display = 'none';
             chartEmptyState.style.display = 'flex';
 
             chartEmptyState.innerHTML = `
