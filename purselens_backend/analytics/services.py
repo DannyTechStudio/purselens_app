@@ -245,7 +245,7 @@ class AnalyticsService:
                 "period_type": "all_time",
                 "start_date": None,
                 "end_date": None,
-                "label": "All time",
+                "label": "Full Historical Period",
             }
         
         if period == "current_month":
@@ -264,7 +264,7 @@ class AnalyticsService:
                 "period_type": "last_month",
                 "start_date": start_date,
                 "end_date": end_date,
-                "label": "Last month"
+                "label": "Previous month"
             }
             
         if period == "last_3_months_current_month_inclusive":
@@ -272,7 +272,7 @@ class AnalyticsService:
                 "period_type": period,
                 "start_date": get_month_start(2),
                 "end_date": current_date,
-                "label": "Last 3 months (Current month inclusive)"
+                "label": "Last 3 months (Current inclusive)"
             }
         
         if period == "last_3_months_current_month_exclusive":
@@ -282,7 +282,7 @@ class AnalyticsService:
                 "period_type": period,
                 "start_date": get_month_start(3),
                 "end_date": end_date,
-                "label": "Last 3 months (Current month exclusive)"
+                "label": "Last 3 months (Current exclusive)"
             }
             
         if period == "last_6_months_current_month_inclusive":
@@ -290,7 +290,7 @@ class AnalyticsService:
                 "period_type": period,
                 "start_date": get_month_start(5),
                 "end_date": current_date,
-                "label": "Last 6 months (Current month inclusive)"
+                "label": "Last 6 months (Current inclusive)"
             }
             
         if period == "last_6_months_current_month_exclusive":
@@ -300,7 +300,7 @@ class AnalyticsService:
                 "period_type": period,
                 "start_date": get_month_start(6),
                 "end_date": end_date,
-                "label": "Last 6 months (This month exclusive)"
+                "label": "Last 6 months (Current exclusive)"
             }
             
         if period == "current_year":
@@ -321,7 +321,7 @@ class AnalyticsService:
                 "period_type": "last_year",
                 "start_date": date(last_year, 1, 1),
                 "end_date": date(last_year, 12, 31),
-                "label": "Last year"
+                "label": "Previous year"
             }
             
     @staticmethod
