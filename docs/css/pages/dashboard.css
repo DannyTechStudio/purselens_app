@@ -185,6 +185,10 @@ a {
     position: relative;
 }
 
+.welcome-heading-wrapper p {
+    color: var(--text-muted);
+}
+
 .greetings-wrapper {
     display: flex;
     align-items: center;
@@ -638,7 +642,7 @@ a {
 .rank-card-title,
 .title-card-val {
     color: var(--text-primary);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .rank-card-bot-title,
