@@ -231,6 +231,7 @@ body {
 .header-wrapper p {
     font-size: 18px;
     font-weight: 500;
+    color: var(--text-muted);
 }
 
 .header-section {
@@ -467,7 +468,11 @@ body {
 }
 
 .filter-block-header h2 {
-    font-weight: 500;
+    font-weight: 600;
+}
+
+.filter-block-header p {
+    color: var(--text-muted);
 }
 
 .filter-form {
