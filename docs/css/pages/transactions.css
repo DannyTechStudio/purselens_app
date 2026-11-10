@@ -181,6 +181,10 @@ a {
     position: relative;
 }
 
+.heading-block p {
+    color: var(--text-muted);
+}
+
 .action-btn-wrapper {
     display: flex;
     align-items: flex-end;
