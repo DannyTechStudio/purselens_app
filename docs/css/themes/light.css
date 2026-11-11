@@ -72,16 +72,16 @@
     --transfer-border: #b8d8f3;
 
     --on-track-color: #047857;
-    --on-track-bg: #ECFDF5;
-    --on-track-border: #A7F3D0;
+    --on-track-bg: #d1f9e6;
+    --on-track-border: #98e0be;
 
     --at-risk-color: #B45309;
     --at-risk-bg: #FFFBEB;
     --at-risk-border: #FDE68A;
 
     --exceeded-color: #BE123C;
-    --exceeded-bg: #FFF1F2;
-    --exceeded-border: #FECDD3;
+    --exceeded-bg: #fad6d8;
+    --exceeded-border: #e8a6ad;
 
     /* Shadows */
     --shadow-sm: 2px 2px 4px rgba(0,0,0,0.08);
