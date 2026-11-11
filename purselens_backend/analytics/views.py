@@ -8,6 +8,7 @@ from .serializers import (
     CategoryBreakdownSerializer,
     CashflowSerializer,
     BudgetPerformanceSerializer,
+    InsightCardSerializer,
 )
 from .pagination import BudgetOverviewPagination
 from utils.response_helper_methods import success_response
@@ -96,5 +97,18 @@ class CashflowView(APIView):
         
         return success_response(
             message="Your cashflow retrieved successfully.",
+            data=serializer.data
+        )
+
+class InsightView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request):
+        data = AnalyticsService.get_financial_insights(request.user)
+        
+        serializer = InsightCardSerializer(instance=data, many=True)
+        
+        return success_response(
+            message= "Financial insights retrieved successfully.",
             data=serializer.data
         )
