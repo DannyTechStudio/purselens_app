@@ -327,8 +327,8 @@ class AnalyticsService:
     @staticmethod
     def generate_insights(user, summary, budget_overview, top_categories) -> list:
         insights = []
+        total_income = summary["total_income"]
         total_expense = summary["total_expense"]
-        balance = summary["balance"]
         
         exceeded = budget_overview["budgets_exceeded"]
         at_risk = budget_overview["budgets_at_risk"]
@@ -337,12 +337,20 @@ class AnalyticsService:
         most_used_category = CategoryService.get_most_used_category(user)
         
         # Most used Category insights
-        insights.append(
-            {
-                "type": "info",
-                "message": f"{most_used_category.name} is the most used category with {most_used_category.transaction_count} transactions"
-            }
-        )
+        if most_used_category:
+            insights.append(
+                {
+                    "type": "info",
+                    "message": f"{most_used_category.name} is the most used category with {most_used_category.transaction_count} transactions"
+                }
+            )
+        else:
+            insights.append(
+                {
+                    "type": "info",
+                    "message": "You haven't recorded enough transactions to identify your most used category yet."
+                }
+            )
 
         # Budget state insights
         if exceeded > 0:
@@ -375,7 +383,7 @@ class AnalyticsService:
             )
 
         # Savings metric insights
-        savings_rate = (balance / total_expense * 100) if total_expense > 0 else 0
+        savings_rate = ((total_income - total_expense) / total_income * 100) if total_expense > 0 else 0
         if savings_rate >= 25:
             insights.append(
                 {
@@ -410,7 +418,7 @@ class AnalyticsService:
                 if spending_percentage >= 40:
                     insights.append(
                         {
-                            "type": "warning",
+                            "type": "info",
                             "message": f"{top_category['category_name']} accounts for {spending_percentage:.2f}% of your expenses."
                         }
                     )
@@ -609,3 +617,16 @@ class AnalyticsService:
             for item in monthly_summary
         ]
     
+    @classmethod
+    def get_financial_insights(cls, user):
+        income_transactions = cls._get_current_period_income(user)
+        expense_transactions = cls._get_current_period_expenses(user)
+        budgets = cls._get_user_current_budgets(user)
+        
+        summary = cls.get_financial_summary(income_transactions, expense_transactions)
+        top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
+        budget_overview = cls.get_budget_overview(expense_transactions, budgets)
+
+        insights = cls.generate_insights(user, summary, budget_overview, top_categories)
+        
+        return insights
