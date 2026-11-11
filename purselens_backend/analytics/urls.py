@@ -5,6 +5,7 @@ from .views import (
     CategoryBreakdownView,
     BudgetPerformanceView,
     CashflowView,
+    InsightView,
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('category-breakdown/', CategoryBreakdownView.as_view(), name='category-breakdown'),
     path('budget-performance/', BudgetPerformanceView.as_view(), name='budget-performance'),
     path('cashflow/', CashflowView.as_view(), name='cashflow'),
+    path('insights/', InsightView.as_view(), name='insights'),
 ]
