@@ -5,9 +5,9 @@ from django.core.exceptions import ValidationError
 def validate_max_words(value):
     words = value.split()
     
-    if len(words) > 100:
+    if len(words) > 10:
         raise ValidationError(
-            "Transaction description cannot be more than 100 words."
+            "Description is too long. Please provide a shorter description."
         )
-        
+      
         
