@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from .validators import validate_max_words
 from .models import (
     Category, 
     CategoryTypeEnum, 
@@ -18,12 +19,24 @@ from .models import (
 class CategoryCreateSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=50)
     type = serializers.ChoiceField(choices=CategoryTypeEnum.choices)
+    short_description = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        validators=[validate_max_words]
+    )
     
 class CategoryUpdateSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=50, required=False)
     type = serializers.ChoiceField(choices=CategoryTypeEnum.choices, required=False)
-    is_active = serializers.BooleanField(required=False) 
-
+    short_description = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        allow_null=True,
+        validators=[validate_max_words]
+    )
+    is_active = serializers.BooleanField(required=False)
+    
 class CategoryResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -38,7 +51,12 @@ class TransactionCreateSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=12, decimal_places=2)
     type = serializers.ChoiceField(choices=TransactionTypeEnum.choices)
     category_id = serializers.UUIDField()
-    description = serializers.CharField(max_length=1000, required=False, allow_blank=True)
+    description = serializers.CharField(
+        required=False, 
+        allow_blank=True, 
+        allow_null=True, 
+        validators=[validate_max_words]
+    )
     transaction_date = serializers.DateField()
     is_recurring = serializers.BooleanField(default=False)
     frequency = serializers.ChoiceField(
@@ -53,7 +71,12 @@ class TransactionUpdateSerializer(serializers.Serializer):
     category_id = serializers.UUIDField(required=False)
     type = serializers.ChoiceField(choices=TransactionTypeEnum.choices, required=False)
 
-    description = serializers.CharField(max_length=1000, required=False, allow_blank=True)
+    description = serializers.CharField(
+        required=False, 
+        allow_blank=True, 
+        allow_null=True, 
+        validators=[validate_max_words]
+    )
     transaction_date = serializers.DateField(required=False)
 
     is_recurring = serializers.BooleanField(required=False)
