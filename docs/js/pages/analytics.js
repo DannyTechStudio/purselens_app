@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const inflowValue = document.getElementById("inflow");
     const outflowValue = document.getElementById("outflow");
     const netflowValue = document.getElementById("netflow");
-    const msgDisplay = document.getElementById("msg-display");
 
     /*-------------------------------------------------------------
             Update Navigation buttons Style
