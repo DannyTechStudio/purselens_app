@@ -243,7 +243,7 @@ body {
 .category-card {
     height: max-content;
     background: var(--bg);
-    padding: 12px;
+    padding: 20px 12px;
     border-radius: 12px;
     border: 1px solid var(--border);
     transition: transform 0.3s;
@@ -259,28 +259,50 @@ body {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 15px;
+    padding: 0;
 }
 
 .category-type {
     width: max-content;
     text-align: center;
     text-transform: capitalize;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 600;
     padding: 2px 8px;
-    border: 1px solid var(--border);
     border-radius: 50px;
 }
 
 .category-type.transfer {
-    background-color: var(--surface);
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
 }
 
 .category-type.income {
-    background-color: var(--success-3);
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
 }
 
 .category-type.expense {
-    background-color: var(--danger-3);
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+    border: 1px solid var(--exceeded-border);
+}
+
+.category-desc {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-muted);
+}
+
+.category-title {
+    text-transform: capitalize;
+}
+
+.category-desc::first-letter {
+    text-transform: uppercase;
 }
 
 .action-menu {
@@ -319,46 +341,64 @@ body {
     display: none;
     position: absolute;
     right: 0;
-    /* aligns with right edge of trigger */
-    top: calc(100% + 4px);
-    background: var(--surface);
-    border: 1px solid var(--border-2);
-    border-radius: 4px;
+    top: calc(100% + 2px);
     list-style: none;
-    margin: 0;
-    padding: 5px;
-    min-width: 60px;
+    padding: 10px 0;
+    width: 200px;
     z-index: 100;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface-2);
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.122);
 }
 
 /* Shown when .open is toggled */
 .action-dropdown.open {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .action-btn {
-    width: 100%;
-    color: var(--text-primary);
-    background: var(--custom-orange);
-    margin: 2px 0;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 10px;
     text-align: center;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 5px;
+    border: 1px solid var(--border-2);
+    transition: all 0.3s ease-in-out;
 }
 
-.action-btn:hover {
-    background-color: var(--custom-orange-hover);
-    color: var(--bg);
+.action-btn.edit,
+.action-btn.delete {
+    background-color: var(--bg);
+}
+
+.action-btn.edit span,
+.action-btn.edit svg {
+    color: var(--transfer-color);
+}
+
+.action-btn.delete span,
+.action-btn.delete svg {
+    color: var(--danger);
+}
+
+.action-btn.edit:hover {
+    border: 1px solid var(--border);
+    background-color: var(--transfer-bg);
 }
 
 .action-btn.delete:hover {
-    background-color: var(--danger);
-    color: var(--text-contrast);
+    border: 1px solid var(--border);
+    background-color: var(--exceeded-bg);
 }
 
 .category-card h3 {
@@ -471,6 +511,8 @@ body {
 }
 
 .insight-cta-wrapper p {
+    line-height: 1.2;
+    font-size: 16px;
     color: var(--text-muted);
 }
 
