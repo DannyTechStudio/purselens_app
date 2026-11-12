@@ -180,12 +180,18 @@
             
                     <form class="category-form" action="/api/category/" method="POST">
                         <fieldset class="input-fieldset">
-                            <label class="required for="category-name-input">Name</label>
+                            <label class="required" for="category-name-input">Category Name</label>
                             <input type="text" name="name" id="category-name-input" placeholder="Transportation" required>
+                        </fieldset>
+
+                        <fieldset class="input-fieldset">
+                            <label class="required" for="category-desc-input">Short Description</label>
+                            <input type="text" name="name" id="category-desc-input" 
+                                placeholder="Expenses related to commuting and other travel activities" required>
                         </fieldset>
             
                         <fieldset class="input-fieldset">
-                            <label class="required for="category-type-dropdown">Category Type</label>
+                            <label class="required" for="category-type-dropdown">Category Type</label>
                             <select name="type" id="category-type-dropdown" required>
                                 <option value="" selected disabled>Select Category Type</option>
                                 <option value="income">Income</option>
@@ -328,6 +334,7 @@
 
     <script src="../../js/api/apiClient.js"></script>
     <script src="../../js/pages/categories.js"></script>
+    <!-- <script src="../../js/pages/insights.js"></script> -->
     <script src="../../js/components/main.js"></script>
 </body>
 </html>
