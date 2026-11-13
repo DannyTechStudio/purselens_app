@@ -355,22 +355,25 @@ a {
     align-items: flex-start;
     gap: 0.5rem;
     border-radius: 12px;
-    border: 1px solid var(--border-2);
 }
 
 .insight-block.info {
+    border: 1px solid var(--border-2);
     background-color: var(--info);
 }
 
 .insight-block.success {
+    border: 1px solid var(--border-2);
     background-color: var(--success-3);
 }
 
 .insight-block.warning {
+    border: 1px solid var(--border-2);
     background-color: var(--warning-4);
 }
 
-.insight-block.danger {
+.insight-block.critical {
+    border: 1px solid var(--border-2);
     background-color: var(--danger-3);
 }
 
@@ -385,6 +388,30 @@ a {
     border-radius: 50px;
     color: var(--text-primary);
     background-color: var(--faded-bg);
+}
+
+.info-type {
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
+}
+
+.success-type {
+    color: var(--on-track-color); 
+    background-color: var(--on-track-bg); 
+    border: 1px solid var(--on-track-border);
+}
+
+.warning-type {
+    color: var(--at-risk-color); 
+    background-color: var(--at-risk-bg); 
+    border: 1px solid var(--at-risk-border);
+}
+
+.critical-type {
+    color: var(--exceeded-color); 
+    background-color: var(--exceeded-bg); 
+    border: 1px solid var(--exceeded-border);
 }
 
 .insight-message {
