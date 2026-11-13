@@ -296,19 +296,23 @@ document.addEventListener('DOMContentLoaded', () => {
             insightMsg.classList.add('insight-message');
 
             if (insightLabel.textContent === 'info') {
-                insightBlock.classList.add('info');
+                insightLabel.classList.add('info-type');
+                insightBlock.classList.add('info-type');
             }
             
             if (insightLabel.textContent === 'success') {
-                insightBlock.classList.add('success');
+                insightLabel.classList.add('success-type');
+                insightBlock.classList.add('success-type');
             }
 
             if (insightLabel.textContent === 'warning') {
-                insightBlock.classList.add('warning');
+                insightLabel.classList.add('warning-type');
+                insightBlock.classList.add('warning-type');
             }
 
-            if (insightLabel.textContent === 'danger') {
-                insightBlock.classList.add('danger');
+            if (insightLabel.textContent === 'critical') {
+                insightLabel.classList.add('critical-type');
+                insightBlock.classList.add('critical-type');
             }
 
             insightBlock.append(
