@@ -471,7 +471,7 @@ class AnalyticsService:
                     insights.append(
                         {
                             "type": "info",
-                            "message": f"{top_category['category_name']} accounts for {spending_percentage:.2f}% of your expenses."
+                            "message": f"{top_category['category_name']} accounts for {spending_percentage:.1f}% of your expenses."
                         }
                     )
 
