@@ -356,7 +356,7 @@ class AnalyticsService:
         if exceeded > 0:
             insights.append(
                 {
-                    "type": "danger", 
+                    "type": "critical", 
                     "message": f"You have exceeded {exceeded} budget(s)."
                     }
             )
@@ -371,7 +371,7 @@ class AnalyticsService:
             insights.append(
                 {
                     "type": "success", 
-                    "message": "All budgets are currently on track."
+                    "message": "Great job! All your budgets are within their allocated spending limits."
                 }
             )
         if total_budget == 0:
