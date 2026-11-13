@@ -93,13 +93,44 @@ class AnalyticsService:
         total_income = income_transactions.aggregate(total=Sum("amount"))["total"] or 0
         total_expense = expense_transactions.aggregate(total=Sum("amount"))["total"] or 0
         balance = total_income - total_expense
-
+        
         return {
             "total_income": total_income,
             "total_expense": total_expense,
             "balance": balance
         }
-
+        
+    # @staticmethod
+    # def get_recent_financial_summary(user):
+    #     now = timezone.now()
+        
+    #     recent_income_transactions = Transaction.objects.filter(
+    #         user=user,
+    #         type="income",
+    #         is_active=True,
+    #         transaction_date__year=now.year,
+    #         transaction_data__month=now.month,
+    #     )
+        
+    #     recent_expense_transactions = Transaction.objects.filter(
+    #         user=user,
+    #         type="expense",
+    #         is_active=True,
+    #         transaction_date__year=now.year,
+    #         transaction_data__month=now.month,
+    #     )
+        
+    #     total_income = recent_income_transactions.aggregate(total=Sum("amount"))["total"] or 0
+    #     total_expense = recent_expense_transactions.aggregate(total=Sum("amount"))["total"] or 0
+    #     balance = total_income - total_expense
+        
+    #     return {
+    #         "total_income": total_income,
+    #         "total_expense": total_expense,
+    #         "balance": balance
+    #     }
+        
+        
     @staticmethod
     def get_top_categories(expense_transactions, limit=5):
         total_expense_transactions = expense_transactions.count()
@@ -323,7 +354,7 @@ class AnalyticsService:
                 "end_date": date(last_year, 12, 31),
                 "label": "Previous year"
             }
-            
+    
     @staticmethod
     def generate_insights(user, summary, budget_overview, top_categories) -> list:
         insights = []
@@ -382,23 +413,44 @@ class AnalyticsService:
                 }
             )
 
-        # Savings metric insights
-        savings_rate = ((total_income - total_expense) / total_income * 100) if total_expense > 0 else 0
-        if savings_rate >= 25:
-            insights.append(
-                {
-                    "type": "success", 
-                    "message": "Excellent savings rate this month."
-                }
-            )
-        elif savings_rate < 10 and total_expense > 0:
-            insights.append(
-                {
-                    "type": "warning", 
-                    "message": "Your savings rate is lower than recommended."
-                }
-            )
-
+        # Remaining income insights
+        if total_income > 0:
+            remaining_balance = total_income - total_expense
+            
+            remaining_rate = (remaining_balance / total_income) * 100
+            
+            if remaining_rate >= 25:
+                insights.append(
+                    {
+                        "type": "success", 
+                        "message": "You've retained an excellent portion of your income after covering expenses this month."
+                    }
+                )
+            elif remaining_rate >= 10:
+                insights.append(
+                    {
+                        "type": "success",
+                        "message": "You're maintaining a positive balance after expenses. Keep managing your spending wisely."
+                    }
+                )    
+            
+            elif remaining_rate > 0 and remaining_rate < 10:
+                insights.append(
+                    {
+                        "type": "warning", 
+                        "message": "Your remaining balance is relatively low. Consider reviewing your spending habits."
+                    }
+                )
+            else:
+                insights.append(
+                    {
+                        "type": "critical",
+                        "message": "Your expenses have exceeded your income. Review your spending to avoid further deficits."
+                    }
+                )
+        else:
+            return 0
+    
         # Top category trends and dominance insights
         top_categories = list(top_categories)
         top_category = (
@@ -438,6 +490,7 @@ class AnalyticsService:
         top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
         insights = cls.generate_insights(user, summary, budget_overview, top_categories)[:4]
+        # insights = cls.get_recent_financial_summary(user, summary, budget_overview, top_categories)[:4]
 
         # Fetch independent services
         recent_transactions = (
