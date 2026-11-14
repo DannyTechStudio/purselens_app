@@ -231,7 +231,6 @@
         
             <!-- Charts Section -->
             <section class="charts-container">
-
                 <div class="bar-chart-wrapper">
                     <div class="bar-chart-header">
                         <h2>Monthly Summary</h2>
@@ -290,6 +289,56 @@
                     </ul>
                 </div>
             </section>
+
+            <!-- Insight Section -->
+            <section class="insight-section">
+                <div class="insights-container">
+                    <div class="heading-section">
+                        <div class="insight-header">
+                            <h2>Financial Insights</h2>
+                            <p>
+                                Discover intelligent, system-generated insights into your spending habits,<br> budget performance, and overall financial
+                                health.
+                            </p>
+                        </div>
+
+                        <div class="insight-metrics-wrapper" role="tablist">
+                            <button class="insight-metrics-filter-btn in-use" data-filter="all">
+                                <p class="metrics-title">All Insights</p>
+                                <span class="metrics-value" id="all-insight-count"></span>
+                            </button>
+
+                            <button class="insight-metrics-filter-btn" data-filter="info">
+                                <p class="metrics-title">Informational</p>
+                                <span class="metrics-value" id="info-count"></span>
+                            </button>
+
+                            <button class="insight-metrics-filter-btn" data-filter="success">
+                                <p class="metrics-title">Success</p>
+                                <span class="metrics-value" id="success-count"></span>
+                            </button>
+
+                            <button class="insight-metrics-filter-btn" data-filter="warning">
+                                <p class="metrics-title">Warnings</p>
+                                <span class="metrics-value" id="warning-count"></span>
+                            </button>
+
+                            <button class="insight-metrics-filter-btn" data-filter="critical">
+                                <p class="metrics-title">Critical</p>
+                                <span class="metrics-value" id="critical-count"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="insight-wrapper" id="insight-wrapper">
+                        <!-- Fetch insights goes here -->
+                    </div>
+
+                    <p class='empty-insight-state hidden'>
+                        No insights currently available for the selected type.
+                    </p>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -297,6 +346,7 @@
     <script src="../../js/pages/analytics.js"></script>
     <script src="../../js/components/analytics-doughout-charts.js"></script>
     <script src="../../js/components/analytics-bar-chart.js"></script>
+    <script src="../../js/pages/insights.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
