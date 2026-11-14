@@ -228,8 +228,9 @@ a {
 }
 
 .charts-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
     gap: 24px;
 }
 
@@ -245,7 +246,12 @@ a {
 }
 
 .bar-chart-wrapper {
+    width: 70%;
     align-items: flex-start;
+}
+
+.doughnut-chart-wrapper {
+    width: 30%;
 }
 
 .bar-chart-header,
@@ -275,7 +281,6 @@ a {
 }
 
 .chart-header-wrapper form select {
-    /* appearance: none; */
     padding: 2px;
     font: inherit;
     font-size: 14px;
@@ -366,6 +371,7 @@ a {
 
 .faded {
     color: var(--text-muted);
+    background-color: transparent;
 }
 
 .category-list {
@@ -428,3 +434,176 @@ a {
     gap: 0.5rem;
 }
 
+.insight-section {
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+}
+
+.insights-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+}
+
+.heading-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.insight-header h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.insight-header p {
+    color: var(--text-muted);
+    line-height: 1.2;
+    margin-top: 0.5rem;
+}
+
+.insight-metrics-wrapper,
+.insight-metrics-filter-btn {
+    display: flex;
+    align-items: center;
+}
+
+.insight-metrics-wrapper {
+    gap: 1rem;
+}
+
+.insight-metrics-filter-btn {
+    gap: 0.2rem;
+    padding: 5px 10px;
+    background-color: var(--bg);
+    border: none;
+    border-radius: 50px;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.insight-metrics-filter-btn:hover {
+    color: var(--text-contrast);
+    background-color: var(--custom-orange);
+}
+
+.in-use {
+    color: var(--text-contrast);
+    background-color: var(--custom-orange);
+}
+
+.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.insight-metrics-filter-btn p,
+.insight-metrics-filter-btn span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.insight-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.insight-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex;
+    gap: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.insight-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.insight-card .insight-heading {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.insight-card .insight-message {
+    font-size: 16px;
+}
+
+.insight-type-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 2px 5px;
+    width: max-content;
+    border-radius: 50px;
+}
+
+.insight-type-wrap span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.info-type {
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
+}
+
+.success-type {
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
+}
+
+.warning-type {
+    color: var(--at-risk-color);
+    background-color: var(--at-risk-bg);
+    border: 1px solid var(--at-risk-border);
+}
+
+.critical-type {
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+    border: 1px solid var(--exceeded-border);
+}
+
+.faded {
+    width: max-content;
+    padding: 20px;
+    line-height: 1.2;
+    font-size: 16px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    background-color: var(--faded-bg);
+}
+
+.error-state,
+.empty-insight-state {
+    width: max-content;
+    padding: 20px;
+    line-height: 1.2;
+    font-size: 16px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    background-color: var(--faded-bg);
+}
+
+.empty-insight-state {
+    margin-left: 5rem;
+    margin-top: 3rem;
+}
