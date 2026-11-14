@@ -100,37 +100,6 @@ class AnalyticsService:
             "balance": balance
         }
         
-    # @staticmethod
-    # def get_recent_financial_summary(user):
-    #     now = timezone.now()
-        
-    #     recent_income_transactions = Transaction.objects.filter(
-    #         user=user,
-    #         type="income",
-    #         is_active=True,
-    #         transaction_date__year=now.year,
-    #         transaction_data__month=now.month,
-    #     )
-        
-    #     recent_expense_transactions = Transaction.objects.filter(
-    #         user=user,
-    #         type="expense",
-    #         is_active=True,
-    #         transaction_date__year=now.year,
-    #         transaction_data__month=now.month,
-    #     )
-        
-    #     total_income = recent_income_transactions.aggregate(total=Sum("amount"))["total"] or 0
-    #     total_expense = recent_expense_transactions.aggregate(total=Sum("amount"))["total"] or 0
-    #     balance = total_income - total_expense
-        
-    #     return {
-    #         "total_income": total_income,
-    #         "total_expense": total_expense,
-    #         "balance": balance
-    #     }
-        
-        
     @staticmethod
     def get_top_categories(expense_transactions, limit=5):
         total_expense_transactions = expense_transactions.count()
@@ -358,6 +327,7 @@ class AnalyticsService:
     @staticmethod
     def generate_insights(user, summary, budget_overview, top_categories) -> list:
         insights = []
+        
         total_income = summary["total_income"]
         total_expense = summary["total_expense"]
         
@@ -372,6 +342,7 @@ class AnalyticsService:
             insights.append(
                 {
                     "type": "info",
+                    "title": "Most Active Category",
                     "message": f"{most_used_category.name} is the most used category with {most_used_category.transaction_count} transactions"
                 }
             )
@@ -379,6 +350,7 @@ class AnalyticsService:
             insights.append(
                 {
                     "type": "info",
+                    "title": "Transaction Activity",
                     "message": "You haven't recorded enough transactions to identify your most used category yet."
                 }
             )
@@ -387,28 +359,32 @@ class AnalyticsService:
         if exceeded > 0:
             insights.append(
                 {
-                    "type": "critical", 
+                    "type": "critical",
+                    "title": "Budget Limit Exceeded",
                     "message": f"You have exceeded {exceeded} budget(s)."
-                    }
+                }
             )
         if at_risk > 0:
             insights.append(
                 {
-                    "type": "warning", 
+                    "type": "warning",
+                    "title": "Budget Warning",
                     "message": f"{at_risk} budget(s) is/are nearing their limit(s)."
                 }
             )
         if at_risk == 0 and exceeded == 0 and total_budget > 0:
             insights.append(
                 {
-                    "type": "success", 
+                    "type": "success",
+                    "title": "Budgets on Track",
                     "message": "Great job! All your budgets are within their allocated spending limits."
                 }
             )
         if total_budget == 0:
             insights.append(
                 {
-                    "type": "info", 
+                    "type": "info",
+                    "title": "Budget Planning",
                     "message": "You have not created any budget yet."
                 }
             )
@@ -422,7 +398,8 @@ class AnalyticsService:
             if remaining_rate >= 25:
                 insights.append(
                     {
-                        "type": "success", 
+                        "type": "success",
+                        "title": "Excellent Income Retention",
                         "message": "You've retained an excellent portion of your income after covering expenses this month."
                     }
                 )
@@ -430,6 +407,7 @@ class AnalyticsService:
                 insights.append(
                     {
                         "type": "success",
+                        "title": "Positive Income Balance",
                         "message": "You're maintaining a positive balance after expenses. Keep managing your spending wisely."
                     }
                 )    
@@ -437,7 +415,8 @@ class AnalyticsService:
             elif remaining_rate > 0 and remaining_rate < 10:
                 insights.append(
                     {
-                        "type": "warning", 
+                        "type": "warning",
+                        "title": "Low Remaining Balance",
                         "message": "Your remaining balance is relatively low. Consider reviewing your spending habits."
                     }
                 )
@@ -445,11 +424,27 @@ class AnalyticsService:
                 insights.append(
                     {
                         "type": "critical",
+                        "title": "Spending Exceeds Income",
                         "message": "Your expenses have exceeded your income. Review your spending to avoid further deficits."
                     }
                 )
         else:
-            return 0
+            if total_expense > 0:
+                insights.append(
+                    {
+                        "type": "info",
+                        "title": "Income Not Recorded Yet",
+                        "message": "You've recorded expenses but no income for this period. Add your income to get a more complete financial overview."
+                    }
+                )
+            else:
+                insights.append(
+                    {
+                        "type": "info",
+                        "title": "No Financial Activity",
+                        "message": "No transaction(income or expenses) have been recorded for this period. Start tracking your transactions to receive financial insights."
+                    }
+                )
     
         # Top category trends and dominance insights
         top_categories = list(top_categories)
@@ -460,7 +455,8 @@ class AnalyticsService:
         if top_category:
             insights.append(
                 {
-                    "type": "info", 
+                    "type": "info",
+                    "title": "Top Spending Category",
                     "message": f"{top_category['category_name']} is your highest spending category."
                 }
             )
@@ -471,6 +467,7 @@ class AnalyticsService:
                     insights.append(
                         {
                             "type": "info",
+                            "title": "High Spending Concentration",
                             "message": f"{top_category['category_name']} accounts for {spending_percentage:.1f}% of your expenses."
                         }
                     )
@@ -490,7 +487,6 @@ class AnalyticsService:
         top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
         insights = cls.generate_insights(user, summary, budget_overview, top_categories)[:4]
-        # insights = cls.get_recent_financial_summary(user, summary, budget_overview, top_categories)[:4]
 
         # Fetch independent services
         recent_transactions = (
