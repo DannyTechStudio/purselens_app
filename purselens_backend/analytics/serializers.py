@@ -50,6 +50,7 @@ class FinancialOverview(serializers.Serializer):
 
 class InsightCardSerializer(serializers.Serializer):
     type = serializers.CharField()
+    title = serializers.CharField()
     message = serializers.CharField()
     
 class AnalyticsOutputSerializer(serializers.Serializer):
