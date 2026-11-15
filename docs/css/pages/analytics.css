@@ -188,7 +188,7 @@ a {
 .metrics-card {
     height: max-content;
     background: var(--bg);
-    padding: 20px;
+    padding: 15px;
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: var(--shadow-sm);
@@ -225,6 +225,31 @@ a {
 .card-value {
     font-size: 2rem;
     font-weight: 800;
+}
+
+.percent-change-val {
+    width: max-content;
+    width: 120px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+}
+
+.increase {
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+}
+
+.decrease {
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+}
+
+.balanced {
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
 }
 
 .charts-container {
