@@ -358,23 +358,27 @@ a {
 }
 
 .insight-block.info {
-    border: 1px solid var(--border-2);
-    background-color: var(--info);
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
 }
 
 .insight-block.success {
-    border: 1px solid var(--border-2);
-    background-color: var(--success-3);
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
 }
 
 .insight-block.warning {
-    border: 1px solid var(--border-2);
-    background-color: var(--warning-4);
+    color: var(--at-risk-color);
+    background-color: var(--at-risk-bg);
+    border: 1px solid var(--at-risk-border);
 }
 
 .insight-block.critical {
-    border: 1px solid var(--border-2);
-    background-color: var(--danger-3);
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+    border: 1px solid var(--exceeded-border);
 }
 
 .insight-label {
@@ -412,6 +416,12 @@ a {
     color: var(--exceeded-color); 
     background-color: var(--exceeded-bg); 
     border: 1px solid var(--exceeded-border);
+}
+
+.insight-heading {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: capitalize;
 }
 
 .insight-message {
