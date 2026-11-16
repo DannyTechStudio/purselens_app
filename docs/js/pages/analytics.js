@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const cashflowPrevArrow = document.getElementById("left-arrow");
     const monthDisplay = document.getElementById("month-display");
     const cashflowNextArrow = document.getElementById("right-arrow");
@@ -85,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Show indicators
         indicators.forEach(indicator => {
-            indicator.style.display = "";
+            indicator.style.display = "block";
         });
 
 
