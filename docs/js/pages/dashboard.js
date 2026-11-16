@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
             remainingPercentValue = (totalRemaining / totalBudget) * 100;
         }
 
-        spentPercent.textContent = `${spentPercentValue.toFixed(2)}%`;
-        RemainlPercent.textContent = `${remainingPercentValue.toFixed(2)}%`;
+        spentPercent.textContent = `${spentPercentValue.toFixed(1)}%`;
+        RemainlPercent.textContent = `${remainingPercentValue.toFixed(1)}%`;
         
         // Progress Bar
         utilizationProg.value = totalSpent;
@@ -277,12 +277,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Rendering Insights
     function renderInsights(data) {
-        const renderInsights = data.insights;
+        const insights = data.insights;
         const insightsContainer = document.querySelector('.insight-container');
 
         insightsContainer.innerHTML = '';
 
-        renderInsights.forEach(insight => {
+        if (!insights || insights.length === 0) {
+            insightsContainer.innerHTML = `
+                <p class="empty-insight-state">No insights yet. Start tracking your spending to see trends.</p>
+            `;
+        }
+
+        insights.forEach(insight => {
             const insightBlock = document.createElement('div');
             const insightLabel = document.createElement('span');
             const insightTitle = document.createElement('h2');
@@ -352,6 +358,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await apiGet('/dashboard/');
             renderDashboardData(response.data);
 
+            // Store insight data in session storage
+            const insights = response.data.insights;
+            sessionStorage.setItem('Dashboard Insights', JSON.stringify(insights));
+
             msgDisplay.textContent = response.message;
             msgDisplay.classList.add('success');
             msgDisplay.style.display = "flex";
@@ -376,7 +386,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    loadDashboard()
+    loadDashboard();
+
+    window.insightsRenFunc = renderInsights;
 });    
 
 
