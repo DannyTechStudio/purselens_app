@@ -344,7 +344,17 @@ a {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 1rem;
+}
+
+.empty-insight-state {
+    color: var(--text-muted);
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    background-color: var(--faded-bg);
+    border-radius: 10px;
+    margin-top: 1rem;
 }
 
 .insight-block {
@@ -420,12 +430,13 @@ a {
 
 .insight-heading {
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 16px;
     text-transform: capitalize;
 }
 
 .insight-message {
     font-size: 16px;
+    line-height: 1.2;
 }
 
 .insight-row {
@@ -469,7 +480,7 @@ a {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .card-header-sub {
@@ -479,8 +490,9 @@ a {
 }
 
 .card-header p {
-    width: 60%;
+    width: 100%;
     font-size: 1rem;
+    color: var(--text-muted);
 }
 
 .budget-heading,
@@ -492,14 +504,13 @@ a {
     font-weight: 500;
 }
 
-.card-header-sub span {
+.card-header-sub .date-display {
     font-size: 0.9rem;
     font-weight: 700;
     padding: 2px 8px;
-    color: var(--custom-orange);
-    color: var(--orange-text);
-    border: 1px solid var(--orange-border);
-    background-color: var(--orange-bg);
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
     border-radius: 50px;
 }
 
@@ -535,6 +546,7 @@ a {
 .budget-metrics-card small,
 .budget-metrics-card small span {
     font-size: 0.9rem;
+    font-weight: 600;
     color: var(--text-primary);
 }
 
