@@ -443,39 +443,96 @@ body {
     gap: 1rem;
 }
 
+.empty-insight-state {
+    color: var(--text-muted);
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+    background-color: var(--faded-bg);
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
 .insight-block {
-    padding: 10px 15px 10px 8px;
+    width: 100%;
+    padding: 10px 12px 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
     border-radius: 12px;
-    border: 1px solid var(--border-2);
 }
 
 .insight-block.info {
-    background-color: var(--info);
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
+}
+
+.insight-block.success {
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
 }
 
 .insight-block.warning {
-    background-color: var(--warning-4);
+    color: var(--at-risk-color);
+    background-color: var(--at-risk-bg);
+    border: 1px solid var(--at-risk-border);
 }
 
-.insight-block.danger {
-    background-color: var(--danger-3);
+.insight-block.critical {
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+    border: 1px solid var(--exceeded-border);
 }
 
 .insight-label {
-    font-size: 14px;
-    color: var(--text-primary);
-    background-color: var(--faded-bg);
     display: block;
-    margin-bottom: 10px;
+    width: max-content;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: capitalize;
     border: 1px solid var(--border-2);
     border-radius: 50px;
-    width: max-content;
-    padding: 4px 10px;
+    color: var(--text-primary);
+    background-color: var(--faded-bg);
+}
+
+.info-type {
+    color: var(--transfer-color);
+    background-color: var(--transfer-bg);
+    border: 1px solid var(--transfer-border);
+}
+
+.success-type {
+    color: var(--on-track-color);
+    background-color: var(--on-track-bg);
+    border: 1px solid var(--on-track-border);
+}
+
+.warning-type {
+    color: var(--at-risk-color);
+    background-color: var(--at-risk-bg);
+    border: 1px solid var(--at-risk-border);
+}
+
+.critical-type {
+    color: var(--exceeded-color);
+    background-color: var(--exceeded-bg);
+    border: 1px solid var(--exceeded-border);
+}
+
+.insight-block .insight-heading {
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: capitalize;
 }
 
 .insight-message {
     font-size: 16px;
-    color: var(--text-primary);
+    line-height: 1.2;
 }
 
 .insights-view-all-link {
