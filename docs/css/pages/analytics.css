@@ -229,7 +229,6 @@ a {
 
 .percent-change-val {
     width: max-content;
-    width: 120px;
     padding: 3px 10px;
     font-size: 12px;
     font-weight: 600;
@@ -460,8 +459,8 @@ a {
 }
 
 .insight-section {
-    margin-top: 3rem;
-    margin-bottom: 5rem;
+    min-height: 100vh;
+    padding: 2rem 0;
 }
 
 .insights-container {
