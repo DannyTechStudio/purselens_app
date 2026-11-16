@@ -285,12 +285,16 @@ document.addEventListener('DOMContentLoaded', () => {
         renderInsights.forEach(insight => {
             const insightBlock = document.createElement('div');
             const insightLabel = document.createElement('span');
+            const insightTitle = document.createElement('h2');
             const insightMsg = document.createElement('p');
 
             insightBlock.classList.add('insight-block');
 
             insightLabel.classList.add('insight-label');
             insightLabel.textContent = insight.type;
+
+            insightTitle.textContent = insight.title;
+            insightTitle.classList.add("insight-heading");
             
             insightMsg.textContent = insight.message
             insightMsg.classList.add('insight-message');
@@ -316,8 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             insightBlock.append(
-                insightLabel, 
-                insightMsg
+                insightLabel,
+                insightTitle,
+                insightMsg,
             );
 
             insightsContainer.appendChild(insightBlock);
