@@ -486,7 +486,7 @@ class AnalyticsService:
         summary = cls.get_financial_summary(income_transactions, expense_transactions)
         top_categories = list(cls.get_top_categories(expense_transactions, limit=5))
         budget_overview = cls.get_budget_overview(expense_transactions, budgets)
-        insights = cls.generate_insights(user, summary, budget_overview, top_categories)[:4]
+        insights = cls.generate_insights(user, summary, budget_overview, top_categories)[:3]
 
         # Fetch independent services
         recent_transactions = (
