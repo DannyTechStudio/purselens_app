@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="../../css/pages/transactions.css">
     <link rel="stylesheet" href="../../css/components/transaction-table.css">
     <link rel="stylesheet" href="../../css/components/navbar.css">
-    <link rel="stylesheet" href="../../css/components/modal.css">
+    <link rel="stylesheet" href="../../css/components/transaction-modal.css">
+    <!-- <link rel="stylesheet" href="../../css/components/modal.css"> -->
     <link rel="stylesheet" href="../../css/themes/light.css">
     <link rel="stylesheet" href="../../css/themes/dark.css">
     <link rel="shortcut icon" href="../../assets/images/PurseLens_logo.png" type="image/x-icon">
@@ -149,7 +150,7 @@
                 </div>
                 
                 <div class="action-btn-wrapper">
-                    <button type="submit" id="transaction-btn">
+                    <button type="submit" id="transaction-modal-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                         </svg>
@@ -189,9 +190,11 @@
                     </div>
             
                     <div class="filter-group category-filter-wrapper">
-                        <select name="category" id="category-filter">
+                        <select name="category" id="category-filter-select">
+
                             <option value="">All Categories</option>
                             <!-- Other category options will be fetch -->
+                             
                         </select>
                     </div>
             
@@ -213,88 +216,576 @@
             </section>
 
             <div id="transaction-modal-overlay">
-                <div class="cancel-btn-wrapper">
-                    <button title="Close and Continue" id="transaction-close-modal-btn">⨉</button>
+                <div class="transaction-modal">
+                
+                    <!-- Close Button -->
+                    <button type="button" title="Close and Continue" id="transaction-close-modal-btn" class="transaction-close-btn"
+                        aria-label="Close and Continue">
+                        &times;
+                    </button>
+                
+                
+                    <!-- LEFT PANEL: TRANSACTION FORM -->
+                    <main class="transaction-form-panel" role="dialog" aria-modal="true">
+                
+                        <!-- Form Heading -->
+                        <div class="transaction-heading">
+                            <div class="heading-image-wrapper">
+                                <img src="../../assets/images/wallet.png" alt="wallet image">
+                            </div>
+                
+                            <div>
+                                <h2>Create Transaction</h2>
+                                <p>Record your income or expenses to keep your finances up to date.</p>
+                            </div>
+                        </div>
+                
+                        <!-- Transaction Form -->
+                        <form id="transaction-form" class="transaction-form" action="/transactions/" method="POST">
+                            
+                            <!-- Transaction Type Selection -->
+                            <fieldset class="transaction-type-fieldset">
+                            
+                                <legend class="required">Transaction Type</legend>
+                            
+                                <div class="transaction-type-overview">
+                            
+                                    <!-- Income -->
+                                    <label class="transaction-type-option income-option" for="transaction-income">
+                                        <div class="transaction-type-content">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up preview-icon">
+                                                <path d="m5 12 7-7 7 7" />
+                                                <path d="M12 19V5" />
+                                            </svg>
+    
+                                            <div>
+                                                <h4>Income</h4>
+                                                <p>Money you receive</p>
+                                            </div>
+                                        </div>
+                            
+                                        <input type="radio" name="type" id="transaction-income" value="income" required>
+                            
+                                    </label>
+                            
+                            
+                                    <!-- Expenses -->
+                                    <label class="transaction-type-option expense-option" for="transaction-expense">
+                                        <div class="transaction-type-content">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down preview-icon">
+                                                <path d="M12 5v14" />
+                                                <path d="m19 12-7 7-7-7" />
+                                            </svg>
+    
+                                            <div>
+                                                <h4>Expenses</h4>
+                                                <p>Money you spend</p>
+                                            </div>
+                                        </div>
+                            
+                                        <input type="radio" name="type" id="transaction-expense" value="expense">
+                            
+                                    </label>
+                            
+                                </div>
+                            
+                            </fieldset>
+                
+
+                            <!-- Transaction Title -->
+                            <fieldset class="input-fieldset">
+                
+                                <label class="required" for="transaction-title-input">
+                                    Transaction Title
+                                </label>
+                
+                                <div class="input-wrapper">
+                
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-tag"
+                                        viewBox="0 0 16 16">
+                                        <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0" />
+                                        <path
+                                            d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1m0 5.586 7 7L13.586 9l-7-7H2z" />
+                                    </svg>
+                
+                                    <input type="text" name="title" id="transaction-title-input"
+                                        placeholder="e.g. Salary, Groceries, Freelance Payment" required>
+                
+                                </div>
+                
+                            </fieldset>
+                
+                
+                            <!-- Amount and Category -->
+                            <div class="form-grid">
+                
+                                <fieldset class="input-fieldset">
+                
+                                    <label class="required" for="transaction-amount-input">
+                                        Amount
+                                    </label>
+                
+                                    <div class="input-wrapper amount-input-wrapper">
+                
+                                        <span class="currency-symbol">GH₵</span>
+                
+                                        <input type="number" name="amount" id="transaction-amount-input" placeholder="0.00" min="1"
+                                            step="0.01" required>
+                
+                                    </div>
+                
+                                </fieldset>
+                
+                                <fieldset class="input-fieldset">
+                
+                                    <label class="required" for="transaction-cat-select">
+                                        Category
+                                    </label>
+                
+                                    <div class="input-wrapper">
+                
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-grid-fill"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z" />
+                                        </svg>
+                
+                                        <select type="text" name="category" id="transaction-cat-select"
+                                            placeholder="Select a category" required>
+                                            
+                                            <!-- Users' categories will be fetched here -->
+                                            <option value="" selected disabled>Select a category</option>
+                                        </select>
+                
+                                    </div>
+                
+                                </fieldset>
+                
+                            </div>
+                
+                
+                            <!-- Description -->
+                            <fieldset class="input-fieldset">
+                
+                                <label for="description-input">
+                                    Short Description
+                                    <span class="optional-label">(Optional)</span>
+                                </label>
+                
+                                <div class="input-wrapper textarea-wrapper">
+                
+                                    <textarea name="description" id="description-input"
+                                        placeholder="Add more details about this transaction..." maxlength="100"></textarea>
+                                    
+                                </div>
+
+                                <div class="description-counter-wrapper">
+                                    <small id="word-counter" aria-live="polite">
+                                        0/10 words
+                                    </small>
+                                </div>
+                
+                            </fieldset>
+                
+                
+                            <!-- Transaction Date -->
+                            <fieldset class="input-fieldset">
+                
+                                <label class="required" for="transaction-date-input">
+                                    Transaction Date
+                                </label>
+                
+                                <div class="input-wrapper">
+                
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar2-date"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M6.445 12.688V7.354h-.633A13 13 0 0 0 4.5 8.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23" />
+                                        <path
+                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                                        <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                
+                                    <input type="date" name="transaction_date" id="transaction-date-input" required>
+                
+                                </div>
+                
+                            </fieldset>
+                
+                
+                            <!-- Recurring Transaction Section -->
+                            <div class="recurring-transaction-section">
+                
+                                <div class="recurring-heading">
+                
+                                    <div class="recurring-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-repeat"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                            <path fill-rule="evenodd"
+                                                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                        </svg>
+                                    </div>
+                
+                                    <div class="recurring-heading-content">
+                                        <div class="recurring-title-row">
+                                            <label for="transaction-is-recurring-checkbox">Recurring Transaction</label>
+                                            <span class="optional-badge">Optional</span>
+                                        </div>
+                
+                                        <p>Enable this if the transaction happens regularly.</p>
+                                    </div>
+
+                                    <input type="checkbox" name="is_recurring" id="transaction-is-recurring-checkbox" value="true">
+                                </div>
+                
+                
+                                <!-- Display these fields when recurring is enabled -->
+                                <div class="form-grid recurring-fields" id="recurring-fields-wrapper" hidden>
+                
+                                    <fieldset class="input-fieldset">
+                
+                                        <label class="required" for="transaction-frequency-select">
+                                            Repeat Frequency
+                                        </label>
+                
+                                        <div class="input-wrapper">
+                
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar2-date"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.445 12.688V7.354h-.633A13 13 0 0 0 4.5 8.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23" />
+                                                <path
+                                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                                                <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
+                                            </svg>
+                
+                                            <select name="frequency" id="transaction-frequency-select">
+                                                <option value="" selected disabled>Select frequency</option>
+                                                <option value="daily">Daily</option>
+                                                <option value="weekly">Weekly</option>
+                                                <option value="biweekly">Every 2 weeks</option>
+                                                <option value="monthly">Monthly</option>
+                                                <option value="quarterly">Quarterly</option>
+                                                <option value="semiannual">Every 6 months</option>
+                                                <option value="yearly">Yearly</option>
+                                            </select>
+                
+                                        </div>
+                
+                                    </fieldset>
+                
+                
+                                    <fieldset class="input-fieldset">
+                
+                                        <label class="required" for="transaction-next-due-date-input">
+                                            Next Due Date
+                                        </label>
+                
+                                        <div class="input-wrapper">
+                
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-calendar2-date"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6.445 12.688V7.354h-.633A13 13 0 0 0 4.5 8.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23" />
+                                                <path
+                                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                                                <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
+                                            </svg>
+                
+                                            <input type="date" name="next_due_date" id="transaction-next-due-date-input">
+                
+                                        </div>
+                
+                                    </fieldset>
+                
+                                </div>
+                
+                            </div>
+                
+                
+                            <!-- Form Actions -->
+                            <fieldset class="transaction-form-actions">
+                                <button type="button" id="transaction-modal-cancel-btn" class="transaction-cancel-btn">
+                                    Cancel
+                                </button>
+                
+                
+                                <button type="submit" id="transaction-btn" class="transaction-submit-btn">
+                                    <div class="loader" id="loader"></div>
+                                    <span class="text-span" id="transaction-btn-text">Create Transaction</span>
+                                </button>
+                            </fieldset>
+                
+                        </form>
+                
+                    </main>
+                
+                
+                    <!-- RIGHT PANEL: INFORMATION -->
+                    <aside class="transaction-info-panel">
+                
+                        <!-- About Transactions -->
+                        <section class="info-section transaction-about-section">
+                
+                            <h2>About Transactions</h2>
+                
+                            <p class="info-description">
+                                Track the money coming in and going out of your
+                                finances. Transactions help you monitor your
+                                financial activity and keep your records up to date.
+                            </p>
+                
+                
+                            <!-- Income and Expenses -->
+                            <div class="type-card-grid">
+                
+                                <div class="type-card income-type">
+                
+                                    <div class="type-card-heading">
+                
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up preview-icon">
+                                            <path d="m5 12 7-7 7 7" />
+                                            <path d="M12 19V5" />
+                                        </svg>
+                
+                                        <h4>Income</h4>
+                
+                                    </div>
+                
+                                    <p>
+                                        Money you receive, such as salaries or
+                                        business earnings.
+                                    </p>
+                
+                                </div>
+                
+                
+                                <div class="type-card expense-type">
+                
+                                    <div class="type-card-heading">
+                
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down preview-icon">
+                                            <path d="M12 5v14" />
+                                            <path d="m19 12-7 7-7-7" />
+                                        </svg>
+                
+                                        <h4>Expenses</h4>
+                
+                                    </div>
+                
+                                    <p>
+                                        Money you spend on things like food,
+                                        transportation or rent.
+                                    </p>
+                
+                                </div>
+                
+                            </div>
+                
+                        </section>
+                
+                
+                        <!-- Required Information -->
+                        <section class="info-section required-info-section">
+                
+                            <div class="info-section-heading">
+                
+                                <div class="section-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                    </svg>
+                                </div>
+                
+                                <h3>Required Information</h3>
+                
+                            </div>
+                
+                
+                            <ul class="required-info-list">
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                
+                                    <p>
+                                        <strong>Transaction Title</strong> –
+                                        Give your transaction a recognisable name.
+                                    </p>
+                                </li>
+                
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                
+                                    <p>
+                                        <strong>Transaction Type</strong> –
+                                        Specify whether money was received or spent.
+                                    </p>
+                                </li>
+                
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                
+                                    <p>
+                                        <strong>Amount</strong> –
+                                        Enter the amount involved.
+                                    </p>
+                                </li>
+                
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                
+                                    <p>
+                                        <strong>Category</strong> –
+                                        Organise your transaction under a relevant category.
+                                    </p>
+                                </li>
+                
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                
+                                    <p>
+                                        <strong>Transaction Date</strong> –
+                                        Keep your financial records accurate.
+                                    </p>
+                                </li>
+                
+                            </ul>
+                
+                        </section>
+                
+                
+                        <!-- Recurring Transactions -->
+                        <section class="info-section recurring-info-section">
+                
+                            <div class="info-section-heading">
+                
+                                <div class="section-icon recurring-section-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-repeat"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+                                        <path fill-rule="evenodd"
+                                            d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
+                                    </svg>
+                                </div>
+                
+                                <h3>Recurring Transactions</h3>
+                
+                            </div>
+                
+                            <small>
+                                Ideal for regular financial activities that happen
+                                on a predictable schedule, such as monthly rent,
+                                subscriptions or salary payments.
+                            </small>
+                
+                
+                            <div class="important-tip">
+                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-info"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                </svg>
+                
+                                <p class="important-tip-text">
+                                    <strong>Tip:</strong>
+                                    Enabling recurring transactions requires you to
+                                    specify both a <strong>Repeat Frequency</strong>
+                                    and a <strong>Next Due Date</strong>.
+                                </p>
+                
+                            </div>
+                
+                        </section>
+                
+                
+                        <!-- Helpful Tips -->
+                        <section class="info-section helpful-tips-section">
+                
+                            <div class="info-section-heading">
+                
+                                <div class="section-icon tips-section-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-lightbulb"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1" />
+                                    </svg>
+                                </div>
+                
+                                <h3>Helpful Tips</h3>
+                
+                            </div>
+                
+                
+                            <ul class="helpful-tips-list">
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                                    Choose the right category.
+                                </li>
+
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                                    Choose unique transaction title.
+                                </li>
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                                    Be accurate with the amount.
+                                </li>
+                
+                                <li>
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
+                                    </svg>
+                                    Use recurring transactions for predictable payments.
+                                </li>
+                
+                            </ul>
+                
+                        </section>
+                
+                    </aside>
+                
                 </div>
-            
-                <div class="transaction-modal-main-container" role="dialog" aria-modal="true">
-                    <div class="heading-wrapper">
-                        <h2>Create Transaction</h2>
-                        <p>Record your transactions (either income or expenses) to gain clarity on your financial habits.</p>
-                    </div>
-            
-                    <form class="transaction-form" action="/api/transactions/" method="POST">
-                        <fieldset class="input-fieldset">
-                            <label class="required" for="transaction-title-input">Title</label>
-                            <input type="text" name="title" id="transaction-title-input" placeholder="Kumasi transport fare"
-                                required>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label class="required" for="transaction-amount-input">Amount</label>
-                            <input type="number" name="amount" id="transaction-amount-input" placeholder="120.00" min="1" required>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label class="required" for="transaction-type-select">Type</label>
-                            <select name="type" id="transaction-type-select" required>
-                                <option value="" selected disabled>Select transaction type</option>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
-                            </select>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label class="required" for="transaction-category-input">Category</label>
-                            <input type="text" name="category" id="transaction-category-input" placeholder="Transportation"
-                                required>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label for="transaction-description-input">Description</label>
-                            <input type="text" name="description" id="transaction-description-input"
-                                placeholder="Payment for transport fare from Nsawam to Kumasi">
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label class="required" for="transaction-date-input">Transaction Date</label>
-                            <input type="date" name="transaction_date" id="transaction-date-input" placeholder="2026-04-05"
-                                required>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label for="transaction-is-recurring-select">Recurring Transaction</label>
-                            <select name="is_recurring" id="transaction-is-recurring-select" required>
-                                <option value="false" selected>No, one time</option>
-                                <option value="true">Yes, recurring</option>
-                            </select>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label for="transaction-frequency-select">Repeat Frequency</label>
-                            <select name="frequency" id="transaction-frequency-select">
-                                <option value="" selected disabled>Select frequency</option>
-                                <option value="daily">Daily</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="biweekly">Every 2 weeks</option>
-                                <option value="monthly">Monthly</option>
-                                <option value="quarterly">Quarterly</option>
-                                <option value="semiannual">Every 6 months</option>
-                                <option value="yearly">Yearly</option>
-                            </select>
-                        </fieldset>
-            
-                        <fieldset class="input-fieldset">
-                            <label for="transaction-next-due-date-input">Next Due Date</label>
-                            <input type="date" name="next_due_date" id="transaction-next-due-date-input" placeholder="2026-05-05">
-                        </fieldset>
-            
-                        <fieldset class="btn-fieldset">
-                            <button type="Submit" id="add-transaction-btn">Submit</button>
-                            <button type="button" id="transaction-modal-cancel-btn">Cancel</button>
-                        </fieldset>
-                    </form>
-                </div>
+                
             </div>
 
             <section class="transactions-table-container">
@@ -354,6 +845,8 @@
     <script src="../../js/pages/transactions.js"></script>
     <script src="../../js/components/transaction-categories.js"></script>
     <script src="../../js/components/transaction-filters.js"></script>
+    <script src="../../js/components/transaction-form-handler.js"></script>
+    <script src="../../js/components/word-limiter.js"></script>
     <script src="../../js/api/apiClient.js"></script>
     <script src="../../js/components/main.js"></script>
 </body>
