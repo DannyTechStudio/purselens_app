@@ -158,7 +158,7 @@ a {
 }
 
 .message-display.success {
-    color: white;
+    color: var(--text-contrast);
     background-color: var(--success);
 }
 
@@ -191,7 +191,7 @@ a {
     height: 60px;
 }
 
-#transaction-btn {
+#transaction-modal-btn {
     padding: 12px;
     width: max-content;
     color: var(--text-contrast);
@@ -207,8 +207,27 @@ a {
     transition: all 0.3s ease-in-out;
 }
 
-#transaction-btn:hover {
+#transaction-modal-btn:hover {
     background-color: var(--custom-orange-hover);
+}
+
+.loader {
+    display: none;
+    width: 30px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, var(--text-primary) 94%, #0000) top/5px 5px no-repeat,
+        conic-gradient(#0000 30%, var(--text-primary));
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(1turn)
+    }
 }
 
 .filter-form {
