@@ -166,18 +166,19 @@ body {
 }
 
 .message-display.success {
-    color: var(--bg);
+    color: var(--text-contrast);
     background-color: var(--success);
 }
 
 .message-display.error {
-    color: var(--bg);
+    color: var(--text-contrast);
     background-color: var(--danger);
 }
 
 #budget-table-msg-display {
     margin: 0;
     padding: 20px 16px;
+    font-size: 14px;
     text-align: center;
     text-transform: none;
     cursor: default;
@@ -205,23 +206,28 @@ body {
 }
 
 .empty-budget-perf-state {
-    width: 100%;
-    border: 1px solid;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .empty-budget-perf-text {
     width: 100%;
     text-align: center;
-    padding: 20px 0;
+    padding: 0;
     color: var(--text-muted);
 }
 
 .error-budget-perf-text {
     width: 100%;
-    padding: 20px 0;
+    padding: 20px;
     text-align: center;
-    color: var(--danger-4);
-    border: 1px solid;
+    font-size: 15px;
+    color: var(--text-muted);
+    background-color: var(--surface-3);
+    border-radius: 10px;
 }
 
 .header-wrapper {
@@ -250,6 +256,13 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     width: 100%;
     gap: 20px;
+    /* border: 1px solid; */
+}
+
+.budget-perf-card-wrapper-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .budget-perf-card {
@@ -384,6 +397,7 @@ body {
 /* At risk */
 .progress-wrapper progress.at-risk::-webkit-progress-value {
     background: var(--warning);
+    background: var(--at-risk-color);
 }
 
 .progress-wrapper progress.at-risk::-moz-progress-bar {
