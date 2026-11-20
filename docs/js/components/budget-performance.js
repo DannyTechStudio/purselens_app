@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const percentWrapper = document.createElement("div");
             
             const percentVal = document.createElement("span");
-            percentVal.textContent = `${performance.utilization}%`;
+            percentVal.textContent = `${Number(performance.utilization).toFixed(1)}%`;
 
             const percentValSupText = document.createElement("span");
             
@@ -323,7 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 : "pointer";
             
         } catch (e) {
-
+            budgetPerfCardWrapper.classList.add("budget-perf-card-wrapper-empty-state");
+            
             budgetPerfCardWrapper.innerHTML = `
                 <div class="empty-budget-perf-state">
                     <p class="error-budget-perf-text">
