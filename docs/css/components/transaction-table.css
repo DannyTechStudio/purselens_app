@@ -286,6 +286,7 @@ a {
     padding: 48px 16px;
     text-align: center;
     color: var(--text-muted);
+    font-size: 14px;
     text-transform: none;
     cursor: default;
     width: 100%;
