@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     const msgDisplay = document.querySelector('.message-display');
-    const transCatFilterSelect = document.getElementById("category-filter");
+    const transCatFilterSelect = document.getElementById("category-filter-select");
+    const transactionCatSelect = document.getElementById("transaction-cat-select");
+
 
     /*-------------------------------------------------------
             RENDER TRANSACTION CATEGORIES
@@ -13,6 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
             transCatFilterSelect.innerHTML = `
                 <option value="">No categories available</option>
             `;
+                
+            transactionCatSelect.innerHTML = `
+                <option value="" selected disabled>Select a category</option>
+                <option value="">No categories available.</option>
+            `;
             return;
         }
 
@@ -21,8 +28,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             selectOption.value = category.id;
             selectOption.textContent = category.name;
-
+            
             transCatFilterSelect.append(
+                selectOption,
+            );
+            
+        });
+        
+        
+        categories.forEach(category => {
+            const selectOption = document.createElement('option');
+    
+            selectOption.value = category.id;
+            selectOption.textContent = category.name;
+            
+            transactionCatSelect.append(
                 selectOption,
             );
         });
