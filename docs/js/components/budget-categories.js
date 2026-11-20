@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const msgDisplay = document.querySelector('.message-display');
     const budgetCatSelect = document.getElementById("budget-cat-select");
+    const budgetCategorySelect = document.getElementById("budget-category-select");
+
 
     /*---------------------------------------------------
             RENDER BUDGET CATEGORIES
@@ -12,7 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!categories || categories.length === 0) {
             budgetCatSelect.innerHTML = `
                 <option value="">No categories available</option>
+                `;
+                
+            budgetCategorySelect.innerHTML = `
+                <option value="">No categories available</option>
             `;
+
             return;
         }
 
@@ -25,6 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
             budgetCatSelect.append(
                 selectOption,
             );
+
+        });
+        
+        categories.forEach(category => {
+            const selectOption = document.createElement('option');
+            
+            selectOption.value = category.id;
+            selectOption.textContent = category.name;
+            
+            budgetCategorySelect.append(
+                selectOption,
+            );
         });
     }
 
@@ -34,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadBudgetsCategories() {
         try {
 
-            const response = await apiGet('/categories/');
+            const response = await apiGet('/categories/?type=expense');
             renderBudgetsCategoryData(response.data.results);
 
         } catch (e) {
