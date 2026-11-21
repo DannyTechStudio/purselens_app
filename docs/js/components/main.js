@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Transaction Modal Functionality
     function displayTransactionModal() {
-        const transactionBtn = document.getElementById('transaction-btn');
+        const transactionBtn = document.getElementById('transaction-modal-btn');
         
         if (!transactionBtn) return; // skip — element not found in DOM
 
