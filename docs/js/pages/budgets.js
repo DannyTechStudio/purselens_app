@@ -180,12 +180,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
 
         } catch (error) {
-            console.error("Transaction error:", error);
+            console.error("Budget error:", error);
 
-            transactionTableBody.innerHTML = `
+            budgetTableBody.innerHTML = `
                 <tr>
                     <td colspan="7">
-                        <p id="message-display">Oops! ${error.message}</p>
+                        <p id="budget-table-msg-display">Oops! ${error.message}</p>
                     </td>
                 </tr>`;
             
