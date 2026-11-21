@@ -22,7 +22,7 @@
     --text-primary: #292b51;
     --text-secondary: #1b1d36;
     --text-muted: #9aa0a6;
-    --text-muted-2: #242222ef;
+    --text-muted-2: #585454ef;
 
     /* Brand */
     --primary: #283593;
@@ -73,14 +73,16 @@
 
     --on-track-color: #047857;
     --on-track-bg: #d1f9e6;
+    --on-track-bg-2: #e7fdf3;
     --on-track-border: #98e0be;
 
-    --at-risk-color: #B45309;
-    --at-risk-bg: #FFFBEB;
-    --at-risk-border: #FDE68A;
+    --at-risk-color: #FF7A1A;
+    --at-risk-bg: #fad2bc;
+    --at-risk-border: #FF8D47;
 
     --exceeded-color: #BE123C;
     --exceeded-bg: #fad6d8;
+    --exceeded-bg-2: #f6e1e2;
     --exceeded-border: #e8a6ad;
 
     /* Shadows */
