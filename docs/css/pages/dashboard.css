@@ -241,12 +241,12 @@ a {
     background-color: var(--custom-orange);
 }
 
-#transaction-btn {
+#transaction-modal-btn {
     color: var(--text-contrast);
     background-color:var(--custom-orange);
 }
 
-#transaction-btn:hover {
+#transaction-modal-btn:hover {
     background-color: var(--custom-orange-hover);
 }
 
