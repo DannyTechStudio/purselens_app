@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             setTimeout(() => {
 
-                clearError()
+                clearError();
                 
             }, 5000);
 
