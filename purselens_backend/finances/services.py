@@ -89,7 +89,7 @@ class CategoryService:
             raise ValueError("Category is in use.")
 
     @staticmethod
-    def create_category(user, name, type, is_system=False):
+    def create_category(user, name, type, short_description, is_system=False):
         if is_system:
             raise ValueError("Cannot create system category.")
 
@@ -99,6 +99,7 @@ class CategoryService:
             user=user,
             name=name.strip(),
             type=type,
+            short_description=short_description,
             is_active=True,
             is_system=False
         )
