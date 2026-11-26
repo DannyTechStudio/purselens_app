@@ -6,7 +6,7 @@ class TransactionPagination(PageNumberPagination):
 
 
 class CategoryPagination(PageNumberPagination):
-    page_size = 15
+    page_size = 10
     page_query_param = "page"
 
 
