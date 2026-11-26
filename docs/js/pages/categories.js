@@ -6,6 +6,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageDisplay = document.querySelector('.message-display');
     const categoryCardContainer = document.getElementById('category-card-container');
 
+    const catPaginationStartCount = document.getElementById("start-count");
+    const catPaginationStopCount = document.getElementById("stop-count");
+    const catPaginationTotalCount = document.getElementById("total-count");
+
+    const prevPaginationBtn = document.getElementById("prev-paginate-btn");
+    const nextPaginationBtn = document.getElementById("next-paginate-btn");
+
+
+    /*-------------------------------------------------------
+            TRACk PAGINATION STATE
+    -------------------------------------------------------*/
+    const paginationState = {
+        currentPage: 1,
+        pagesize: 10,
+        totalCount: 0,
+        nextUrl: null,
+        previousUrl: null,
+    };
+
+
+    /*-------------------------------------------------------
+            UPDATE PAGINATION UI
+    -------------------------------------------------------*/
+    function updatePaginationUI() {
+        const {
+            currentPage,
+            pagesize,
+            totalCount,
+            nextUrl,
+            previousUrl
+        } = paginationState;
+
+        const startIndex = totalCount === 0 ? 0 : (currentPage - 1) * pagesize + 1;
+        const endIndex = Math.min(currentPage * pagesize, totalCount);
+
+        catPaginationStartCount.textContent = startIndex;
+        catPaginationStopCount.textContent = endIndex;
+        catPaginationTotalCount.textContent = totalCount;
+
+        console.log(currentPage);
+        console.log(pagesize);
+        console.log(totalCount);
+        console.log('Next URL', nextUrl);
+        console.log('Previous URL', previousUrl);
+        
+
+        prevPaginationBtn.disabled = !previousUrl;
+        nextPaginationBtn.disabled = !nextUrl
+        
+    }
+
+
     //---------- Category Card Elements Creation
     function createCategoryCard(category) {
         const categoryCard = document.createElement('div');
@@ -282,38 +334,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    async function loadCategories() {
-        try {
+    async function loadCategories(url = "/categories/") {
+      try {
+        const response = await apiGet(url);
 
-            const response = await apiGet('/categories/');
-            renderCategories(response.data.results);
+        paginationState.totalCount = response.data.count;
+        paginationState.nextUrl = response.data.next;
+        paginationState.previousUrl = response.data.previous;
 
-            messageDisplay.textContent = response.message;
-            messageDisplay.classList.add('success');
-            messageDisplay.style.display = "flex";
-            
-            setTimeout(() => {
-                messageDisplay.textContent = "";
-                messageDisplay.classList.remove('success');
-                messageDisplay.style.display = "none";
-            }, 3000);
+        const requestedUrl = new URL(url, API_BASE_URL);
 
-        } catch (error) {
-            console.error("Categories error:", error);
-            
-            messageDisplay.textContent = error.message;
-            messageDisplay.classList.add('error');
-            messageDisplay.style.display = "flex";
-            
-            setTimeout(() => {
-                messageDisplay.textContent = "";
-                messageDisplay.classList.remove('error');
-                messageDisplay.style.display = "none";
-            }, 3000);
-        }
+        paginationState.currentPage = Number(
+          requestedUrl.searchParams.get("page") || 1,
+        );
+
+        renderCategories(response.data.results);
+
+        updatePaginationUI();
+
+        // Update pagination buttons state
+        prevPaginationBtn.disabled = paginationState.previousUrl === null;
+        prevPaginationBtn.style.cursor = prevPaginationBtn.disabled
+          ? "not-allowed"
+          : "pointer";
+
+        nextPaginationBtn.disabled = paginationState.nextUrl === null;
+        nextPaginationBtn.style.cursor = nextPaginationBtn.disabled
+          ? "not-allowed"
+          : "pointer";
+
+        messageDisplay.textContent = response.message;
+        messageDisplay.classList.add("success");
+        messageDisplay.style.display = "flex";
+
+        setTimeout(() => {
+          messageDisplay.textContent = "";
+          messageDisplay.classList.remove("success");
+          messageDisplay.style.display = "none";
+        }, 3000);
+      } catch (error) {
+        console.error("Categories error:", error);
+
+        messageDisplay.textContent = error.message;
+        messageDisplay.classList.add("error");
+        messageDisplay.style.display = "flex";
+
+        setTimeout(() => {
+          messageDisplay.textContent = "";
+          messageDisplay.classList.remove("error");
+          messageDisplay.style.display = "none";
+        }, 3000);
+      }
     }
 
     loadCategories();
+
+    window.loadCats = loadCategories;
+
+
+    /*-------------------------------------------------------
+            PAGINATION BUTTONS FUNCTIONALITIES
+    -------------------------------------------------------*/
+    nextPaginationBtn.addEventListener("click", () => {
+
+        if (paginationState.nextUrl) {
+            loadCategories(paginationState.nextUrl);
+        }
+    });
+    
+    
+    prevPaginationBtn.addEventListener("click", () => {
+        
+        if (paginationState.previousUrl) {
+            loadCategories(paginationState.previousUrl);
+        }
+    });
+
 
     // Insight rendering
     const insightsData = JSON.parse(
