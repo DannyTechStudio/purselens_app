@@ -45,13 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         catPaginationStopCount.textContent = endIndex;
         catPaginationTotalCount.textContent = totalCount;
 
-        console.log(currentPage);
-        console.log(pagesize);
-        console.log(totalCount);
-        console.log('Next URL', nextUrl);
-        console.log('Previous URL', previousUrl);
-        
-
         prevPaginationBtn.disabled = !previousUrl;
         nextPaginationBtn.disabled = !nextUrl
         
